@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:otzaria/core/focus_repository.dart';
+import 'package:otzaria/l10n/app_translations.dart';
+import 'package:otzaria/l10n/tr_extension.dart';
 import 'package:otzaria/tools/calendar/utils/calendar_cubit.dart';
 import 'package:otzaria/settings/search/settings_search_field.dart';
 import 'package:otzaria/settings/search/settings_search_index.dart';
@@ -211,66 +213,63 @@ class _MySettingsScreenState extends State<MySettingsScreen> {
   }
 
   // ── הגדרת רשימת הטאבים ────────────────────────────────────────────────────
-  late final List<
-      ({
-        String label,
-        IconData icon,
-        IconData iconFilled,
-        Widget Function() pageBuilder
-      })> _tabsData = [
-    (
-      label: 'מראה',
-      icon: FluentIcons.paint_brush_24_regular,
-      iconFilled: FluentIcons.paint_brush_24_filled,
-      pageBuilder: () => const DesignSettingsTab(),
-    ),
-    (
-      label: 'כתב',
-      icon: FluentIcons.book_24_regular,
-      iconFilled: FluentIcons.book_24_filled,
-      pageBuilder: () => const TextSettingsTab(),
-    ),
-    (
-      label: 'ספריה',
-      icon: FluentIcons.library_24_regular,
-      iconFilled: FluentIcons.library_24_filled,
-      pageBuilder: () => const LibrarySettingsTab(),
-    ),
-    (
-      label: 'כלים',
-      icon: FluentIcons.apps_24_regular,
-      iconFilled: FluentIcons.apps_24_filled,
-      pageBuilder: () => ToolsSettingsTab(
-            calendarCubit: context.read<CalendarCubit>(),
-          ),
-    ),
-    (
-      label: 'קיצורים',
-      icon: FluentIcons.keyboard_24_regular,
-      iconFilled: FluentIcons.keyboard_24_filled,
-      pageBuilder: () => const ShortcutsSettingsTab(),
-    ),
-    (
-      label: 'מערכת',
-      icon: FluentIcons.settings_24_regular,
-      iconFilled: FluentIcons.settings_24_filled,
-      pageBuilder: () => const SystemSettingsTab(),
-    ),
-    (
-      label: 'אודות',
-      icon: FluentIcons.people_team_24_regular,
-      iconFilled: FluentIcons.people_team_24_filled,
-      pageBuilder: () => const AboutDevTab(),
-    ),
-  ];
+  // getter (ולא late final) כדי שה-labels יתורגמו מחדש בכל build —
+  // כך החלפת שפה מתעדכנת מיד.
+  List<({String label, IconData icon, IconData iconFilled, Widget Function() pageBuilder})>
+      get _tabsData => [
+            (
+              label: 'מראה'.tr(),
+              icon: FluentIcons.paint_brush_24_regular,
+              iconFilled: FluentIcons.paint_brush_24_filled,
+              pageBuilder: () => const DesignSettingsTab(),
+            ),
+            (
+              label: 'כתב'.tr(),
+              icon: FluentIcons.book_24_regular,
+              iconFilled: FluentIcons.book_24_filled,
+              pageBuilder: () => const TextSettingsTab(),
+            ),
+            (
+              label: 'ספריה'.tr(),
+              icon: FluentIcons.library_24_regular,
+              iconFilled: FluentIcons.library_24_filled,
+              pageBuilder: () => const LibrarySettingsTab(),
+            ),
+            (
+              label: 'כלים'.tr(),
+              icon: FluentIcons.apps_24_regular,
+              iconFilled: FluentIcons.apps_24_filled,
+              pageBuilder: () => ToolsSettingsTab(
+                    calendarCubit: context.read<CalendarCubit>(),
+                  ),
+            ),
+            (
+              label: 'קיצורים'.tr(),
+              icon: FluentIcons.keyboard_24_regular,
+              iconFilled: FluentIcons.keyboard_24_filled,
+              pageBuilder: () => const ShortcutsSettingsTab(),
+            ),
+            (
+              label: 'מערכת'.tr(),
+              icon: FluentIcons.settings_24_regular,
+              iconFilled: FluentIcons.settings_24_filled,
+              pageBuilder: () => const SystemSettingsTab(),
+            ),
+            (
+              label: 'אודות'.tr(),
+              icon: FluentIcons.people_team_24_regular,
+              iconFilled: FluentIcons.people_team_24_filled,
+              pageBuilder: () => const AboutDevTab(),
+            ),
+          ];
 
   // ── קבוצות למובייל ────────────────────────────────────────────────────────
-  // כל קבוצה: (כותרת, רשימת אינדקסים מ-_tabsData)
-  static const _mobileGroups = [
-    (label: 'תצוגה ותוכן', indices: <int>[0, 1, 2]),
-    (label: 'כלים', indices: <int>[3, 4]),
-    (label: 'מערכת', indices: <int>[5, 6]),
-  ];
+  // כל קבוצה: (כותרת, רשימת אינדקסים מ-_tabsData). getter כדי לתרגם דינמית.
+  List<({String label, List<int> indices})> get _mobileGroups => [
+        (label: 'תצוגה ותוכן'.tr(), indices: const <int>[0, 1, 2]),
+        (label: 'כלים'.tr(), indices: const <int>[3, 4]),
+        (label: 'מערכת'.tr(), indices: const <int>[5, 6]),
+      ];
 
   @override
   Widget build(BuildContext context) {
@@ -280,7 +279,7 @@ class _MySettingsScreenState extends State<MySettingsScreen> {
 
     return ProtectedSettingsWrapper(
       child: Directionality(
-        textDirection: TextDirection.rtl,
+        textDirection: AppTranslations.textDirection,
         child: LayoutBuilder(
           builder: (context, constraints) {
             final isMobile = constraints.maxWidth < LayoutBreakpoints.compact;
@@ -299,7 +298,7 @@ class _MySettingsScreenState extends State<MySettingsScreen> {
                     appBar: AppBar(
                       backgroundColor: bgColor,
                       elevation: 0,
-                      title: const Text('הגדרות'),
+                      title: Text('הגדרות'.tr()),
                     ),
                     body: Column(
                       children: [
@@ -370,7 +369,7 @@ class _MySettingsScreenState extends State<MySettingsScreen> {
                       elevation: 0,
                       title: Text(_tabsData[_selectedIndex].label),
                       leading: Tooltip(
-                        message: 'חזור (Esc)',
+                        message: 'חזור (Esc)'.tr(),
                         child: IconButton(
                           icon:
                               const RtlIcon(FluentIcons.arrow_right_24_regular),
@@ -444,7 +443,7 @@ class _MySettingsScreenState extends State<MySettingsScreen> {
                                 padding: const EdgeInsets.only(
                                     right: 12, left: 12, bottom: 20),
                                 child: Text(
-                                  'הגדרות',
+                                  'הגדרות'.tr(),
                                   style: Theme.of(context)
                                       .textTheme
                                       .headlineSmall

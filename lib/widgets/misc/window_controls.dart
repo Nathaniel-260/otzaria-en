@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:window_manager/window_manager.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:otzaria/l10n/tr_extension.dart';
 import 'package:otzaria/utils/ui/fullscreen_helper.dart';
 import 'package:otzaria/settings/settings_exports.dart';
 
@@ -81,7 +82,7 @@ class _WindowControlsState extends State<WindowControls> with WindowListener {
                 await windowManager.minimize();
               },
               icon: const Icon(FluentIcons.subtract_24_regular),
-              tooltip: 'מזער',
+              tooltip: 'מזער'.tr(),
             ),
             IconButton(
               onPressed: () async {
@@ -92,12 +93,14 @@ class _WindowControlsState extends State<WindowControls> with WindowListener {
               icon: Icon(settingsState.isFullscreen
                   ? FluentIcons.full_screen_minimize_24_regular
                   : FluentIcons.full_screen_maximize_24_regular),
-              tooltip: settingsState.isFullscreen ? 'צא ממסך מלא' : 'מסך מלא',
+              tooltip: settingsState.isFullscreen
+                  ? 'צא ממסך מלא'.tr()
+                  : 'מסך מלא'.tr(),
             ),
             IconButton(
               onPressed: () => windowManager.close(),
               icon: const Icon(FluentIcons.dismiss_24_regular),
-              tooltip: 'סגור',
+              tooltip: 'סגור'.tr(),
             ),
           ],
         );

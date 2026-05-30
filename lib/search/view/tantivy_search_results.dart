@@ -4,6 +4,7 @@ import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_settings_screens/flutter_settings_screens.dart';
 import 'package:otzaria/core/ui_snack.dart';
+import 'package:otzaria/l10n/tr_extension.dart';
 import 'package:otzaria/models/books.dart';
 import 'package:otzaria/search/bloc/search_bloc.dart';
 import 'package:otzaria/search/bloc/search_event.dart';
@@ -157,7 +158,7 @@ class _TantivySearchResultsState extends State<TantivySearchResults> {
       return const Center(child: CircularProgressIndicator());
     }
     if (state.searchQuery.isEmpty) {
-      return const Center(child: Text("לא בוצע חיפוש"));
+      return Center(child: Text("לא בוצע חיפוש".tr()));
     }
     if (state.results.isEmpty && !state.isLoading) {
       // הבחנה בין חיפוש ריק לגיטימי לבין כשל בחיפוש: אם errorMessage קיים,
@@ -175,10 +176,10 @@ class _TantivySearchResultsState extends State<TantivySearchResults> {
           ),
         );
       }
-      return const Center(
+      return Center(
           child: Padding(
-        padding: EdgeInsets.all(8.0),
-        child: Text('אין תוצאות'),
+        padding: const EdgeInsets.all(8.0),
+        child: Text('אין תוצאות'.tr()),
       ));
     }
 
@@ -205,29 +206,29 @@ class _TantivySearchResultsState extends State<TantivySearchResults> {
         // או כפתור pagination כשיש עוד תוצאות בשרת.
         if (index == state.results.length) {
           if (showInlineLoadingIndicator) {
-            return const Padding(
-              padding: EdgeInsets.symmetric(vertical: 16.0),
+            return Padding(
+              padding: const EdgeInsets.symmetric(vertical: 16.0),
               child: Center(
                 child: Column(
                   children: [
-                    CircularProgressIndicator(),
-                    SizedBox(height: 8),
-                    Text('טוען תוצאות...'),
+                    const CircularProgressIndicator(),
+                    const SizedBox(height: 8),
+                    Text('טוען תוצאות...'.tr()),
                   ],
                 ),
               ),
             );
           }
 
-          final remainingText =
-              'טען תוצאות נוספות (${state.totalResults - state.results.length})';
+          final remainingText = 'טען תוצאות נוספות ({count})'.tr(
+              args: {'count': '${state.totalResults - state.results.length}'});
           return Padding(
             padding: const EdgeInsets.symmetric(vertical: 16.0),
             child: Center(
               child: ConstrainedBox(
                 constraints: const BoxConstraints(maxWidth: 260),
                 child: NeutralActionButton(
-                  text: state.isLoading ? 'טוען...' : remainingText,
+                  text: state.isLoading ? 'טוען...'.tr() : remainingText,
                   onPressed: () {
                     context.read<SearchBloc>().add(
                           LoadMoreResults(
@@ -478,7 +479,7 @@ class _TantivySearchResultsState extends State<TantivySearchResults> {
                                         .colorScheme
                                         .onSurfaceVariant,
                                   ),
-                                  tooltip: 'העתק טקסט',
+                                  tooltip: 'העתק טקסט'.tr(),
                                   visualDensity: VisualDensity.compact,
                                   padding: EdgeInsets.zero,
                                   constraints: const BoxConstraints(

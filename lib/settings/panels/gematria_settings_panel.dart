@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter_settings_screens/flutter_settings_screens.dart'
     hide SwitchSettingsTile;
+import 'package:otzaria/l10n/tr_extension.dart';
 import 'package:otzaria/settings/search/settings_anchor.dart';
 import 'package:otzaria/settings/search/settings_search_models.dart';
 import 'package:otzaria/settings/settings_card.dart';
@@ -136,13 +137,13 @@ class _GematriaSettingsTabState extends State<GematriaSettingsTab> {
         SettingsAnchor(
           cardId: 'tools.gematria',
           child: SettingsCard(
-            title: 'חיפוש גימטריה',
+            title: 'חיפוש גימטריה'.tr(),
             children: [
               ListTile(
                 leading: const Icon(FluentIcons.number_row_24_regular),
-                title: const Text('מספר תוצאות מקסימלי',
+                title: Text('מספר תוצאות מקסימלי'.tr(),
                     style: kSettingsTitleStyle),
-                subtitle: const Text('כמות התוצאות המקסימלית להצגה',
+                subtitle: Text('כמות התוצאות המקסימלית להצגה'.tr(),
                     style: kSettingsSubtitleStyle),
                 trailing: SizedBox(
                   width: 120,
@@ -170,12 +171,12 @@ class _GematriaSettingsTabState extends State<GematriaSettingsTab> {
               ),
               SwitchSettingsTile(
                 leading: const Icon(FluentIcons.filter_24_regular),
-                title: const Text('סינון תוצאות כפולות',
+                title: Text('סינון תוצאות כפולות'.tr(),
                     style: kSettingsTitleStyle),
                 subtitle: Text(
                   filterDuplicates
-                      ? 'תוצאות זהות יוצגו פעם אחת בלבד'
-                      : 'כל התוצאות יוצגו',
+                      ? 'תוצאות זהות יוצגו פעם אחת בלבד'.tr()
+                      : 'כל התוצאות יוצגו'.tr(),
                   style: kSettingsSubtitleStyle,
                 ),
                 value: filterDuplicates,
@@ -187,12 +188,12 @@ class _GematriaSettingsTabState extends State<GematriaSettingsTab> {
               ),
               SwitchSettingsTile(
                 leading: const Icon(FluentIcons.text_word_count_24_regular),
-                title: const Text('חיפוש פסוק שלם בלבד',
+                title: Text('חיפוש פסוק שלם בלבד'.tr(),
                     style: kSettingsTitleStyle),
                 subtitle: Text(
                   wholeVerseOnly
-                      ? 'חיפוש רק בפסוקים שלמים'
-                      : 'חיפוש גם בחלקי פסוקים',
+                      ? 'חיפוש רק בפסוקים שלמים'.tr()
+                      : 'חיפוש גם בחלקי פסוקים'.tr(),
                   style: kSettingsSubtitleStyle,
                 ),
                 value: wholeVerseOnly,
@@ -205,9 +206,11 @@ class _GematriaSettingsTabState extends State<GematriaSettingsTab> {
               SwitchSettingsTile(
                 leading: const Icon(FluentIcons.book_24_regular),
                 title:
-                    const Text('חיפוש בתורה בלבד', style: kSettingsTitleStyle),
+                    Text('חיפוש בתורה בלבד'.tr(), style: kSettingsTitleStyle),
                 subtitle: Text(
-                  torahOnly ? 'חיפוש רק בחמישה חומשי תורה' : 'חיפוש בכל הספרים',
+                  torahOnly
+                      ? 'חיפוש רק בחמישה חומשי תורה'.tr()
+                      : 'חיפוש בכל הספרים'.tr(),
                   style: kSettingsSubtitleStyle,
                 ),
                 value: torahOnly,
@@ -221,12 +224,12 @@ class _GematriaSettingsTabState extends State<GematriaSettingsTab> {
         ),
         kSettingsCardSpacing,
         SettingsCard(
-          title: 'שיטת חישוב גימטריה',
+          title: 'שיטת חישוב גימטריה'.tr(),
           children: [
             SwitchSettingsTile(
               leading: const Icon(FluentIcons.number_symbol_24_regular),
-              title: const Text('גימטריה קטנה', style: kSettingsTitleStyle),
-              subtitle: const Text('כל אות מחושבת לפי ספרה אחת',
+              title: Text('גימטריה קטנה'.tr(), style: kSettingsTitleStyle),
+              subtitle: Text('כל אות מחושבת לפי ספרה אחת'.tr(),
                   style: kSettingsSubtitleStyle),
               value: useSmallGematria,
               onChanged: (value) {
@@ -245,8 +248,8 @@ class _GematriaSettingsTabState extends State<GematriaSettingsTab> {
             SwitchSettingsTile(
               leading: const Icon(FluentIcons.text_font_24_regular),
               title:
-                  const Text('אותיות סופיות שונות', style: kSettingsTitleStyle),
-              subtitle: const Text('מנצפ"ך בערכים שונים',
+                  Text('אותיות סופיות שונות'.tr(), style: kSettingsTitleStyle),
+              subtitle: Text('מנצפ"ך בערכים שונים'.tr(),
                   style: kSettingsSubtitleStyle),
               value: useFinalLetters,
               onChanged: (value) {
@@ -263,8 +266,8 @@ class _GematriaSettingsTabState extends State<GematriaSettingsTab> {
             ),
             SwitchSettingsTile(
               leading: const Icon(FluentIcons.add_circle_24_regular),
-              title: const Text('עם הכולל', style: kSettingsTitleStyle),
-              subtitle: const Text('הוספת מספר האותיות לסכום',
+              title: Text('עם הכולל'.tr(), style: kSettingsTitleStyle),
+              subtitle: Text('הוספת מספר האותיות לסכום'.tr(),
                   style: kSettingsSubtitleStyle),
               value: useWithKolel,
               onChanged: (value) {

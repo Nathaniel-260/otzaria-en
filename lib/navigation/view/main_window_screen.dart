@@ -8,6 +8,7 @@ import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:collection/collection.dart';
 import 'package:otzaria/core/ui_snack.dart';
+import 'package:otzaria/l10n/tr_extension.dart';
 import 'package:otzaria/data/repository/data_repository.dart';
 import 'package:otzaria/core/focus_repository.dart';
 import 'package:otzaria/data/data_providers/tantivy_data_provider.dart';
@@ -636,11 +637,12 @@ class MainWindowScreenState extends State<MainWindowScreen>
     try {
       final result = await showTwoActionsDialog(
         context: context,
-        title: 'נדרש איפוס אינדקס',
+        title: 'נדרש איפוס אינדקס'.tr(),
         content:
-            'האינדקס הקיים אינו מעודכן ביחס לשינויים האחרונים בחיפוש. עד שתבצע איפוס ואינדוקס מחדש, ייתכן שחלק מיכולות החיפוש לא יעבדו כראוי.',
-        cancelText: 'אחר כך',
-        confirmText: 'אפס ועדכן',
+            'האינדקס הקיים אינו מעודכן ביחס לשינויים האחרונים בחיפוש. עד שתבצע איפוס ואינדוקס מחדש, ייתכן שחלק מיכולות החיפוש לא יעבדו כראוי.'
+                .tr(),
+        cancelText: 'אחר כך'.tr(),
+        confirmText: 'אפס ועדכן'.tr(),
       );
       if (!mounted || !context.mounted || result != true) {
         return;
@@ -812,7 +814,8 @@ class MainWindowScreenState extends State<MainWindowScreen>
     final book =
         library.getAllBooks().firstWhereOrNull((b) => b.id == action.bookId);
     if (book == null) {
-      UiSnack.showError('הספר עם המזהה ${action.bookId} לא נמצא בספרייה');
+      UiSnack.showError('הספר עם המזהה {id} לא נמצא בספרייה'
+          .tr(args: {'id': '${action.bookId}'}));
       return false;
     }
     dispatchOpenBookAction(
@@ -834,7 +837,8 @@ class MainWindowScreenState extends State<MainWindowScreen>
           (b) => b is PdfBook && b.id == action.bookId,
         );
     if (book == null) {
-      UiSnack.showError('ספר ה-PDF עם המזהה ${action.bookId} לא נמצא בספרייה');
+      UiSnack.showError('ספר ה-PDF עם המזהה {id} לא נמצא בספרייה'
+          .tr(args: {'id': '${action.bookId}'}));
       return false;
     }
     dispatchOpenPdfBookAction(
@@ -950,7 +954,7 @@ class MainWindowScreenState extends State<MainWindowScreen>
           child: Icon(item.icon),
         ),
         selectedIcon: Icon(item.iconFilled),
-        label: item.label,
+        label: item.label.tr(),
       );
     }
 
@@ -1885,9 +1889,10 @@ class MainWindowScreenState extends State<MainWindowScreen>
                     total > 0 ? (processed / total).clamp(0.0, 1.0) : null;
                 cubit.upsert(WorkStatusItem(
                   id: 'indexing',
-                  title: 'אינדוקס ספרים',
-                  message: 'התוכנה בתהליך אינדוקס',
-                  detail: 'התקדמות: $processed/$total',
+                  title: 'אינדוקס ספרים'.tr(),
+                  message: 'התוכנה בתהליך אינדוקס'.tr(),
+                  detail: 'התקדמות: {processed}/{total}'
+                      .tr(args: {'processed': '$processed', 'total': '$total'}),
                   progress: progress,
                 ));
               } else {
@@ -2135,12 +2140,15 @@ class MainWindowScreenState extends State<MainWindowScreen>
                 final bloc = context.read<PluginSystemBloc>();
                 showWarningDialog(
                   context: context,
-                  title: 'התוסף כבר קיים',
+                  title: 'התוסף כבר קיים'.tr(),
                   content:
-                      'התוסף "${state.pluginName}" בגרסה ${state.version} כבר מותקן.',
-                  subtitle: 'האם ברצונך להתקין מחדש ולדרוס אותו?',
-                  cancelText: 'ביטול',
-                  confirmText: 'התקן מחדש',
+                      'התוסף "{name}" בגרסה {version} כבר מותקן.'.tr(args: {
+                    'name': state.pluginName,
+                    'version': state.version,
+                  }),
+                  subtitle: 'האם ברצונך להתקין מחדש ולדרוס אותו?'.tr(),
+                  cancelText: 'ביטול'.tr(),
+                  confirmText: 'התקן מחדש'.tr(),
                 ).then((value) {
                   if (value == true) {
                     bloc.add(InstallPluginRequested(state.archivePath,
@@ -2542,7 +2550,7 @@ class MainWindowScreenState extends State<MainWindowScreen>
                           onClose: _toggleReadingSettingsPanel,
                           deferChildBuildOnOpen: true,
                           preserveChildStateOnClose: true,
-                          title: 'הגדרות תצוגת הספרים',
+                          title: 'הגדרות תצוגת הספרים'.tr(),
                           child: const Expanded(
                             child: ReadingSettingsPanel(),
                           ),
@@ -2812,7 +2820,7 @@ class MainWindowScreenState extends State<MainWindowScreen>
     return NavRailItem(
       icon: item.icon,
       iconFilled: item.iconFilled,
-      label: item.label,
+      label: item.label.tr(),
       isSelected: isSelected,
       onTap: () => _onNavTap(context, index, currentScreen),
       tooltip: tooltip,

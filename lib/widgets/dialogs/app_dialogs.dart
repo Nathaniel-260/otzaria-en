@@ -21,6 +21,8 @@
 // ```
 
 import 'package:flutter/material.dart';
+import 'package:otzaria/l10n/app_translations.dart';
+import 'package:otzaria/l10n/tr_extension.dart';
 import 'package:otzaria/widgets/misc/keyboard_dialog_navigation.dart';
 
 // ── SingleActionDialog ────────────────────────────────────────────────────────
@@ -40,7 +42,7 @@ class SingleActionDialog extends StatefulWidget {
     this.confirmText = 'אישור',
   }) : assert(
           content != null || customContent != null,
-          'content או customContent חייבים להיות מוגדרים',
+          'content או customContent חייבים להיות מוגדרים', // i18n-ignore: assert מפתחים
         );
 
   @override
@@ -57,14 +59,16 @@ class _SingleActionDialogState extends State<SingleActionDialog>
       onCancel: () => Navigator.of(context).pop(false),
       child: AlertDialog(
         backgroundColor: Theme.of(context).colorScheme.surfaceContainerHigh,
-        title: widget.title is String ? Text(widget.title) : widget.title,
-        content: widget.customContent ?? Text(widget.content!),
+        title: widget.title is String
+            ? Text((widget.title as String).tr())
+            : widget.title,
+        content: widget.customContent ?? Text(widget.content!.tr()),
         actions: [
           FilledButton(
             onPressed: () => Navigator.of(context).pop(true),
             style: FilledButton.styleFrom(
                 backgroundColor: cs.primary, foregroundColor: cs.onPrimary),
-            child: Text(widget.confirmText),
+            child: Text(widget.confirmText.tr()),
           ),
         ],
       ),
@@ -108,21 +112,23 @@ class _TwoActionsDialogState extends State<TwoActionsDialog>
       handleEnterKey: widget.handleEnterKey,
       child: AlertDialog(
         backgroundColor: Theme.of(context).colorScheme.surfaceContainerHigh,
-        title: widget.title is String ? Text(widget.title) : widget.title,
-        content: widget.customContent ?? Text(widget.content),
+        title: widget.title is String
+            ? Text((widget.title as String).tr())
+            : widget.title,
+        content: widget.customContent ?? Text(widget.content.tr()),
         actions: [
           FilledButton.tonal(
             onPressed: () => Navigator.of(context).pop(false),
             style: FilledButton.styleFrom(
                 backgroundColor: cs.secondaryContainer,
                 foregroundColor: cs.onSecondaryContainer),
-            child: Text(widget.cancelText),
+            child: Text(widget.cancelText.tr()),
           ),
           FilledButton(
             onPressed: () => Navigator.of(context).pop(true),
             style: FilledButton.styleFrom(
                 backgroundColor: cs.primary, foregroundColor: cs.onPrimary),
-            child: Text(widget.confirmText),
+            child: Text(widget.confirmText.tr()),
           ),
         ],
       ),
@@ -163,15 +169,17 @@ class _WarningDialogState extends State<WarningDialog>
       onCancel: () => Navigator.of(context).pop(false),
       child: AlertDialog(
         backgroundColor: Theme.of(context).colorScheme.surfaceContainerHigh,
-        title: widget.title is String ? Text(widget.title) : widget.title,
+        title: widget.title is String
+            ? Text((widget.title as String).tr())
+            : widget.title,
         content: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(widget.content),
+            Text(widget.content.tr()),
             if (widget.subtitle != null) ...[
               const SizedBox(height: 8),
-              Text(widget.subtitle!,
+              Text(widget.subtitle!.tr(),
                   style: TextStyle(color: cs.error, fontSize: 13)),
             ],
           ],
@@ -181,12 +189,12 @@ class _WarningDialogState extends State<WarningDialog>
             onPressed: () => Navigator.of(context).pop(false),
             style: FilledButton.styleFrom(
                 backgroundColor: cs.primary, foregroundColor: cs.onPrimary),
-            child: Text(widget.cancelText),
+            child: Text(widget.cancelText.tr()),
           ),
           TextButton(
             onPressed: () => Navigator.of(context).pop(true),
             style: TextButton.styleFrom(foregroundColor: cs.error),
-            child: Text(widget.confirmText),
+            child: Text(widget.confirmText.tr()),
           ),
         ],
       ),
@@ -263,29 +271,32 @@ Future<bool?> showDbCopyRequiredDialog({
 }) =>
     showTwoActionsDialog(
       context: context,
-      title: 'נדרשת העתקה של קובץ הספרייה',
+      title: 'נדרשת העתקה של קובץ הספרייה'.tr(),
       content: '',
       barrierDismissible: barrierDismissible,
-      cancelText: 'העתק (שמור מקור)',
-      confirmText: 'העתק + נסה מחק מקור',
+      cancelText: 'העתק (שמור מקור)'.tr(),
+      confirmText: 'העתק + נסה מחק מקור'.tr(),
       customContent: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'לא ניתן לגשת ישירות לקובץ seforim.db (גודל: $sizeText) מכיוון שהוא נמצא באחסון חיצוני ב-Android.',
-            textDirection: TextDirection.rtl,
+            'לא ניתן לגשת ישירות לקובץ seforim.db (גודל: {size}) מכיוון שהוא נמצא באחסון חיצוני ב-Android.'
+                .tr(args: {'size': sizeText}),
+            textDirection: AppTranslations.textDirection,
           ),
           const SizedBox(height: 12),
-          const Text(
-            'לחץ על כפתור למטה, נווט לאותה תיקייה ובחר את הקובץ seforim.db — האפליקציה תעתיק אותו לאחסון הפנימי.',
-            textDirection: TextDirection.rtl,
+          Text(
+            'לחץ על כפתור למטה, נווט לאותה תיקייה ובחר את הקובץ seforim.db — האפליקציה תעתיק אותו לאחסון הפנימי.'
+                .tr(),
+            textDirection: AppTranslations.textDirection,
           ),
           const SizedBox(height: 6),
-          const Text(
-            '(אפשרות "נסה מחק מקור" — ניסיון למחוק לאחר העתקה. עשויה שלא להצליח בכל גרסאות Android.)',
-            style: TextStyle(fontSize: 12),
-            textDirection: TextDirection.rtl,
+          Text(
+            '(אפשרות "נסה מחק מקור" — ניסיון למחוק לאחר העתקה. עשויה שלא להצליח בכל גרסאות Android.)'
+                .tr(),
+            style: const TextStyle(fontSize: 12),
+            textDirection: AppTranslations.textDirection,
           ),
         ],
       ),

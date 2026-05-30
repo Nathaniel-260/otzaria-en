@@ -71,6 +71,9 @@ class SettingsRepository {
       'key-personal-notes-collapsed';
   static const String keyCompactMenuMode = 'key-compact-menu-mode';
 
+  /// שפת הממשק (`he` / `en`). ברירת מחדל: עברית.
+  static const String keyLanguage = 'key-language';
+
   /// CSV של מזהי כלים מובנים שהמשתמש הסתיר מהממשק (לשונית הכלים).
   static const String keyHiddenBuiltInToolIds = 'key-hidden-builtin-tool-ids';
 
@@ -272,6 +275,10 @@ class SettingsRepository {
       'compactMenuMode': _settings.getValue<bool>(
         keyCompactMenuMode,
         defaultValue: false,
+      ),
+      'language': _settings.getValue<String>(
+        keyLanguage,
+        defaultValue: 'he',
       ),
       'mergeUserBooksIntoLibrary': _settings.getValue<bool>(
         keyMergeUserBooksIntoLibrary,
@@ -512,6 +519,10 @@ class SettingsRepository {
 
   Future<void> updateCompactMenuMode(bool value) async {
     await _settings.setValue(keyCompactMenuMode, value);
+  }
+
+  Future<void> updateLanguage(String value) async {
+    await _settings.setValue(keyLanguage, value);
   }
 
   Future<void> updateMergeUserBooksIntoLibrary(bool value) async {
@@ -819,6 +830,9 @@ class SettingsRepository {
 
     // Protected Mode defaults
     await _settings.setValue(keyProtectedModeEnabled, false);
+
+    // שפת ממשק — ברירת מחדל עברית
+    await _settings.setValue(keyLanguage, 'he');
 
     // מיזוג תיקיות מותאמות אישית לעץ הספרייה — ברירת מחדל כבוי
     await _settings.setValue(keyMergeUserBooksIntoLibrary, false);

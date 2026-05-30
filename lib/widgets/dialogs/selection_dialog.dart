@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
+import 'package:otzaria/l10n/app_translations.dart';
+import 'package:otzaria/l10n/tr_extension.dart';
 import 'package:otzaria/widgets/buttons/action_buttons.dart';
 import 'package:otzaria/widgets/misc/keyboard_dialog_navigation.dart';
 import 'package:otzaria/widgets/text/otzaria_search_field.dart';
@@ -72,8 +74,8 @@ class _SelectionDialogState<T> extends State<SelectionDialog<T>>
       child: AlertDialog(
         backgroundColor: Theme.of(context).colorScheme.surfaceContainerHigh,
         title: Text(
-          widget.title,
-          textDirection: TextDirection.rtl,
+          widget.title.tr(),
+          textDirection: AppTranslations.textDirection,
         ),
         content: SizedBox(
           width: 300,
@@ -83,15 +85,15 @@ class _SelectionDialogState<T> extends State<SelectionDialog<T>>
               OtzariaSearchField(
                 controller: _searchController,
                 focusNode: _searchFocusNode,
-                hintText: widget.searchHint,
+                hintText: widget.searchHint.tr(),
                 autofocus: true,
               ),
               const SizedBox(height: 8),
               Expanded(
                 child: filteredItems.isEmpty
-                    ? const ToolEmptyState(
+                    ? ToolEmptyState(
                         icon: FluentIcons.search_24_regular,
-                        message: 'לא נמצאו תוצאות',
+                        message: 'לא נמצאו תוצאות'.tr(),
                       )
                     : ListView.builder(
                         itemCount: filteredItems.length,
@@ -102,7 +104,7 @@ class _SelectionDialogState<T> extends State<SelectionDialog<T>>
                           return ListTile(
                             title: Text(
                               item.label,
-                              textDirection: TextDirection.rtl,
+                              textDirection: AppTranslations.textDirection,
                             ),
                             selected: isSelected,
                             trailing: isSelected
@@ -120,7 +122,7 @@ class _SelectionDialogState<T> extends State<SelectionDialog<T>>
         ),
         actions: [
           NeutralActionButton(
-            text: 'ביטול',
+            text: 'ביטול'.tr(),
             onPressed: () => Navigator.of(context).pop(),
           ),
         ],

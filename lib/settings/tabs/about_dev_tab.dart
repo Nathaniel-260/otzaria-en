@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:otzaria/l10n/app_translations.dart';
+import 'package:otzaria/l10n/tr_extension.dart';
 import 'package:otzaria/widgets/widgets_exports.dart';
 import 'package:otzaria/settings/search/settings_anchor.dart';
 import 'package:otzaria/settings/search/settings_search_models.dart';
@@ -251,22 +253,23 @@ class AboutDevTab extends StatelessWidget {
 
             // ── תרומה ומידע ──
             SettingsCard(
-              title: 'תרומה ומידע',
+              title: 'תרומה ומידע'.tr(),
               children: [
                 _ActionTile(
                   icon: FluentIcons.payment_24_regular,
-                  title: 'תרום לפרויקט',
+                  title: 'תרום לפרויקט'.tr(),
                   subtitle:
-                      'תרומתך תעזור לנו להמשיך לפתח ולשפר את אוצריא עבור כלל ציבור הלומדים',
-                  buttonLabel: 'נדרים+',
+                      'תרומתך תעזור לנו להמשיך לפתח ולשפר את אוצריא עבור כלל ציבור הלומדים'
+                          .tr(),
+                  buttonLabel: 'נדרים+'.tr(),
                   buttonIcon: FluentIcons.payment_24_regular,
                   onTap: () => _openUrl('https://nedar.im/ezOd'),
                 ),
                 _ActionTile(
                   icon: FluentIcons.shield_task_24_filled,
-                  title: 'אוצריא מתגייסת לעזרת לומדי התורה',
-                  subtitle: 'מרכז המידע על ארגוני סיוע ללומדי התורה',
-                  buttonLabel: 'למידע נוסף',
+                  title: 'אוצריא מתגייסת לעזרת לומדי התורה'.tr(),
+                  subtitle: 'מרכז המידע על ארגוני סיוע ללומדי התורה'.tr(),
+                  buttonLabel: 'למידע נוסף'.tr(),
                   onTap: () => _openAdPopup(context),
                 ),
               ],
@@ -274,21 +277,22 @@ class AboutDevTab extends StatelessWidget {
 
             // ── הצטרף ──
             SettingsCard(
-              title: 'הצטרף',
+              title: 'הצטרף'.tr(),
               children: [
                 _ActionTile(
                   icon: FluentIcons.edit_24_regular,
-                  title: 'הצטרף לצוות העריכה ומהדירי הספרים',
-                  subtitle: 'עזור לנו להוסיף ספרים חדשים לספריית אוצריא',
-                  buttonLabel: 'הצטרף לעריכה',
+                  title: 'הצטרף לצוות העריכה ומהדירי הספרים'.tr(),
+                  subtitle: 'עזור לנו להוסיף ספרים חדשים לספריית אוצריא'.tr(),
+                  buttonLabel: 'הצטרף לעריכה'.tr(),
                   onTap: () => _openUrl('https://www.otzaria.org/library'),
                 ),
                 _ActionTile(
                   icon: FluentIcons.code_24_regular,
-                  title: 'הצטרף לפיתוח',
+                  title: 'הצטרף לפיתוח'.tr(),
                   subtitle:
-                      'מפתחים מוזמנים לתרום לקהילה התורנית ולשדרג את אוצריא',
-                  buttonLabel: 'הצטרף עכשיו',
+                      'מפתחים מוזמנים לתרום לקהילה התורנית ולשדרג את אוצריא'
+                          .tr(),
+                  buttonLabel: 'הצטרף עכשיו'.tr(),
                   onTap: () => _openUrl('https://github.com/otzaria/otzaria'),
                 ),
               ],
@@ -296,13 +300,13 @@ class AboutDevTab extends StatelessWidget {
 
             // ── משוב ותמיכה ──
             SettingsCard(
-              title: 'משוב ותמיכה',
+              title: 'משוב ותמיכה'.tr(),
               children: [
                 _ActionTile(
                   icon: FluentIcons.chat_24_regular,
-                  title: 'נתקלת בבאג? יש לך שאלה או משוב?',
-                  subtitle: 'מוזמנים לבקר בפורום התמיכה והמשוב של אוצריא',
-                  buttonLabel: 'כניסה לפורום',
+                  title: 'נתקלת בבאג? יש לך שאלה או משוב?'.tr(),
+                  subtitle: 'מוזמנים לבקר בפורום התמיכה והמשוב של אוצריא'.tr(),
+                  buttonLabel: 'כניסה לפורום'.tr(),
                   onTap: () => _openUrl('https://otzaria.org/forum'),
                 ),
               ],
@@ -310,7 +314,7 @@ class AboutDevTab extends StatelessWidget {
 
             // ── תורמים ──
             SettingsCard(
-              title: 'תורמים',
+              title: 'תורמים'.tr(),
               children: [
                 Padding(
                   padding: const EdgeInsets.all(16),
@@ -323,7 +327,7 @@ class AboutDevTab extends StatelessWidget {
 
             // ── מפתחים ──
             SettingsCard(
-              title: 'מפתחים',
+              title: 'מפתחים'.tr(),
               children: [
                 Padding(
                   padding: const EdgeInsets.all(16),
@@ -337,7 +341,7 @@ class AboutDevTab extends StatelessWidget {
 
             // ── אנשים חיוניים ──
             SettingsCard(
-              title: 'התוכנה נעזרה רבות ב:',
+              title: 'התוכנה נעזרה רבות ב:'.tr(),
               children: [
                 Padding(
                   padding: const EdgeInsets.all(16),
@@ -351,16 +355,16 @@ class AboutDevTab extends StatelessWidget {
 
             // ── מהדירי ספרים ──
             SettingsCard(
-              title: 'מהדירי ספרים',
+              title: 'מהדירי ספרים'.tr(),
               children: [
                 Padding(
                   padding: const EdgeInsets.all(16),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      _editorCategory('10 ספרים ומעלה', _topEditors),
+                      _editorCategory('10 ספרים ומעלה'.tr(), _topEditors),
                       const SizedBox(height: 20),
-                      _editorCategory('בין 5 ל-10 ספרים', _regularEditors),
+                      _editorCategory('בין 5 ל-10 ספרים'.tr(), _regularEditors),
                       const SizedBox(height: 12),
                       _editorsNote(context),
                     ],
@@ -371,7 +375,7 @@ class AboutDevTab extends StatelessWidget {
 
             // ── מקור הספרים ──
             SettingsCard(
-              title: 'מקור הספרים',
+              title: 'מקור הספרים'.tr(),
               children: [
                 Padding(
                   padding: const EdgeInsets.all(16),
@@ -409,14 +413,14 @@ class AboutDevTab extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'אוצריא',
+                  'אוצריא'.tr(),
                   style: Theme.of(context)
                       .textTheme
                       .headlineSmall
                       ?.copyWith(fontWeight: FontWeight.bold),
                 ),
                 Text(
-                  'מאגר תורני חינמי, רחב ומהיר לשימוש בכל מקום.',
+                  'מאגר תורני חינמי, רחב ומהיר לשימוש בכל מקום.'.tr(),
                   style: kSettingsSubtitleStyle,
                 ),
               ],
@@ -431,7 +435,8 @@ class AboutDevTab extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text('מהדירים שההדירו $label', style: kSettingsSubtitleStyle),
+        Text('מהדירים שההדירו {label}'.tr(args: {'label': label}),
+            style: kSettingsSubtitleStyle),
         const SizedBox(height: 8),
         _ContributorWrap(
           contributors: editors,
@@ -459,8 +464,8 @@ class AboutDevTab extends StatelessWidget {
           const SizedBox(width: 8),
           Expanded(
             child: Text(
-              'באם שמכם אינו מופיע ברשימה או שאתם מעוניינים בשינוי, '
-              'אנא פנו למייל המערכת.',
+              'באם שמכם אינו מופיע ברשימה או שאתם מעוניינים בשינוי, אנא פנו למייל המערכת.'
+                  .tr(),
               style: kSettingsSubtitleStyle,
             ),
           ),
@@ -478,8 +483,8 @@ class AboutDevTab extends StatelessWidget {
     showDialog(
       context: context,
       barrierDismissible: true,
-      builder: (context) => const AdPopupDialog(
-        title: 'אוצריא מתגייסת לעזרת לומדי התורה',
+      builder: (context) => AdPopupDialog(
+        title: 'אוצריא מתגייסת לעזרת לומדי התורה'.tr(),
       ),
     );
   }
@@ -551,7 +556,7 @@ class _ContributorChip extends StatelessWidget {
 
     Widget content = Row(
       mainAxisSize: MainAxisSize.min,
-      textDirection: TextDirection.rtl,
+      textDirection: AppTranslations.textDirection,
       children: [
         mirrorIcon
             ? Transform.scale(scaleX: -1, child: iconWidget)
@@ -692,9 +697,9 @@ class _DonationMemorialCard extends StatelessWidget {
                 color: colorScheme.primary.withValues(alpha: 0.6), size: 24),
             const SizedBox(height: 6),
             Text(
-              'מקום זה יכול להיות מונצח לע"נ יקירך',
+              'מקום זה יכול להיות מונצח לע"נ יקירך'.tr(),
               textAlign: TextAlign.center,
-              textDirection: TextDirection.rtl,
+              textDirection: AppTranslations.textDirection,
               style: TextStyle(
                   fontSize: 13,
                   fontWeight: FontWeight.bold,
@@ -703,7 +708,7 @@ class _DonationMemorialCard extends StatelessWidget {
             const SizedBox(height: 8),
             RecommendedActionButton(
               icon: FluentIcons.payment_24_regular,
-              text: 'נדרים+',
+              text: 'נדרים+'.tr(),
               onPressed: onTap,
             ),
           ],
@@ -790,9 +795,10 @@ class _BookSourcesSection extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         Text(
-          'מקור חלק גדול מהספרים בספריית אוצריא נלקח מהפרויקט המדהים של ספריא ושל עמותת דיקטה, שבאמצעותו נוספו חלק ניכר מהספרים.',
+          'מקור חלק גדול מהספרים בספריית אוצריא נלקח מהפרויקט המדהים של ספריא ושל עמותת דיקטה, שבאמצעותו נוספו חלק ניכר מהספרים.'
+              .tr(),
           style: kSettingsSubtitleStyle,
-          textDirection: TextDirection.rtl,
+          textDirection: AppTranslations.textDirection,
         ),
         const SizedBox(height: 10),
         Wrap(
@@ -808,9 +814,9 @@ class _BookSourcesSection extends StatelessWidget {
         ),
         const SizedBox(height: 16),
         Text(
-          'כמו כן נוספו ספרים חשובים רבים מהפרויקטים הבאים:',
+          'כמו כן נוספו ספרים חשובים רבים מהפרויקטים הבאים:'.tr(),
           style: kSettingsSubtitleStyle,
-          textDirection: TextDirection.rtl,
+          textDirection: AppTranslations.textDirection,
         ),
         const SizedBox(height: 10),
         Wrap(
@@ -842,9 +848,10 @@ class _BookSourcesSection extends StatelessWidget {
                 const SizedBox(width: 8),
                 Expanded(
                   child: Text(
-                    'הספרים הותאמו במיוחד עבור אוצריא, וכן נוספו ספרים רבים נוספים בזכות עבודתם המסורה של מהדירי הספרים.',
+                    'הספרים הותאמו במיוחד עבור אוצריא, וכן נוספו ספרים רבים נוספים בזכות עבודתם המסורה של מהדירי הספרים.'
+                        .tr(),
                     style: kSettingsSubtitleStyle,
-                    textDirection: TextDirection.rtl,
+                    textDirection: AppTranslations.textDirection,
                   ),
                 ),
               ],
@@ -875,7 +882,7 @@ class _SourceChip extends StatelessWidget {
       borderRadius: BorderRadius.circular(4),
       child: Row(
         mainAxisSize: MainAxisSize.min,
-        textDirection: TextDirection.rtl,
+        textDirection: AppTranslations.textDirection,
         children: [
           Icon(FluentIcons.library_24_regular,
               size: 14, color: colorScheme.onSurfaceVariant),

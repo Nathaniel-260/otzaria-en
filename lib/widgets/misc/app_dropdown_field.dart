@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:otzaria/l10n/tr_extension.dart';
 import 'package:otzaria/theme/theme_exports.dart';
 import 'package:otzaria/widgets/inputs/app_input_tokens.dart';
 
@@ -324,7 +325,7 @@ class _AppDropdownFieldState<T> extends State<AppDropdownField<T>> {
             initialValue: widget.value,
             searchHint: widget.decoration?.hintText ??
                 widget.decoration?.labelText ??
-                'חיפוש',
+                'חיפוש'.tr(),
           )
         : showAnchoredAppMenu<T>(
             context: context,

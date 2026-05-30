@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:otzaria/l10n/app_translations.dart';
+import 'package:otzaria/l10n/tr_extension.dart';
 import 'package:otzaria/widgets/widgets_exports.dart';
 import 'package:otzaria/widgets/text/rtl_text_field.dart';
 
@@ -29,7 +31,7 @@ Future<String?> showErrorReportSenderEmailDialog({
   final confirmed = await showSingleActionDialog(
     context: context,
     title: title,
-    confirmText: 'שמור',
+    confirmText: 'שמור'.tr(),
     customContent: EmailFieldWithAutocomplete(
       controller: controller,
       subtitle: subtitle,
@@ -236,8 +238,8 @@ class _EmailFieldWithAutocompleteState
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         Text(
-          widget.subtitle,
-          textDirection: TextDirection.rtl,
+          widget.subtitle.tr(),
+          textDirection: AppTranslations.textDirection,
         ),
         const SizedBox(height: 12),
         CompositedTransformTarget(
@@ -251,8 +253,8 @@ class _EmailFieldWithAutocompleteState
                 focusNode: _focusNode,
                 keyboardType: TextInputType.emailAddress,
                 textAlign: TextAlign.left,
-                decoration: const InputDecoration(
-                  labelText: 'כתובת דוא"ל',
+                decoration: InputDecoration(
+                  labelText: 'כתובת דוא"ל'.tr(),
                   hintText: 'name@example.com',
                 ),
                 autofocus: true,

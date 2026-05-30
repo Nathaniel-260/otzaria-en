@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
+import 'package:otzaria/l10n/app_translations.dart';
+import 'package:otzaria/l10n/tr_extension.dart';
 
 class CommentatorsFilterHeader extends StatelessWidget {
   final VoidCallback onBack;
@@ -8,7 +10,7 @@ class CommentatorsFilterHeader extends StatelessWidget {
   const CommentatorsFilterHeader({
     super.key,
     required this.onBack,
-    this.title = 'בחירת מפרשים',
+    this.title = 'בחירת מפרשים', // i18n-ignore: ברירת מחדל const; מתורגם בהצגה
   });
 
   @override
@@ -23,11 +25,11 @@ class CommentatorsFilterHeader extends StatelessWidget {
             Padding(
               padding: const EdgeInsetsDirectional.only(start: 48, end: 48),
               child: Text(
-                title,
+                title.tr(),
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
                 textAlign: TextAlign.center,
-                textDirection: TextDirection.rtl,
+                textDirection: AppTranslations.textDirection,
                 style: Theme.of(context).textTheme.titleMedium?.copyWith(
                       fontWeight: FontWeight.bold,
                       color: Theme.of(context).colorScheme.onSurface,
@@ -38,7 +40,7 @@ class CommentatorsFilterHeader extends StatelessWidget {
               alignment: AlignmentDirectional.centerStart,
               child: IconButton(
                 icon: const Icon(FluentIcons.arrow_left_24_regular),
-                tooltip: 'חזרה למפרשים',
+                tooltip: 'חזרה למפרשים'.tr(),
                 onPressed: onBack,
               ),
             ),

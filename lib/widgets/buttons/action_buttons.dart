@@ -9,6 +9,7 @@
 
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
+import 'package:otzaria/l10n/tr_extension.dart';
 
 // ── RecommendedActionButton ───────────────────────────────────────────────────
 
@@ -215,7 +216,7 @@ class SecondaryIconButton extends StatelessWidget {
   Widget build(BuildContext context) {
     final cs = Theme.of(context).colorScheme;
     return Tooltip(
-      message: tooltip,
+      message: tooltip.tr(),
       child: IconButton(
         icon: Icon(icon, size: 20),
         onPressed: onPressed,
@@ -247,7 +248,7 @@ class PrimaryIconButton extends StatelessWidget {
   Widget build(BuildContext context) {
     final cs = Theme.of(context).colorScheme;
     return Tooltip(
-      message: tooltip,
+      message: tooltip.tr(),
       child: IconButton(
         icon: Icon(icon, size: 20),
         onPressed: onPressed,

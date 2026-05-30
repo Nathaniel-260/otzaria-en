@@ -3,6 +3,8 @@ import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:otzaria/core/ui_snack.dart';
+import 'package:otzaria/l10n/app_translations.dart';
+import 'package:otzaria/l10n/tr_extension.dart';
 import 'package:otzaria/plugins/bloc/plugin_system_bloc.dart';
 import 'package:otzaria/plugins/bloc/plugin_system_event.dart';
 import 'package:otzaria/plugins/bloc/plugin_system_state.dart';
@@ -119,9 +121,10 @@ class _ToolsManagementPanelState extends State<ToolsManagementPanel> {
                       onClear: _clearSelection,
                     ),
                   SettingsCard(
-                    title: 'כלים מובנים',
+                    title: 'כלים מובנים'.tr(),
                     subtitle:
-                        'בחר כלים כדי להסתיר מהממשק או להצמיד לסרגל הניווט הראשי.',
+                        'בחר כלים כדי להסתיר מהממשק או להצמיד לסרגל הניווט הראשי.'
+                            .tr(),
                     children: [
                       for (final meta in kBuiltInToolsCatalog)
                         _BuiltInToolRow(
@@ -139,9 +142,10 @@ class _ToolsManagementPanelState extends State<ToolsManagementPanel> {
                   const SizedBox(height: 16),
                   if (plugins.isNotEmpty)
                     SettingsCard(
-                      title: 'תוספים מותקנים',
+                      title: 'תוספים מותקנים'.tr(),
                       subtitle:
-                          'נהל את התוספים שלך: השבתה, הסתרה, הצמדה, הרשאות ומחיקה. גרור לשינוי סדר.',
+                          'נהל את התוספים שלך: השבתה, הסתרה, הצמדה, הרשאות ומחיקה. גרור לשינוי סדר.'
+                              .tr(),
                       children: [
                         for (final plugin in plugins)
                           _DraggableSettingsPluginRow(
@@ -284,21 +288,21 @@ class _ActionBar extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 4),
               child: Text(
-                '$count נבחרו',
-                textDirection: TextDirection.rtl,
+                '{count} נבחרו'.tr(args: {'count': '$count'}),
+                textDirection: AppTranslations.textDirection,
                 style: Theme.of(context).textTheme.titleSmall,
               ),
             ),
             TextButton.icon(
               onPressed: onClear,
               icon: const Icon(FluentIcons.dismiss_circle_24_regular),
-              label: const Text('נקה בחירה'),
+              label: Text('נקה בחירה'.tr()),
             ),
             _ActionChip(
               icon: _allSelectedAreHidden
                   ? FluentIcons.eye_24_regular
                   : FluentIcons.eye_off_24_regular,
-              label: _allSelectedAreHidden ? 'הצג' : 'הסתר',
+              label: _allSelectedAreHidden ? 'הצג'.tr() : 'הסתר'.tr(),
               onPressed: () => _onToggleHide(context),
             ),
             _ActionChip(
@@ -306,8 +310,8 @@ class _ActionBar extends StatelessWidget {
                   ? FluentIcons.pin_off_24_regular
                   : FluentIcons.pin_24_regular,
               label: _allSelectedArePinnedToNav
-                  ? 'הסר מסרגל הניווט'
-                  : 'הצמד לסרגל הניווט',
+                  ? 'הסר מסרגל הניווט'.tr()
+                  : 'הצמד לסרגל הניווט'.tr(),
               onPressed: () => _onTogglePinNavRail(context),
             ),
             if (_allPlugins) ...[
@@ -315,30 +319,30 @@ class _ActionBar extends StatelessWidget {
                 icon: _allSelectedPluginsEnabled
                     ? FluentIcons.pause_circle_24_regular
                     : FluentIcons.play_circle_24_regular,
-                label: _allSelectedPluginsEnabled ? 'השבת' : 'הפעל',
+                label: _allSelectedPluginsEnabled ? 'השבת'.tr() : 'הפעל'.tr(),
                 onPressed: () => _onToggleEnabled(context),
               ),
               _PermissionMenu(
                 icon: FluentIcons.globe_24_regular,
-                label: 'גישה לרשת',
+                label: 'גישה לרשת'.tr(),
                 onGrant: () => _setNetworkAccess(context, granted: true),
                 onRevoke: () => _setNetworkAccess(context, granted: false),
               ),
               _PermissionMenu(
                 icon: FluentIcons.power_24_regular,
-                label: 'טעינה אוטומטית בעלייה',
+                label: 'טעינה אוטומטית בעלייה'.tr(),
                 onGrant: () => _setRunOnStartup(context, granted: true),
                 onRevoke: () => _setRunOnStartup(context, granted: false),
               ),
               _ActionChip(
                 icon: FluentIcons.delete_24_regular,
-                label: 'מחק',
+                label: 'מחק'.tr(),
                 danger: true,
                 onPressed: () => _onDelete(context),
               ),
             ],
             if (_allBuiltIn && _selectedBuiltIns.isNotEmpty)
-              _disabledHint('פעולות נוספות זמינות רק לתוספים'),
+              _disabledHint('פעולות נוספות זמינות רק לתוספים'.tr()),
           ],
         ),
       ),
@@ -351,7 +355,7 @@ class _ActionBar extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 8),
         child: Text(
           text,
-          textDirection: TextDirection.rtl,
+          textDirection: AppTranslations.textDirection,
           style: Theme.of(ctx).textTheme.bodySmall?.copyWith(
                 color: Theme.of(ctx).colorScheme.onSurfaceVariant,
               ),
@@ -385,7 +389,7 @@ class _ActionBar extends StatelessWidget {
         hidden: shouldHide,
       ));
     }
-    UiSnack.show(shouldHide ? 'הפריטים הוסתרו' : 'הפריטים יוצגו');
+    UiSnack.show(shouldHide ? 'הפריטים הוסתרו'.tr() : 'הפריטים יוצגו'.tr());
   }
 
   void _onTogglePinNavRail(BuildContext context) {
@@ -434,7 +438,8 @@ class _ActionBar extends StatelessWidget {
         .where((p) => p.manifest.permissions.contains(_networkAccessPermission))
         .toList();
     if (eligible.isEmpty) {
-      UiSnack.showError('אף תוסף נבחר לא מצהיר על שימוש ברשת — אין מה לעדכן');
+      UiSnack.showError(
+          'אף תוסף נבחר לא מצהיר על שימוש ברשת — אין מה לעדכן'.tr());
       return;
     }
     final bloc = context.read<PluginSystemBloc>();
@@ -446,8 +451,8 @@ class _ActionBar extends StatelessWidget {
       ));
     }
     UiSnack.show(granted
-        ? 'גישה לרשת הוענקה לתוספים הנבחרים'
-        : 'גישה לרשת בוטלה לתוספים הנבחרים');
+        ? 'גישה לרשת הוענקה לתוספים הנבחרים'.tr()
+        : 'גישה לרשת בוטלה לתוספים הנבחרים'.tr());
   }
 
   void _setRunOnStartup(BuildContext context, {required bool granted}) {
@@ -456,7 +461,7 @@ class _ActionBar extends StatelessWidget {
             p.manifest.permissions.contains(pluginRunOnStartupPermission))
         .toList();
     if (eligible.isEmpty) {
-      UiSnack.showError('אף תוסף נבחר לא תומך בטעינה אוטומטית בעלייה');
+      UiSnack.showError('אף תוסף נבחר לא תומך בטעינה אוטומטית בעלייה'.tr());
       return;
     }
     final bloc = context.read<PluginSystemBloc>();
@@ -468,8 +473,8 @@ class _ActionBar extends StatelessWidget {
       ));
     }
     UiSnack.show(granted
-        ? 'טעינה אוטומטית בעלייה הופעלה לתוספים הנבחרים'
-        : 'טעינה אוטומטית בעלייה בוטלה לתוספים הנבחרים');
+        ? 'טעינה אוטומטית בעלייה הופעלה לתוספים הנבחרים'.tr()
+        : 'טעינה אוטומטית בעלייה בוטלה לתוספים הנבחרים'.tr());
   }
 
   Future<void> _onDelete(BuildContext context) async {
@@ -480,10 +485,12 @@ class _ActionBar extends StatelessWidget {
     final bloc = context.read<PluginSystemBloc>();
     final confirmed = await showWarningDialog(
       context: context,
-      title: 'מחיקת תוספים',
-      content: 'האם למחוק ${plugins.length} תוסף(ים)?\n\n• $names',
-      subtitle: 'פעולה זו אינה הפיכה. נתוני התוסף יימחקו.',
-      confirmText: 'מחק',
+      title: 'מחיקת תוספים'.tr(),
+      content: 'האם למחוק {count} תוסף(ים)?\n\n• {names}'.tr(
+        args: {'count': '${plugins.length}', 'names': names},
+      ),
+      subtitle: 'פעולה זו אינה הפיכה. נתוני התוסף יימחקו.'.tr(),
+      confirmText: 'מחק'.tr(),
     );
     if (confirmed != true) return;
     for (final p in plugins) {
@@ -493,7 +500,7 @@ class _ActionBar extends StatelessWidget {
         bloc.add(UninstallPluginRequested(p.pluginId));
       }
     }
-    UiSnack.show('התוספים סומנו למחיקה');
+    UiSnack.show('התוספים סומנו למחיקה'.tr());
   }
 }
 
@@ -546,20 +553,20 @@ class _PermissionMenu extends StatelessWidget {
     return PopupMenuButton<bool>(
       tooltip: label,
       onSelected: (grant) => grant ? onGrant() : onRevoke(),
-      itemBuilder: (_) => const [
+      itemBuilder: (_) => [
         PopupMenuItem<bool>(
           value: true,
           child: ListTile(
-            leading: Icon(FluentIcons.checkmark_24_regular),
-            title: Text('הענק'),
+            leading: const Icon(FluentIcons.checkmark_24_regular),
+            title: Text('הענק'.tr()),
             dense: true,
           ),
         ),
         PopupMenuItem<bool>(
           value: false,
           child: ListTile(
-            leading: Icon(FluentIcons.dismiss_24_regular),
-            title: Text('בטל'),
+            leading: const Icon(FluentIcons.dismiss_24_regular),
+            title: Text('בטל'.tr()),
             dense: true,
           ),
         ),
@@ -605,7 +612,7 @@ class _BuiltInToolRow extends StatelessWidget {
     return ListTile(
       hoverColor: Colors.transparent,
       leading: Checkbox(value: selected, onChanged: onSelectChanged),
-      title: Text(meta.label, textDirection: TextDirection.rtl),
+      title: Text(meta.label, textDirection: AppTranslations.textDirection),
       subtitle: _StatusBadges(
         hidden: hidden,
         pinnedToNavRail: pinnedToNavRail,
@@ -664,7 +671,7 @@ class _DraggableSettingsPluginRow extends StatelessWidget {
                 child: MouseRegion(
                   cursor: SystemMouseCursors.grab,
                   child: Tooltip(
-                    message: 'גרור ושחרר לשינוי סדר',
+                    message: 'גרור ושחרר לשינוי סדר'.tr(),
                     child: Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 4.0),
                       child: Icon(
@@ -705,7 +712,7 @@ class _PluginRow extends StatelessWidget {
       leading: Checkbox(value: selected, onChanged: onSelectChanged),
       title: Text(
         '${plugin.name}  •  v${plugin.version}',
-        textDirection: TextDirection.rtl,
+        textDirection: AppTranslations.textDirection,
       ),
       subtitle: _StatusBadges(
         hidden: plugin.hiddenFromTools,
@@ -783,19 +790,19 @@ class _StatusBadges extends StatelessWidget {
     final cs = Theme.of(context).colorScheme;
     final chips = <Widget>[];
     if (disabled) {
-      chips.add(_badge(context, 'מושבת', cs.errorContainer, cs.onErrorContainer,
-          FluentIcons.pause_circle_24_regular));
+      chips.add(_badge(context, 'מושבת'.tr(), cs.errorContainer,
+          cs.onErrorContainer, FluentIcons.pause_circle_24_regular));
     }
     if (hidden) {
-      chips.add(_badge(context, 'מוסתר', cs.surfaceContainerHighest,
+      chips.add(_badge(context, 'מוסתר'.tr(), cs.surfaceContainerHighest,
           cs.onSurfaceVariant, FluentIcons.eye_off_24_regular));
     }
     if (pinnedToNavRail) {
-      chips.add(_badge(context, 'בסרגל ניווט', cs.primaryContainer,
+      chips.add(_badge(context, 'בסרגל ניווט'.tr(), cs.primaryContainer,
           cs.onPrimaryContainer, FluentIcons.pin_24_regular));
     }
     if (networkDeclared) {
-      chips.add(_badge(context, 'משתמש ברשת', cs.tertiaryContainer,
+      chips.add(_badge(context, 'משתמש ברשת'.tr(), cs.tertiaryContainer,
           cs.onTertiaryContainer, FluentIcons.globe_24_regular));
     }
     if (chips.isEmpty) return const SizedBox.shrink();
@@ -819,7 +826,7 @@ class _StatusBadges extends StatelessWidget {
           Icon(icon, size: 14, color: fg),
           const SizedBox(width: 4),
           Text(text,
-              textDirection: TextDirection.rtl,
+              textDirection: AppTranslations.textDirection,
               style: TextStyle(color: fg, fontSize: 12)),
         ],
       ),

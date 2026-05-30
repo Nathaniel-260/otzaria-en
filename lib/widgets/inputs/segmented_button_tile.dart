@@ -1,4 +1,3 @@
-import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:otzaria/theme/theme_exports.dart';
@@ -276,11 +275,7 @@ class _SegmentedSettingsTileState<T> extends State<SegmentedSettingsTile<T>> {
       child: SizedBox(
         width: totalW,
         child: SegmentedButton<T>(
-          showSelectedIcon: true,
-          selectedIcon: const Icon(
-            FluentIcons.checkmark_24_regular,
-            size: 16,
-          ),
+          showSelectedIcon: false,
           style: ButtonStyle(
             minimumSize: WidgetStateProperty.all(const Size(0, 40)),
             maximumSize:

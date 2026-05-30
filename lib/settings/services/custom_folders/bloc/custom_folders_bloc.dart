@@ -4,6 +4,7 @@ import 'package:flutter_settings_screens/flutter_settings_screens.dart';
 import 'package:otzaria/data/data_providers/database_library_provider.dart';
 import 'package:otzaria/data/data_providers/sqlite_data_provider.dart';
 import 'package:otzaria/data/data_providers/user_books_database_holder.dart';
+import 'package:otzaria/l10n/tr_extension.dart';
 import 'package:otzaria/library/bloc/library_bloc.dart';
 import 'package:otzaria/library/bloc/library_event.dart';
 import 'package:otzaria/migration/models/category.dart';
@@ -78,21 +79,28 @@ class CustomFoldersBloc extends Bloc<CustomFoldersEvent, CustomFoldersState> {
         if (result.hasPartialFailure) {
           final failedMsg = result.failedDetails.isNotEmpty
               ? result.failedDetails.map((d) => '"${d.$1}": ${d.$2}').join('\n')
-              : 'כשל: ${result.failedBooks}';
+              : 'כשל: {count}'.tr(args: {'count': '${result.failedBooks}'});
           emit(state.copyWith(
             isSyncing: false,
-            error:
-                '${result.addedBooks} ספרים נוספו, ${result.updatedBooks} עודכנו\n$failedMsg',
+            error: '{added} ספרים נוספו, {updated} עודכנו\n{failed}'.tr(args: {
+              'added': '${result.addedBooks}',
+              'updated': '${result.updatedBooks}',
+              'failed': failedMsg,
+            }),
           ));
         } else {
           emit(state.copyWith(isSyncing: false));
         }
       } else {
         emit(state.copyWith(
-            isSyncing: false, error: 'שגיאת סריקה: ${result.fatalError}'));
+            isSyncing: false,
+            error: 'שגיאת סריקה: {error}'
+                .tr(args: {'error': '${result.fatalError}'})));
       }
     } catch (e) {
-      emit(state.copyWith(isSyncing: false, error: 'שגיאה בסריקת התיקייה: $e'));
+      emit(state.copyWith(
+          isSyncing: false,
+          error: 'שגיאה בסריקת התיקייה: {error}'.tr(args: {'error': '$e'})));
     }
   }
 
@@ -110,18 +118,19 @@ class CustomFoldersBloc extends Bloc<CustomFoldersEvent, CustomFoldersState> {
         await _deleteFolderFromDb(event.folder);
         emit(state.copyWith(
           isSyncing: false,
-          message: 'התיקייה והספרים נמחקו ממסד הנתונים.',
+          message: 'התיקייה והספרים נמחקו ממסד הנתונים.'.tr(),
         ));
       } catch (e) {
         emit(state.copyWith(
           isSyncing: false,
-          error: 'שגיאה במחיקת התיקייה ממסד הנתונים: $e',
+          error: 'שגיאה במחיקת התיקייה ממסד הנתונים: {error}'
+              .tr(args: {'error': '$e'}),
         ));
         return;
       }
     } else {
       emit(state.copyWith(
-        message: 'התיקייה הוסרה. הספרים נשארו במסד הנתונים.',
+        message: 'התיקייה הוסרה. הספרים נשארו במסד הנתונים.'.tr(),
       ));
     }
     _libraryBloc.add(RefreshLibrary());
@@ -149,20 +158,27 @@ class CustomFoldersBloc extends Bloc<CustomFoldersEvent, CustomFoldersState> {
         emit(state.copyWith(
           isSyncing: false,
           message:
-              'תוכן הספרים נסרק ועודכן.\nמעתה הספרים ייקראו ישירות מהקבצים.',
+              'תוכן הספרים נסרק ועודכן.\nמעתה הספרים ייקראו ישירות מהקבצים.'
+                  .tr(),
         ));
       } else {
         final hasChanges = result.addedBooks > 0 || result.updatedBooks > 0;
         emit(state.copyWith(
           isSyncing: false,
           message: hasChanges
-              ? 'הסריקה הושלמה: ${result.addedBooks} ספרים נוספו, ${result.updatedBooks} עודכנו'
+              ? 'הסריקה הושלמה: {added} ספרים נוספו, {updated} עודכנו'
+                  .tr(args: {
+                  'added': '${result.addedBooks}',
+                  'updated': '${result.updatedBooks}',
+                })
               : null,
         ));
       }
       _libraryBloc.add(RefreshLibrary());
     } catch (e) {
-      emit(state.copyWith(isSyncing: false, error: 'שגיאה בסנכרון: $e'));
+      emit(state.copyWith(
+          isSyncing: false,
+          error: 'שגיאה בסנכרון: {error}'.tr(args: {'error': '$e'})));
     }
   }
 
@@ -179,15 +195,20 @@ class CustomFoldersBloc extends Bloc<CustomFoldersEvent, CustomFoldersState> {
       final result = await _syncCustomFolders(currentFolders);
       final hasChanges = result.addedBooks > 0 || result.updatedBooks > 0;
       final message = hasChanges
-          ? 'הסריקה הושלמה: ${result.addedBooks} ספרים נוספו, ${result.updatedBooks} עודכנו'
+          ? 'הסריקה הושלמה: {added} ספרים נוספו, {updated} עודכנו'.tr(args: {
+              'added': '${result.addedBooks}',
+              'updated': '${result.updatedBooks}',
+            })
           : event.showNoChangesMessage
-              ? 'הסריקה הושלמה. לא נמצאו ספרים חדשים.'
+              ? 'הסריקה הושלמה. לא נמצאו ספרים חדשים.'.tr()
               : null;
       emit(state.copyWith(isSyncing: false, message: message));
       _libraryBloc.add(RefreshLibrary());
     } catch (e) {
       emit(state.copyWith(
-          isSyncing: false, error: 'שגיאה בסריקת תיקיות אישיות: $e'));
+          isSyncing: false,
+          error:
+              'שגיאה בסריקת תיקיות אישיות: {error}'.tr(args: {'error': '$e'})));
     }
   }
 
@@ -223,12 +244,14 @@ class CustomFoldersBloc extends Bloc<CustomFoldersEvent, CustomFoldersState> {
   Future<FileSyncResult> _runSync(List<CustomFolder> folders) async {
     final sqliteProvider = SqliteDataProvider.instance;
     if (!sqliteProvider.isInitialized) await sqliteProvider.initialize();
-    if (!sqliteProvider.isInitialized) throw Exception('מסד הנתונים לא זמין');
+    if (!sqliteProvider.isInitialized) {
+      throw Exception('מסד הנתונים לא זמין'.tr());
+    }
 
     final dbPath = sqliteProvider.dbPath;
     final libraryPath = Settings.getValue<String>('key-library-path');
     if (libraryPath == null || libraryPath.isEmpty) {
-      throw Exception('נתיב הספרייה לא מוגדר');
+      throw Exception('נתיב הספרייה לא מוגדר'.tr());
     }
 
     final folderName =
@@ -256,6 +279,7 @@ class CustomFoldersBloc extends Bloc<CustomFoldersEvent, CustomFoldersState> {
     Category? personalCategory;
     for (final cat in rootCategories) {
       if (cat.title == 'ספרים אישיים') {
+        // i18n-ignore: מפתח קטגוריה פנימי ב-DB
         personalCategory = cat;
         break;
       }

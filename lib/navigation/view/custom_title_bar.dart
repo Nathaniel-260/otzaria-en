@@ -32,6 +32,7 @@ import 'package:otzaria/library/bloc/library_state.dart';
 import 'package:otzaria/workspaces/bloc/workspace_bloc.dart';
 import 'package:otzaria/workspaces/bloc/workspace_event.dart';
 import 'package:otzaria/core/ui_snack.dart';
+import 'package:otzaria/l10n/tr_extension.dart';
 import 'package:otzaria/settings/settings_exports.dart';
 import 'package:otzaria/tour/tour_target_keys.dart';
 
@@ -197,7 +198,7 @@ class _CustomTitleBarState extends State<CustomTitleBar>
                                 if (settingsState.isFullscreen)
                                   _CaptionActionButton(
                                     brightness: Theme.of(context).brightness,
-                                    tooltip: 'מזער',
+                                    tooltip: 'מזער'.tr(),
                                     icon: FluentIcons.subtract_24_regular,
                                     onPressed: () async {
                                       await FullscreenHelper.toggleFullscreen(
@@ -208,7 +209,7 @@ class _CustomTitleBarState extends State<CustomTitleBar>
                                 if (settingsState.isFullscreen)
                                   _CaptionActionButton(
                                     brightness: Theme.of(context).brightness,
-                                    tooltip: 'סגור',
+                                    tooltip: 'סגור'.tr(),
                                     icon: FluentIcons.dismiss_24_regular,
                                     onPressed: () => windowManager.close(),
                                   ),
@@ -269,21 +270,23 @@ class _CustomTitleBarState extends State<CustomTitleBar>
                 IconButton(
                   key: tourTitleBarHistoryButtonTargetKey,
                   icon: const Icon(FluentIcons.history_24_regular, size: 18),
-                  tooltip: 'הצג היסטוריה (${historyShortcut.toUpperCase()})',
+                  tooltip: 'הצג היסטוריה ({shortcut})'
+                      .tr(args: {'shortcut': historyShortcut.toUpperCase()}),
                   onPressed: () => _showHistoryDialog(context),
                   style: _kIconButtonStyle,
                 ),
                 IconButton(
                   key: tourTitleBarBookmarkButtonTargetKey,
                   icon: const Icon(FluentIcons.bookmark_24_regular, size: 18),
-                  tooltip: 'הצג סימניות (${bookmarksShortcut.toUpperCase()})',
+                  tooltip: 'הצג סימניות ({shortcut})'
+                      .tr(args: {'shortcut': bookmarksShortcut.toUpperCase()}),
                   onPressed: () => _showBookmarksDialog(context),
                   style: _kIconButtonStyle,
                 ),
                 IconButton(
                   icon: const Icon(FluentIcons.add_square_24_regular, size: 18),
-                  tooltip:
-                      'החלף שולחן עבודה (${workspaceShortcut.toUpperCase()})',
+                  tooltip: 'החלף שולחן עבודה ({shortcut})'
+                      .tr(args: {'shortcut': workspaceShortcut.toUpperCase()}),
                   onPressed: () => _showSaveWorkspaceDialog(context),
                   style: _kIconButtonStyle,
                 ),
@@ -326,7 +329,7 @@ class _CustomTitleBarState extends State<CustomTitleBar>
             category == null || identical(category, libraryState.library);
         return _buildPanelTitle(
           context,
-          'ספריה',
+          'ספריה'.tr(),
           subtitle: isRoot ? null : category.title,
         );
       },
@@ -335,11 +338,11 @@ class _CustomTitleBarState extends State<CustomTitleBar>
 
   Widget _buildStandardTitle(BuildContext context, NavigationState navState) {
     final title = switch (navState.currentScreen) {
-      Screen.settings => 'הגדרות',
-      Screen.more => 'כלים',
-      Screen.find => 'איתור',
-      Screen.search => 'חיפוש',
-      _ => 'אוצריא',
+      Screen.settings => 'הגדרות'.tr(),
+      Screen.more => 'כלים'.tr(),
+      Screen.find => 'איתור'.tr(),
+      Screen.search => 'חיפוש'.tr(),
+      _ => 'אוצריא'.tr(),
     };
     return _buildPanelTitle(context, title);
   }
@@ -375,7 +378,7 @@ class _CustomTitleBarState extends State<CustomTitleBar>
           return DragToMoveArea(
             child: Center(
               child: Text(
-                'עיון',
+                'עיון'.tr(),
                 style: Theme.of(context).textTheme.titleMedium,
               ),
             ),
@@ -449,7 +452,7 @@ class _CustomTitleBarState extends State<CustomTitleBar>
                 : FluentIcons.settings_24_regular,
             size: 18,
           ),
-          tooltip: 'הגדרות תצוגת הספרים',
+          tooltip: 'הגדרות תצוגת הספרים'.tr(),
           onPressed: widget.onReadingSettingsPressed ??
               () => showReadingSettingsDialog(context),
           style: _kIconButtonStyle,
@@ -500,7 +503,7 @@ class _CustomTitleBarState extends State<CustomTitleBar>
       BuildContext context, SettingsState settingsState) {
     return _CaptionActionButton(
       brightness: Theme.of(context).brightness,
-      tooltip: settingsState.isFullscreen ? 'צא ממסך מלא' : 'מסך מלא',
+      tooltip: settingsState.isFullscreen ? 'צא ממסך מלא'.tr() : 'מסך מלא'.tr(),
       icon: settingsState.isFullscreen
           ? FluentIcons.full_screen_minimize_24_regular
           : FluentIcons.full_screen_maximize_24_regular,
@@ -519,7 +522,7 @@ class _CustomTitleBarState extends State<CustomTitleBar>
       child: Padding(
         padding: const EdgeInsets.only(right: 4.0),
         child: Tooltip(
-          message: 'בטל הצמדה',
+          message: 'בטל הצמדה'.tr(),
           child: const Icon(FluentIcons.pin_24_filled, size: 14),
         ),
       ),
@@ -741,8 +744,9 @@ class _CustomTitleBarState extends State<CustomTitleBar>
         key: isSelected ? tourTabContextMenuTargetKey : null,
         menuBuilder: (menuCtx, _) =>
             _buildTabContextMenuEntries(menuCtx, tab, state),
-        menuItemKeysByLabel:
-            isSelected ? {'הצג לצד': tourTabSideBySideMenuItemTargetKey} : null,
+        menuItemKeysByLabel: isSelected
+            ? {'הצג לצד'.tr(): tourTabSideBySideMenuItemTargetKey}
+            : null,
         child: Draggable<OpenedTab>(
           axis: Axis.horizontal,
           data: tab,
@@ -814,13 +818,13 @@ class _CustomTitleBarState extends State<CustomTitleBar>
 
     if (otherWorkspaces.isEmpty) {
       return AppContextMenuEntry(
-        label: 'העבר לשולחן עבודה',
+        label: 'העבר לשולחן עבודה'.tr(),
         enabled: false,
       );
     }
 
     return AppContextMenuEntry(
-      label: 'העבר לשולחן עבודה',
+      label: 'העבר לשולחן עבודה'.tr(),
       children: otherWorkspaces.map((workspace) {
         return AppContextMenuEntry(
           label: workspace.name,
@@ -857,7 +861,8 @@ class _CustomTitleBarState extends State<CustomTitleBar>
       currentTabIndex: newActiveIndex,
     ));
 
-    UiSnack.show('הכרטיסיה הועברה לשולחן העבודה "${targetWorkspace.name}"');
+    UiSnack.show('הכרטיסיה הועברה לשולחן העבודה "{name}"'
+        .tr(args: {'name': targetWorkspace.name}));
   }
 
   List<AppContextMenuEntry> _buildTabContextMenuEntries(
@@ -867,23 +872,23 @@ class _CustomTitleBarState extends State<CustomTitleBar>
   ) {
     final entries = <AppContextMenuEntry>[
       AppContextMenuEntry(
-        label: tab.isPinned ? 'בטל הצמדת כרטיסיה' : 'הצמד כרטיסיה',
+        label: tab.isPinned ? 'בטל הצמדת כרטיסיה'.tr() : 'הצמד כרטיסיה'.tr(),
         onTap: () => context.read<TabsBloc>().add(TogglePinTab(tab)),
       ),
       AppContextMenuEntry(
-        label: 'סגור',
+        label: 'סגור'.tr(),
         onTap: () => closeTab(tab, context),
       ),
       AppContextMenuEntry(
-        label: 'סגור הכל',
+        label: 'סגור הכל'.tr(),
         onTap: () => closeAllTabs(state, context),
       ),
       AppContextMenuEntry(
-        label: 'סגור את האחרים',
+        label: 'סגור את האחרים'.tr(),
         onTap: () => closeAllTabsButCurrent(state, context),
       ),
       AppContextMenuEntry(
-        label: 'שיכפול',
+        label: 'שיכפול'.tr(),
         onTap: () => context.read<TabsBloc>().add(CloneTab(tab)),
       ),
       const AppContextMenuEntry.divider(),
@@ -910,12 +915,12 @@ class _CustomTitleBarState extends State<CustomTitleBar>
           );
         }).toList();
         entries.add(AppContextMenuEntry(
-          label: 'הצג לצד',
+          label: 'הצג לצד'.tr(),
           children: otherTabs,
         ));
       } else {
         entries.add(AppContextMenuEntry(
-          label: 'הצג לצד',
+          label: 'הצג לצד'.tr(),
           enabled: false,
         ));
       }
@@ -924,11 +929,11 @@ class _CustomTitleBarState extends State<CustomTitleBar>
     if (tab is CombinedTab) {
       entries.addAll([
         AppContextMenuEntry(
-          label: 'החלף צדדים',
+          label: 'החלף צדדים'.tr(),
           onTap: () => context.read<TabsBloc>().add(const SwapSideBySideTabs()),
         ),
         AppContextMenuEntry(
-          label: 'חזרה לתצוגה רגילה',
+          label: 'חזרה לתצוגה רגילה'.tr(),
           onTap: () => context
               .read<TabsBloc>()
               .add(DisableSideBySideMode(state.tabs.indexOf(tab))),
@@ -939,7 +944,7 @@ class _CustomTitleBarState extends State<CustomTitleBar>
     entries.addAll([
       const AppContextMenuEntry.divider(),
       AppContextMenuEntry(
-        label: 'כרטיסיות פתוחות',
+        label: 'כרטיסיות פתוחות'.tr(),
         // childrenBuilder + stream: הרשימה נבנית מחדש בכל שינוי במצב הכרטיסיות,
         // כך שסגירת כרטיסייה דרך ה-X מסירה את שורתה והתפריט נשאר פתוח.
         childrenBuilder: () =>
@@ -964,7 +969,7 @@ class _CustomTitleBarState extends State<CustomTitleBar>
         trailing: Align(
           alignment: AlignmentDirectional.centerEnd,
           child: IconButton(
-            tooltip: 'סגור',
+            tooltip: 'סגור'.tr(),
             visualDensity: VisualDensity.compact,
             padding: EdgeInsets.zero,
             constraints: const BoxConstraints(minWidth: 28, minHeight: 28),

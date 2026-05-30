@@ -7,6 +7,8 @@ import 'package:flutter_settings_screens/flutter_settings_screens.dart'
     hide SwitchSettingsTile;
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:file_picker/file_picker.dart';
+import 'package:otzaria/l10n/app_translations.dart';
+import 'package:otzaria/l10n/tr_extension.dart';
 import 'package:otzaria/settings/engine/settings_engine_exports.dart';
 import 'package:otzaria/settings/search/settings_anchor.dart';
 import 'package:otzaria/settings/search/settings_search_models.dart';
@@ -62,8 +64,7 @@ class LibrarySettingsTab extends StatefulWidget {
     SettingsSearchEntry(
       id: 'library.custom_folders.merge_into_library',
       title: 'מיזוג ספרים אישיים לעץ הספרייה',
-      subtitle:
-          'תת-התיקיות של התיקייה הנבחרת ימוזגו לקטגוריות הראשיות לפי שם',
+      subtitle: 'תת-התיקיות של התיקייה הנבחרת ימוזגו לקטגוריות הראשיות לפי שם',
       tab: SettingsTab.library,
       cardId: 'library.custom_folders',
       keywords: [
@@ -169,8 +170,8 @@ class _LibrarySettingsTabState extends State<LibrarySettingsTab> {
           context.read<NavigationBloc>().add(const CheckLibrary());
 
           if (extractionResult.successfullyExtracted) {
-            UiSnack.show(
-                'הקובץ "${extractionResult.extractedFileName}" חולץ בהצלחה!');
+            UiSnack.show('הקובץ "{name}" חולץ בהצלחה!'
+                .tr(args: {'name': '${extractionResult.extractedFileName}'}));
           }
         }
       },
@@ -195,7 +196,7 @@ class _LibrarySettingsTabState extends State<LibrarySettingsTab> {
     final actions = <Widget>[
       if (hasPath)
         NeutralActionButton(
-          text: 'העתק נתיב',
+          text: 'העתק נתיב'.tr(),
           icon: FluentIcons.copy_24_regular,
           onPressed: () async {
             try {
@@ -205,13 +206,14 @@ class _LibrarySettingsTabState extends State<LibrarySettingsTab> {
               }
             } catch (e) {
               if (context.mounted) {
-                UiSnack.showError('שגיאה בהעתקה: ${e.toString()}');
+                UiSnack.showError(
+                    'שגיאה בהעתקה: {error}'.tr(args: {'error': e.toString()}));
               }
             }
           },
         ),
       RecommendedActionButton(
-        text: hasPath ? 'שנה מיקום' : 'בחר מיקום',
+        text: hasPath ? 'שנה מיקום'.tr() : 'בחר מיקום'.tr(),
         icon: FluentIcons.folder_24_regular,
         onPressed: () async {
           String? path =
@@ -226,8 +228,8 @@ class _LibrarySettingsTabState extends State<LibrarySettingsTab> {
 
     return LocationSettingsTile(
       icon: FluentIcons.folder_24_regular,
-      title: 'מיקום ספריית אוצריא',
-      subtitle: hasPath ? pathStr : 'בחר מיקום עבור מאגר הספרים',
+      title: 'מיקום ספריית אוצריא'.tr(),
+      subtitle: hasPath ? pathStr : 'בחר מיקום עבור מאגר הספרים'.tr(),
       actions: actions,
     );
   }
@@ -241,7 +243,7 @@ class _LibrarySettingsTabState extends State<LibrarySettingsTab> {
     final actions = <Widget>[
       if (hasPath)
         NeutralActionButton(
-          text: 'העתק נתיב',
+          text: 'העתק נתיב'.tr(),
           icon: FluentIcons.copy_24_regular,
           onPressed: () async {
             try {
@@ -251,13 +253,14 @@ class _LibrarySettingsTabState extends State<LibrarySettingsTab> {
               }
             } catch (e) {
               if (context.mounted) {
-                UiSnack.showError('שגיאה בהעתקה: ${e.toString()}');
+                UiSnack.showError(
+                    'שגיאה בהעתקה: {error}'.tr(args: {'error': e.toString()}));
               }
             }
           },
         ),
       RecommendedActionButton(
-        text: hasPath ? 'שנה מיקום' : 'בחר מיקום',
+        text: hasPath ? 'שנה מיקום'.tr() : 'בחר מיקום'.tr(),
         icon: FluentIcons.folder_24_regular,
         onPressed: () async {
           String? path =
@@ -272,14 +275,14 @@ class _LibrarySettingsTabState extends State<LibrarySettingsTab> {
         IconButton(
           icon: const Icon(FluentIcons.delete_24_regular),
           onPressed: () => _removeHebrewBooksPath(context),
-          tooltip: 'הסר מיקום',
+          tooltip: 'הסר מיקום'.tr(),
         ),
     ];
 
     return LocationSettingsTile(
       icon: FluentIcons.folder_24_regular,
-      title: 'מיקום ספרי היברובוקס',
-      subtitle: hasPath ? pathStr : 'במידה וקיימים ברשותך ספרים ממאגר זה',
+      title: 'מיקום ספרי היברובוקס'.tr(),
+      subtitle: hasPath ? pathStr : 'במידה וקיימים ברשותך ספרים ממאגר זה'.tr(),
       actions: actions,
     );
   }
@@ -291,9 +294,10 @@ class _LibrarySettingsTabState extends State<LibrarySettingsTab> {
         if (_isRemovingHebrewPath && !libraryState.isLoading) {
           setState(() => _isRemovingHebrewPath = false);
           if (libraryState.error == null) {
-            UiSnack.show('מיקום ספרי היברובוקס הוסר בהצלחה');
+            UiSnack.show('מיקום ספרי היברובוקס הוסר בהצלחה'.tr());
           } else {
-            UiSnack.showError('שגיאה בהסרת המיקום: ${libraryState.error}');
+            UiSnack.showError('שגיאה בהסרת המיקום: {error}'
+                .tr(args: {'error': '${libraryState.error}'}));
           }
         }
 
@@ -328,7 +332,7 @@ class _LibrarySettingsTabState extends State<LibrarySettingsTab> {
                       SettingsAnchor(
                         cardId: 'library.repository',
                         child: SettingsCard(
-                          title: 'מאגר הספרים',
+                          title: 'מאגר הספרים'.tr(),
                           children: [
                             _buildLibraryLocationWidget(context),
                           ],
@@ -350,19 +354,22 @@ class _LibrarySettingsTabState extends State<LibrarySettingsTab> {
                       SettingsAnchor(
                         cardId: 'library.custom_folders',
                         child: SettingsCard(
-                          title: 'תיקיות מותאמות אישית',
+                          title: 'תיקיות מותאמות אישית'.tr(),
                           children: [
                             const CustomFoldersTile(),
                             SwitchSettingsTile(
-                              leading: const Icon(FluentIcons.person_24_regular),
-                              title: const Text(
-                                'מיזוג ספרים אישיים לעץ הספרייה',
+                              leading:
+                                  const Icon(FluentIcons.person_24_regular),
+                              title: Text(
+                                'מיזוג ספרים אישיים לעץ הספרייה'.tr(),
                                 style: kSettingsTitleStyle,
                               ),
                               subtitle: Text(
                                 state.mergeUserBooksIntoLibrary
                                     ? 'תת-התיקיות של התיקייה הנבחרת ימוזגו לקטגוריות הראשיות לפי שם'
-                                    : 'תיקיות אישיות יוצגו תחת קטגוריית "ספרים אישיים"',
+                                        .tr()
+                                    : 'תיקיות אישיות יוצגו תחת קטגוריית "ספרים אישיים"'
+                                        .tr(),
                                 style: kSettingsSubtitleStyle,
                               ),
                               value: state.mergeUserBooksIntoLibrary,
@@ -370,9 +377,8 @@ class _LibrarySettingsTabState extends State<LibrarySettingsTab> {
                                 // ה-RefreshLibrary מופעל ב-listener למעלה,
                                 // אחרי שהערך החדש נשמר ב-`Settings`. אחרת
                                 // הספרייה היתה נבנית עם הערך הישן.
-                                context
-                                    .read<SettingsBloc>()
-                                    .add(UpdateMergeUserBooksIntoLibrary(value));
+                                context.read<SettingsBloc>().add(
+                                    UpdateMergeUserBooksIntoLibrary(value));
                               },
                             ),
                           ],
@@ -402,15 +408,15 @@ class _LibrarySettingsTabState extends State<LibrarySettingsTab> {
     LibraryState libraryState,
   ) {
     return SettingsCard(
-      title: 'חיפוש ואינדקס',
+      title: 'חיפוש ואינדקס'.tr(),
       children: [
         SwitchSettingsTile(
           leading: const Icon(FluentIcons.arrow_clockwise_24_regular),
-          title: const Text('עדכון אינדקס אוטומטי', style: kSettingsTitleStyle),
+          title: Text('עדכון אינדקס אוטומטי'.tr(), style: kSettingsTitleStyle),
           subtitle: Text(
               state.autoUpdateIndex
-                  ? 'אינדקס החיפוש יתעדכן אוטומטית'
-                  : 'אינדקס החיפוש לא יתעדכן אוטומטית',
+                  ? 'אינדקס החיפוש יתעדכן אוטומטית'.tr()
+                  : 'אינדקס החיפוש לא יתעדכן אוטומטית'.tr(),
               style: kSettingsSubtitleStyle),
           value: state.autoUpdateIndex,
           onChanged: (value) {
@@ -424,32 +430,33 @@ class _LibrarySettingsTabState extends State<LibrarySettingsTab> {
             final isActive = indexingState is IndexingInProgress && total > 0;
             final isCheckingManualReindex = _requiresManualReindex == null;
             String subtitleText;
-            TextDirection subtitleDirection = TextDirection.rtl;
+            TextDirection subtitleDirection = AppTranslations.textDirection;
             final libraryPath =
                 Settings.getValue<String>(SettingsRepository.keyLibraryPath);
             final library = libraryState.library;
             final hasBooks = library?.getAllBooks().isNotEmpty ?? false;
             if (libraryPath == null || libraryPath.isEmpty) {
-              subtitleText = 'לא קיימת ספרייה לאינדוקס';
+              subtitleText = 'לא קיימת ספרייה לאינדוקס'.tr();
             } else if (!hasBooks) {
-              subtitleText = 'הספרייה ריקה – אין ספרים לאינדוקס';
+              subtitleText = 'הספרייה ריקה – אין ספרים לאינדוקס'.tr();
             } else if (isCheckingManualReindex) {
-              subtitleText = 'בודק אם נדרש איפוס ואינדוקס מחדש';
+              subtitleText = 'בודק אם נדרש איפוס ואינדוקס מחדש'.tr();
             } else if (_requiresManualReindex == true) {
-              subtitleText = 'נדרש איפוס ואינדוקס מחדש באישור המשתמש';
+              subtitleText = 'נדרש איפוס ואינדוקס מחדש באישור המשתמש'.tr();
             } else if (isActive) {
-              subtitleText = 'התקדמות האינדקס: $processed/$total';
+              subtitleText = 'התקדמות האינדקס: {processed}/{total}'
+                  .tr(args: {'processed': '$processed', 'total': '$total'});
             } else if (indexingState is IndexingComplete) {
-              subtitleText = 'האינדקס מעודכן';
+              subtitleText = 'האינדקס מעודכן'.tr();
             } else {
-              subtitleText = 'האינדקס לא מעודכן';
+              subtitleText = 'האינדקס לא מעודכן'.tr();
             }
             return ListTile(
               leading: const Icon(FluentIcons.table_24_regular),
-              title: const Text(
-                'אינדקס חיפוש',
+              title: Text(
+                'אינדקס חיפוש'.tr(),
                 style: kSettingsTitleStyle,
-                textDirection: TextDirection.rtl,
+                textDirection: AppTranslations.textDirection,
               ),
               subtitle: Text(
                 subtitleText,
@@ -458,12 +465,12 @@ class _LibrarySettingsTabState extends State<LibrarySettingsTab> {
               ),
               trailing: isActive
                   ? NeutralActionButton(
-                      text: 'עצור',
+                      text: 'עצור'.tr(),
                       onPressed: () async {
                         final result = await showWarningDialog(
                           context: context,
-                          title: 'עצירת עדכון',
-                          content: 'האם לעצור את תהליך עדכון האינדקס?',
+                          title: 'עצירת עדכון'.tr(),
+                          content: 'האם לעצור את תהליך עדכון האינדקס?'.tr(),
                         );
                         if (!context.mounted) return;
                         if (result == true) {
@@ -479,7 +486,7 @@ class _LibrarySettingsTabState extends State<LibrarySettingsTab> {
                         )
                       : _requiresManualReindex == true
                           ? RecommendedActionButton(
-                              text: 'אפס ועדכן',
+                              text: 'אפס ועדכן'.tr(),
                               onPressed: () async {
                                 if (library == null) {
                                   return;
@@ -504,13 +511,14 @@ class _LibrarySettingsTabState extends State<LibrarySettingsTab> {
                             )
                           : indexingState is IndexingComplete
                               ? NeutralActionButton(
-                                  text: 'איפוס',
+                                  text: 'איפוס'.tr(),
                                   onPressed: () async {
                                     final result = await showWarningDialog(
                                       context: context,
-                                      title: 'איפוס אינדקס',
+                                      title: 'איפוס אינדקס'.tr(),
                                       content:
-                                          'האם למחוק את אינדקס החיפוש? תצטרך לבנות אותו מחדש כדי להשתמש בחיפוש.',
+                                          'האם למחוק את אינדקס החיפוש? תצטרך לבנות אותו מחדש כדי להשתמש בחיפוש.'
+                                              .tr(),
                                     );
                                     if (!context.mounted) return;
                                     if (result == true) {
@@ -521,7 +529,7 @@ class _LibrarySettingsTabState extends State<LibrarySettingsTab> {
                                   },
                                 )
                               : RecommendedActionButton(
-                                  text: 'עדכן',
+                                  text: 'עדכן'.tr(),
                                   onPressed: () {
                                     final library = context
                                         .read<LibraryBloc>()

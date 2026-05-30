@@ -4,6 +4,8 @@ import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_settings_screens/flutter_settings_screens.dart';
 import 'package:otzaria/core/focus_repository.dart';
+import 'package:otzaria/l10n/app_translations.dart';
+import 'package:otzaria/l10n/tr_extension.dart';
 import 'package:otzaria/history/bloc/history_bloc.dart';
 import 'package:otzaria/history/bloc/history_event.dart';
 import 'package:otzaria/history/bloc/history_state.dart';
@@ -107,7 +109,7 @@ class _SearchDialogState extends State<SearchDialog> {
       final lastMode =
           Settings.getValue<String>('key-last-search-mode') ?? 'advanced';
 
-      _searchTab = SearchingTab("חיפוש", lastTyping);
+      _searchTab = SearchingTab("חיפוש".tr(), lastTyping);
 
       final searchMode = switch (lastMode) {
         'fuzzy' => SearchMode.fuzzy,
@@ -240,7 +242,7 @@ class _SearchDialogState extends State<SearchDialog> {
                     ),
                     trailing: IconButton(
                       icon: const Icon(FluentIcons.delete_24_regular, size: 18),
-                      tooltip: 'מחק מההיסטוריה',
+                      tooltip: 'מחק מההיסטוריה'.tr(),
                       onPressed: () {
                         context
                             .read<HistoryBloc>()
@@ -308,14 +310,15 @@ class _SearchDialogState extends State<SearchDialog> {
     if (isSearchBlockedByMissingIndex(
       providerInitialized: TantivyDataProvider.instance.isInitialized.value,
     )) {
-      UiSnack.showError('אינדקס לא קיים, לא ניתן לבצע חיפוש זה ללא אינדקס.');
+      UiSnack.showError(
+          'אינדקס לא קיים, לא ניתן לבצע חיפוש זה ללא אינדקס.'.tr());
       return;
     }
 
     String query = _searchTab.queryController.text.trim();
 
     if (query.isEmpty) {
-      UiSnack.show('נא להזין טקסט לחיפוש');
+      UiSnack.show('נא להזין טקסט לחיפוש'.tr());
       return;
     }
 
@@ -384,7 +387,8 @@ class _SearchDialogState extends State<SearchDialog> {
 
     // יצירת טאב חדש לגמרי - ללא קשר לטאב קודם
     // שם הלשונית: "חיפוש: [מילות החיפוש]"
-    final newSearchTab = SearchingTab("חיפוש: $query", query);
+    final newSearchTab =
+        SearchingTab('חיפוש: {query}'.tr(args: {'query': query}), query);
 
     // העתקת כל ההגדרות מהטאב הנוכחי לטאב החדש
     newSearchTab.searchOptions.addAll(_searchTab.searchOptions.map(
@@ -471,7 +475,7 @@ class _SearchDialogState extends State<SearchDialog> {
         mainAxisSize: MainAxisSize.min,
         children: [
           Text(
-            'כל הקטגוריות',
+            'כל הקטגוריות'.tr(),
             style: TextStyle(
               fontSize: 15,
               fontWeight: FontWeight.w500,
@@ -479,7 +483,7 @@ class _SearchDialogState extends State<SearchDialog> {
                   ? colorScheme.primary
                   : colorScheme.onSurfaceVariant,
             ),
-            textDirection: TextDirection.rtl,
+            textDirection: AppTranslations.textDirection,
           ),
           const SizedBox(width: 4),
           Transform.scale(
@@ -590,8 +594,9 @@ class _SearchDialogState extends State<SearchDialog> {
                     const SizedBox(width: 12),
                     Text(
                       widget.bookTitle != null
-                          ? 'חיפוש ב${widget.bookTitle}'
-                          : 'חיפוש',
+                          ? 'חיפוש ב{book}'
+                              .tr(args: {'book': widget.bookTitle!})
+                          : 'חיפוש'.tr(),
                       style: const TextStyle(
                           fontSize: 24, fontWeight: FontWeight.bold),
                     ),
@@ -599,7 +604,7 @@ class _SearchDialogState extends State<SearchDialog> {
                     IconButton(
                       icon: const Icon(FluentIcons.dismiss_24_regular),
                       onPressed: () => Navigator.of(context).pop(),
-                      tooltip: 'סגור',
+                      tooltip: 'סגור'.tr(),
                     ),
                   ],
                 ),
@@ -624,7 +629,7 @@ class _SearchDialogState extends State<SearchDialog> {
                               children: [
                                 _buildNavButton(
                                   context,
-                                  'מדויק',
+                                  'מדויק'.tr(),
                                   FluentIcons.text_quote_24_regular,
                                   SearchMode.exact,
                                   state.configuration.searchMode ==
@@ -633,7 +638,7 @@ class _SearchDialogState extends State<SearchDialog> {
                                 const SizedBox(height: 4),
                                 _buildNavButton(
                                   context,
-                                  'מתקדם',
+                                  'מתקדם'.tr(),
                                   FluentIcons.search_info_24_regular,
                                   SearchMode.advanced,
                                   state.configuration.searchMode ==
@@ -642,7 +647,7 @@ class _SearchDialogState extends State<SearchDialog> {
                                 const SizedBox(height: 4),
                                 _buildNavButton(
                                   context,
-                                  'מקורב',
+                                  'מקורב'.tr(),
                                   FluentIcons
                                       .arrow_bidirectional_left_right_24_regular,
                                   SearchMode.fuzzy,
@@ -687,7 +692,7 @@ class _SearchDialogState extends State<SearchDialog> {
                                                       .history_24_regular,
                                               size: 24,
                                             ),
-                                            tooltip: 'היסטוריית חיפושים',
+                                            tooltip: 'היסטוריית חיפושים'.tr(),
                                             padding: EdgeInsets.zero,
                                             constraints: const BoxConstraints(),
                                             onPressed: () {
@@ -723,7 +728,8 @@ class _SearchDialogState extends State<SearchDialog> {
                                               ),
                                               tooltip: blocked
                                                   ? 'אינדקס לא קיים, לא ניתן לבצע חיפוש זה ללא אינדקס'
-                                                  : 'חפש',
+                                                      .tr()
+                                                  : 'חפש'.tr(),
                                               onPressed: blocked
                                                   ? null
                                                   : _performSearch,

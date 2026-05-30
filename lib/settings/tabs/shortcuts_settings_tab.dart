@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'dart:io';
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:otzaria/l10n/app_translations.dart';
+import 'package:otzaria/l10n/tr_extension.dart';
 import 'package:otzaria/settings/engine/settings_engine_exports.dart';
 import 'package:otzaria/settings/search/settings_anchor.dart';
 import 'package:otzaria/settings/search/settings_search_models.dart';
@@ -282,7 +284,7 @@ class ShortcutsSettingsTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (Platform.isAndroid || Platform.isIOS) {
-      return const Center(child: Text('קיצורי מקשים זמינים רק בדסקטופ'));
+      return Center(child: Text('קיצורי מקשים זמינים רק בדסקטופ'.tr()));
     }
 
     return SingleChildScrollView(
@@ -313,18 +315,18 @@ class ShortcutsSettingsTab extends StatelessWidget {
         SettingsAnchor(
           cardId: 'shortcuts.main',
           child: SettingsCard(
-            title: 'כללי',
+            title: 'כללי'.tr(),
             children: [
               ListTile(
                 leading: const Icon(FluentIcons.arrow_reset_24_regular),
-                title: const Text('איפוס קיצורי מקשים',
-                    style: kSettingsTitleStyle),
-                subtitle: const Text(
-                  'החזר את כל קיצורי המקשים לברירת המחדל',
+                title:
+                    Text('איפוס קיצורי מקשים'.tr(), style: kSettingsTitleStyle),
+                subtitle: Text(
+                  'החזר את כל קיצורי המקשים לברירת המחדל'.tr(),
                   style: kSettingsSubtitleStyle,
                 ),
                 trailing: NeutralActionButton(
-                  text: 'איפוס',
+                  text: 'איפוס'.tr(),
                   onPressed: () => _resetShortcuts(context),
                 ),
               ),
@@ -336,67 +338,67 @@ class ShortcutsSettingsTab extends StatelessWidget {
 
         // ── ניווט כללי ────────────────────────────────────────────────
         SettingsCard(
-          title: 'ניווט כללי',
+          title: 'ניווט כללי'.tr(),
           children: _onlyConfigured([
             _ShortcutTile(
               settingKey: 'key-shortcut-open-library-browser',
-              label: 'ספרייה',
+              label: 'ספרייה'.tr(),
               defaultShortcut: 'ctrl+l',
               icon: FluentIcons.library_24_regular,
               allShortcuts: _shortcutsList,
             ),
             _ShortcutTile(
               settingKey: 'key-shortcut-open-find-ref',
-              label: 'איתור',
+              label: 'איתור'.tr(),
               defaultShortcut: 'ctrl+o',
               icon: FluentIcons.book_search_24_regular,
               allShortcuts: _shortcutsList,
             ),
             _ShortcutTile(
               settingKey: 'key-shortcut-open-reading-screen',
-              label: 'עיון',
+              label: 'עיון'.tr(),
               defaultShortcut: 'ctrl+r',
               icon: FluentIcons.book_open_24_regular,
               allShortcuts: _shortcutsList,
             ),
             _ShortcutTile(
               settingKey: 'key-shortcut-open-new-search',
-              label: 'חלון חיפוש חדש',
+              label: 'חלון חיפוש חדש'.tr(),
               defaultShortcut: 'ctrl+q',
               icon: FluentIcons.search_24_regular,
               allShortcuts: _shortcutsList,
             ),
             _ShortcutTile(
               settingKey: 'key-shortcut-open-settings',
-              label: 'הגדרות',
+              label: 'הגדרות'.tr(),
               defaultShortcut: 'ctrl+comma',
               icon: FluentIcons.settings_24_regular,
               allShortcuts: _shortcutsList,
             ),
             _ShortcutTile(
               settingKey: 'key-shortcut-open-more',
-              label: 'כלים',
+              label: 'כלים'.tr(),
               defaultShortcut: 'ctrl+m',
               icon: FluentIcons.apps_24_regular,
               allShortcuts: _shortcutsList,
             ),
             _ShortcutTile(
               settingKey: 'key-shortcut-open-bookmarks',
-              label: 'סימניות',
+              label: 'סימניות'.tr(),
               defaultShortcut: 'ctrl+shift+b',
               icon: FluentIcons.bookmark_24_regular,
               allShortcuts: _shortcutsList,
             ),
             _ShortcutTile(
               settingKey: 'key-shortcut-open-history',
-              label: 'היסטוריה',
+              label: 'היסטוריה'.tr(),
               defaultShortcut: 'ctrl+h',
               icon: FluentIcons.history_24_regular,
               allShortcuts: _shortcutsList,
             ),
             _ShortcutTile(
               settingKey: 'key-shortcut-switch-workspace',
-              label: 'החלף שולחן עבודה',
+              label: 'החלף שולחן עבודה'.tr(),
               defaultShortcut: 'ctrl+k',
               icon: FluentIcons.grid_24_regular,
               allShortcuts: _shortcutsList,
@@ -408,75 +410,75 @@ class ShortcutsSettingsTab extends StatelessWidget {
 
         // ── תצוגת ספר ─────────────────────────────────────────────────
         SettingsCard(
-          title: 'תצוגת ספר',
+          title: 'תצוגת ספר'.tr(),
           children: _onlyConfigured([
             _ShortcutTile(
               settingKey: ShortcutValidator.currentWindowSearchKey,
-              label: 'חיפוש בחלון הנוכחי',
-              subtitle: 'משמש לחיפוש מהיר במסכי תוכן וכלים תומכים',
+              label: 'חיפוש בחלון הנוכחי'.tr(),
+              subtitle: 'משמש לחיפוש מהיר במסכי תוכן וכלים תומכים'.tr(),
               defaultShortcut: 'ctrl+f',
               icon: FluentIcons.search_24_regular,
               allShortcuts: _shortcutsList,
             ),
             _ShortcutTile(
               settingKey: 'key-shortcut-print',
-              label: 'הדפסה',
+              label: 'הדפסה'.tr(),
               defaultShortcut: 'ctrl+p',
               icon: FluentIcons.print_24_regular,
               allShortcuts: _shortcutsList,
             ),
             _ShortcutTile(
               settingKey: 'key-shortcut-add-bookmark',
-              label: 'הוסף סימניה',
+              label: 'הוסף סימניה'.tr(),
               defaultShortcut: 'ctrl+b',
               icon: FluentIcons.bookmark_24_regular,
               allShortcuts: _shortcutsList,
             ),
             _ShortcutTile(
               settingKey: 'key-shortcut-add-note',
-              label: 'הוספת הערה',
+              label: 'הוספת הערה'.tr(),
               defaultShortcut: 'ctrl+n',
               icon: FluentIcons.note_24_regular,
               allShortcuts: _shortcutsList,
             ),
             _ShortcutTile(
               settingKey: 'key-shortcut-close-tab',
-              label: 'סגור ספר נוכחי',
+              label: 'סגור ספר נוכחי'.tr(),
               defaultShortcut: 'ctrl+w',
               icon: FluentIcons.dismiss_circle_24_regular,
               allShortcuts: _shortcutsList,
             ),
             _ShortcutTile(
               settingKey: 'key-shortcut-close-all-tabs',
-              label: 'סגור כל הספרים',
+              label: 'סגור כל הספרים'.tr(),
               defaultShortcut: 'ctrl+shift+w',
               icon: FluentIcons.dismiss_24_regular,
               allShortcuts: _shortcutsList,
             ),
             _ShortcutTile(
               settingKey: 'key-shortcut-toggle-nav-pane',
-              label: 'פתח/סגור חלונית ניווט',
+              label: 'פתח/סגור חלונית ניווט'.tr(),
               defaultShortcut: 'ctrl+shift+l',
               icon: FluentIcons.panel_left_24_regular,
               allShortcuts: _shortcutsList,
             ),
             _ShortcutTile(
               settingKey: 'key-shortcut-toggle-commentators-pane',
-              label: 'פתח/סגור חלונית מפרשים',
+              label: 'פתח/סגור חלונית מפרשים'.tr(),
               defaultShortcut: 'ctrl+shift+c',
               icon: FluentIcons.book_open_24_regular,
               allShortcuts: _shortcutsList,
             ),
             _ShortcutTile(
               settingKey: 'key-shortcut-toggle-pdf-view',
-              label: 'החלף מצב תצוגה (PDF/טקסט)',
+              label: 'החלף מצב תצוגה (PDF/טקסט)'.tr(),
               defaultShortcut: 'ctrl+shift+p',
               icon: FluentIcons.document_pdf_24_regular,
               allShortcuts: _shortcutsList,
             ),
             _ShortcutTile(
               settingKey: 'key-shortcut-open-commentators-tab',
-              label: 'פתח כרטיסיית מפרשים',
+              label: 'פתח כרטיסיית מפרשים'.tr(),
               defaultShortcut: '',
               icon: FluentIcons.open_24_regular,
               allShortcuts: _shortcutsList,
@@ -488,46 +490,46 @@ class ShortcutsSettingsTab extends StatelessWidget {
 
         // ── לוח שנה ושמור וזכור ───────────────────────────────────────
         SettingsCard(
-          title: 'לוח שנה ושמור וזכור',
+          title: 'לוח שנה ושמור וזכור'.tr(),
           children: _onlyConfigured([
             _ShortcutTile(
               settingKey: 'key-shortcut-calendar-toggle-times',
-              label: 'לוח שנה: פתיחה/סגירה זמני היום',
+              label: 'לוח שנה: פתיחה/סגירה זמני היום'.tr(),
               defaultShortcut: 'ctrl+e',
               icon: FluentIcons.clock_24_regular,
               allShortcuts: _shortcutsList,
             ),
             _ShortcutTile(
               settingKey: 'key-shortcut-calendar-toggle-events',
-              label: 'לוח שנה: פתיחה/סגירה אירועים',
+              label: 'לוח שנה: פתיחה/סגירה אירועים'.tr(),
               defaultShortcut: 'ctrl+n',
               icon: FluentIcons.calendar_24_regular,
               allShortcuts: _shortcutsList,
             ),
             _ShortcutTile(
               settingKey: 'key-shortcut-calendar-today',
-              label: 'לוח שנה: מעבר להיום',
+              label: 'לוח שנה: מעבר להיום'.tr(),
               defaultShortcut: 'ctrl+d',
               icon: FluentIcons.calendar_today_24_regular,
               allShortcuts: _shortcutsList,
             ),
             _ShortcutTile(
               settingKey: 'key-shortcut-calendar-create-event',
-              label: 'לוח שנה: יצירת אירוע',
+              label: 'לוח שנה: יצירת אירוע'.tr(),
               defaultShortcut: 'ctrl+shift+n',
               icon: FluentIcons.calendar_add_24_regular,
               allShortcuts: _shortcutsList,
             ),
             _ShortcutTile(
               settingKey: 'key-shortcut-calendar-toggle-view',
-              label: 'לוח שנה: מעבר בין תצוגות',
+              label: 'לוח שנה: מעבר בין תצוגות'.tr(),
               defaultShortcut: 'ctrl+shift+e',
               icon: FluentIcons.calendar_multiple_24_regular,
               allShortcuts: _shortcutsList,
             ),
             _ShortcutTile(
               settingKey: 'key-shortcut-shamor-zachor-cycle-filter',
-              label: 'שמור וזכור: מעבר בין הסינונים',
+              label: 'שמור וזכור: מעבר בין הסינונים'.tr(),
               defaultShortcut: 'ctrl+e',
               icon: FluentIcons.filter_24_regular,
               allShortcuts: _shortcutsList,
@@ -539,20 +541,21 @@ class ShortcutsSettingsTab extends StatelessWidget {
         if (unconfiguredKeys.isNotEmpty) ...[
           kSettingsCardSpacing,
           SettingsCard(
-            title: 'פעולות זמינות לקיצור',
+            title: 'פעולות זמינות לקיצור'.tr(),
             subtitle:
-                'פעולות הקיימות באפליקציה ועדיין לא הוגדר להן קיצור מקלדת',
+                'פעולות הקיימות באפליקציה ועדיין לא הוגדר להן קיצור מקלדת'.tr(),
             children: [
               ListTile(
                 leading: const Icon(FluentIcons.add_24_regular),
-                title: const Text('הוסף קיצור לפעולה זמינה',
+                title: Text('הוסף קיצור לפעולה זמינה'.tr(),
                     style: kSettingsTitleStyle),
                 subtitle: Text(
-                  '${unconfiguredKeys.length} פעולות זמינות',
+                  '{count} פעולות זמינות'
+                      .tr(args: {'count': '${unconfiguredKeys.length}'}),
                   style: kSettingsSubtitleStyle,
                 ),
                 trailing: RecommendedActionButton(
-                  text: 'הוסף קיצור',
+                  text: 'הוסף קיצור'.tr(),
                   onPressed: () => _addShortcut(context, unconfiguredKeys),
                 ),
               ),
@@ -606,7 +609,8 @@ class ShortcutsSettingsTab extends StatelessWidget {
 
     if (conflictingNames.isNotEmpty) {
       UiSnack.showError(
-        'קיצור זה כבר בשימוש עבור: ${conflictingNames.join(', ')}',
+        'קיצור זה כבר בשימוש עבור: {names}'
+            .tr(args: {'names': conflictingNames.join(', ')}),
       );
       return;
     }
@@ -617,13 +621,13 @@ class ShortcutsSettingsTab extends StatelessWidget {
   Future<void> _resetShortcuts(BuildContext context) async {
     final confirmed = await showWarningDialog(
       context: context,
-      title: 'איפוס קיצורי מקשים?',
-      content: 'כל קיצורי המקשים המותאמים אישית יאופסו לברירת המחדל.',
-      subtitle: 'פעולה זו אינה הפיכה',
+      title: 'איפוס קיצורי מקשים?'.tr(),
+      content: 'כל קיצורי המקשים המותאמים אישית יאופסו לברירת המחדל.'.tr(),
+      subtitle: 'פעולה זו אינה הפיכה'.tr(),
     );
     if (confirmed == true && context.mounted) {
       context.read<SettingsBloc>().add(ResetShortcuts());
-      UiSnack.showSuccess('קיצורי המקשים אופסו בהצלחה');
+      UiSnack.showSuccess('קיצורי המקשים אופסו בהצלחה'.tr());
     }
   }
 }
@@ -682,9 +686,9 @@ class _PickActionDialog extends StatelessWidget {
     final cs = Theme.of(context).colorScheme;
     return AlertDialog(
       backgroundColor: cs.surfaceContainerHigh,
-      title: const Text(
-        'בחר פעולה להוספת קיצור',
-        textDirection: TextDirection.rtl,
+      title: Text(
+        'בחר פעולה להוספת קיצור'.tr(),
+        textDirection: AppTranslations.textDirection,
       ),
       content: SizedBox(
         width: 420,
@@ -696,7 +700,7 @@ class _PickActionDialog extends StatelessWidget {
             final key = actionKeys[i];
             final name = ShortcutValidator.shortcutNames[key] ?? key;
             return ListTile(
-              title: Text(name, textDirection: TextDirection.rtl),
+              title: Text(name, textDirection: AppTranslations.textDirection),
               trailing: const Icon(FluentIcons.chevron_right_24_regular),
               onTap: () => Navigator.of(context).pop(key),
             );
@@ -710,7 +714,7 @@ class _PickActionDialog extends StatelessWidget {
             backgroundColor: cs.secondaryContainer,
             foregroundColor: cs.onSecondaryContainer,
           ),
-          child: const Text('ביטול'),
+          child: Text('ביטול'.tr()),
         ),
       ],
     );

@@ -181,6 +181,7 @@ flutter:
     - assets/
     - assets/logos/
     - assets/ca/
+    - assets/translations/
     - assets/icon/שמור וזכור מקור.png
     - assets/icon/שמור וזכור שחור ריק.png
     - assets/icon/shamor_zachor_with_v.png

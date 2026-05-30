@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
+import 'package:otzaria/l10n/app_translations.dart';
+import 'package:otzaria/l10n/tr_extension.dart';
 import 'package:otzaria/search/search_query_builder.dart';
 import 'package:otzaria/tabs/models/searching_tab.dart';
 import 'package:otzaria/widgets/text/rtl_text_field.dart';
@@ -214,7 +216,7 @@ class _AdvancedSearchControlsState extends State<AdvancedSearchControls> {
               ),
               const SizedBox(height: 16),
               Text(
-                'לחץ על מילה בשדה החיפוש כדי להגדיר אפשרויות מתקדמות',
+                'לחץ על מילה בשדה החיפוש כדי להגדיר אפשרויות מתקדמות'.tr(),
                 style: TextStyle(
                   fontSize: 16,
                   color: Colors.grey.shade600,
@@ -284,8 +286,8 @@ class _AdvancedSearchControlsState extends State<AdvancedSearchControls> {
 
     return Tooltip(
       message: useGlobal
-          ? 'ההגדרות חלות על כל המילים בשאילתה ולא משתנות בעת שינוי המילים'
-          : 'ההגדרות נשמרות לכל מילה בנפרד',
+          ? 'ההגדרות חלות על כל המילים בשאילתה ולא משתנות בעת שינוי המילים'.tr()
+          : 'ההגדרות נשמרות לכל מילה בנפרד'.tr(),
       child: Container(
         decoration: BoxDecoration(
           color: useGlobal
@@ -298,7 +300,7 @@ class _AdvancedSearchControlsState extends State<AdvancedSearchControls> {
           mainAxisSize: MainAxisSize.min,
           children: [
             Text(
-              'זהה לכל המילים',
+              'זהה לכל המילים'.tr(),
               style: TextStyle(
                 fontSize: 13,
                 fontWeight: FontWeight.w500,
@@ -306,7 +308,7 @@ class _AdvancedSearchControlsState extends State<AdvancedSearchControls> {
                     ? colorScheme.primary
                     : colorScheme.onSurfaceVariant,
               ),
-              textDirection: TextDirection.rtl,
+              textDirection: AppTranslations.textDirection,
             ),
             const SizedBox(width: 4),
             Transform.scale(
@@ -335,7 +337,7 @@ class _AdvancedSearchControlsState extends State<AdvancedSearchControls> {
           onPressed: isEnabled && _wordIndex! > 0
               ? () => _navigateToWord(_wordIndex! - 1)
               : null,
-          tooltip: 'מילה קודמת',
+          tooltip: 'מילה קודמת'.tr(),
         ),
         Flexible(
           child: Container(
@@ -347,7 +349,7 @@ class _AdvancedSearchControlsState extends State<AdvancedSearchControls> {
               borderRadius: BorderRadius.circular(8),
             ),
             child: Text(
-              isEnabled ? _currentWord! : 'בחר מילה',
+              isEnabled ? _currentWord! : 'בחר מילה'.tr(),
               style: TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
@@ -364,7 +366,7 @@ class _AdvancedSearchControlsState extends State<AdvancedSearchControls> {
           onPressed: isEnabled && _wordIndex! < _words.length - 1
               ? () => _navigateToWord(_wordIndex! + 1)
               : null,
-          tooltip: 'מילה הבאה',
+          tooltip: 'מילה הבאה'.tr(),
         ),
       ],
     );
@@ -390,7 +392,7 @@ class _AdvancedSearchControlsState extends State<AdvancedSearchControls> {
                       ? _getSpacingFocusNode(_wordIndex!, _wordIndex! + 1)
                       : null,
                   decoration: InputDecoration(
-                    labelText: 'מרווח למילה הבאה',
+                    labelText: 'מרווח למילה הבאה'.tr(),
                     hintText: '0-30',
                     border: const OutlineInputBorder(),
                     contentPadding:
@@ -448,8 +450,8 @@ class _AdvancedSearchControlsState extends State<AdvancedSearchControls> {
                 focusNode: _alternativeWordFocusNode,
                 enabled: isEnabled,
                 decoration: InputDecoration(
-                  labelText: 'מילה חילופית',
-                  hintText: 'הקלד מילה...',
+                  labelText: 'מילה חילופית'.tr(),
+                  hintText: 'הקלד מילה...'.tr(),
                   border: const OutlineInputBorder(),
                   contentPadding:
                       const EdgeInsets.symmetric(horizontal: 12, vertical: 8),

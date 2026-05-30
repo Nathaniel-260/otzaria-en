@@ -8,6 +8,7 @@ import 'package:otzaria/bookmarks/repository/bookmark_repository.dart';
 import 'package:otzaria/bookmarks/models/bookmark.dart';
 import 'package:otzaria/data/data_providers/hive_data_provider.dart';
 import 'package:otzaria/history/history_repository.dart';
+import 'package:otzaria/l10n/tr_extension.dart';
 import 'package:otzaria/settings/engine/settings_engine_exports.dart';
 import 'package:otzaria/workspaces/workspace_repository.dart';
 import 'package:otzaria/workspaces/workspace.dart';
@@ -376,7 +377,7 @@ class BackupService {
   static Future<List<String>> restoreFromBackup(String backupPath) async {
     final file = File(backupPath);
     if (!await file.exists()) {
-      throw Exception('קובץ הגיבוי לא נמצא');
+      throw Exception('קובץ הגיבוי לא נמצא'.tr());
     }
 
     final content = await file.readAsString();
@@ -385,7 +386,7 @@ class BackupService {
     // Validate backup version
     final version = backupData['version'] as String?;
     if (version != '1.0') {
-      throw Exception('גרסת גיבוי לא נתמכת');
+      throw Exception('גרסת גיבוי לא נתמכת'.tr());
     }
 
     final partialSections =

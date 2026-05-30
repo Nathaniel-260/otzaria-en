@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
+import 'package:otzaria/l10n/tr_extension.dart';
 import 'package:otzaria/widgets/text/rtl_text_field.dart';
 
 /// שדה חיפוש בהגדרות, מעל אזור התוכן.
@@ -60,7 +61,7 @@ class _SettingsSearchFieldState extends State<SettingsSearchField> {
         style: const TextStyle(fontSize: 13),
         textAlignVertical: TextAlignVertical.center,
         decoration: InputDecoration(
-          hintText: 'חיפוש בהגדרות',
+          hintText: 'חיפוש בהגדרות'.tr(),
           hintStyle: TextStyle(
             fontSize: 13,
             color: colorScheme.onSurfaceVariant,
@@ -77,7 +78,7 @@ class _SettingsSearchFieldState extends State<SettingsSearchField> {
           suffixIcon: hasText
               ? IconButton(
                   icon: const Icon(FluentIcons.dismiss_24_regular, size: 14),
-                  tooltip: 'נקה חיפוש',
+                  tooltip: 'נקה חיפוש'.tr(),
                   padding: EdgeInsets.zero,
                   constraints: const BoxConstraints(
                     minWidth: 28,
@@ -101,7 +102,9 @@ class _SettingsSearchFieldState extends State<SettingsSearchField> {
               const EdgeInsets.symmetric(horizontal: 4, vertical: 6),
           isDense: true,
         ),
-        textAlign: TextAlign.right,
+        // TextAlign.start נגזר מהכיוון הסביבתי (locale): ימין בעברית, שמאל
+        // באנגלית. אסור לקבע .right — זה שובר את השדה במצב LTR.
+        textAlign: TextAlign.start,
       ),
     );
   }

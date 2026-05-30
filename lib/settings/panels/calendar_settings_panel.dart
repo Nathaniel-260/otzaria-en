@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:otzaria/l10n/app_translations.dart';
+import 'package:otzaria/l10n/tr_extension.dart';
 import 'package:otzaria/settings/engine/settings_bloc.dart';
 import 'package:otzaria/settings/search/settings_anchor.dart';
 import 'package:otzaria/settings/search/settings_search_models.dart';
@@ -149,23 +151,24 @@ class _CalendarSettingsTabState extends State<CalendarSettingsTab> {
             SettingsAnchor(
               cardId: 'tools.calendar',
               child: SettingsCard(
-                title: 'לוח שנה',
+                title: 'לוח שנה'.tr(),
                 children: [
                   // סוג לוח
                   SegmentedSettingsTile<CalendarType>(
                     icon: FluentIcons.calendar_24_regular,
-                    title: 'סוג לוח שנה',
+                    title: 'סוג לוח שנה'.tr(),
                     subtitle: state.calendarType == CalendarType.hebrew
-                        ? 'יוצג לוח השנה היהודי בלבד'
+                        ? 'יוצג לוח השנה היהודי בלבד'.tr()
                         : state.calendarType == CalendarType.gregorian
-                            ? 'יוצג לוח השנה הלועזי בלבד'
-                            : 'יוצגו תאריכים מהלוח העברי והלועזי יחד',
-                    options: const [
-                      SegmentOption(value: CalendarType.hebrew, label: 'עברי'),
+                            ? 'יוצג לוח השנה הלועזי בלבד'.tr()
+                            : 'יוצגו תאריכים מהלוח העברי והלועזי יחד'.tr(),
+                    options: [
                       SegmentOption(
-                          value: CalendarType.combined, label: 'משולב'),
+                          value: CalendarType.hebrew, label: 'עברי'.tr()),
                       SegmentOption(
-                          value: CalendarType.gregorian, label: 'לועזי'),
+                          value: CalendarType.combined, label: 'משולב'.tr()),
+                      SegmentOption(
+                          value: CalendarType.gregorian, label: 'לועזי'.tr()),
                     ],
                     currentValue: state.calendarType,
                     onChanged: (value) {
@@ -174,25 +177,25 @@ class _CalendarSettingsTabState extends State<CalendarSettingsTab> {
                   ),
                   SegmentedSettingsTile<CalendarDayTransition>(
                     icon: FluentIcons.weather_sunny_low_24_regular,
-                    title: 'מעבר יום',
+                    title: 'מעבר יום'.tr(),
                     subtitle:
                         _calendarDayTransitionSubtitle(state.dayTransition),
-                    options: const [
+                    options: [
                       SegmentOption(
                         value: CalendarDayTransition.sunset,
-                        label: 'שקיעה',
+                        label: 'שקיעה'.tr(),
                       ),
                       SegmentOption(
                         value: CalendarDayTransition.tzais,
-                        label: 'צאה"כ',
+                        label: 'צאה"כ'.tr(),
                       ),
                       SegmentOption(
                         value: CalendarDayTransition.rabbeinuTam,
-                        label: 'רבינו תם',
+                        label: 'רבינו תם'.tr(),
                       ),
                       SegmentOption(
                         value: CalendarDayTransition.midnight,
-                        label: '12 בלילה',
+                        label: '12 בלילה'.tr(),
                       ),
                     ],
                     currentValue: state.dayTransition,
@@ -205,8 +208,8 @@ class _CalendarSettingsTabState extends State<CalendarSettingsTab> {
                   // עיר
                   _buildResponsiveDropdownTile<String>(
                     icon: FluentIcons.location_24_regular,
-                    title: 'עיר נבחרת',
-                    subtitle: 'בחירת עיר לחישובי זמני היום והלוח',
+                    title: 'עיר נבחרת'.tr(),
+                    subtitle: 'בחירת עיר לחישובי זמני היום והלוח'.tr(),
                     value: state.selectedCity,
                     minFieldWidth: 220,
                     maxFieldWidth: 320,
@@ -230,12 +233,12 @@ class _CalendarSettingsTabState extends State<CalendarSettingsTab> {
 
             // ── אירועים ותזכורות: התראות + Google Calendar ──
             SettingsCard(
-              title: 'אירועים ותזכורות',
+              title: 'אירועים ותזכורות'.tr(),
               children: [
                 // הפעל התראות
                 SwitchSettingsTile(
                   leading: const Icon(FluentIcons.alert_24_regular),
-                  title: const Text('הפעל התראות על אירועים',
+                  title: Text('הפעל התראות על אירועים'.tr(),
                       style: kSettingsTitleStyle),
                   value: state.calendarNotificationsEnabled,
                   onChanged: (value) {
@@ -247,7 +250,7 @@ class _CalendarSettingsTabState extends State<CalendarSettingsTab> {
                 if (state.calendarNotificationsEnabled) ...[
                   SwitchSettingsTile(
                     leading: const Icon(FluentIcons.speaker_2_24_regular),
-                    title: const Text('השמע צליל בהתראה',
+                    title: Text('השמע צליל בהתראה'.tr(),
                         style: kSettingsTitleStyle),
                     value: state.calendarNotificationSound,
                     onChanged: (value) {
@@ -258,16 +261,16 @@ class _CalendarSettingsTabState extends State<CalendarSettingsTab> {
                   ),
                   _buildResponsiveDropdownTile<int>(
                     icon: FluentIcons.alert_snooze_24_regular,
-                    title: 'זמן תזכורת לפני האירוע',
-                    subtitle: 'כמה זמן לפני תחילת האירוע תופיע התראה',
+                    title: 'זמן תזכורת לפני האירוע'.tr(),
+                    subtitle: 'כמה זמן לפני תחילת האירוע תופיע התראה'.tr(),
                     value: state.calendarNotificationTime,
                     minFieldWidth: 180,
                     maxFieldWidth: 240,
-                    entries: const [
-                      AppMenuEntry(value: 60, label: 'שעה'),
-                      AppMenuEntry(value: 720, label: '12 שעות'),
-                      AppMenuEntry(value: 1440, label: 'יום'),
-                      AppMenuEntry(value: 2880, label: 'יומיים'),
+                    entries: [
+                      AppMenuEntry(value: 60, label: 'שעה'.tr()),
+                      AppMenuEntry(value: 720, label: '12 שעות'.tr()),
+                      AppMenuEntry(value: 1440, label: 'יום'.tr()),
+                      AppMenuEntry(value: 2880, label: 'יומיים'.tr()),
                     ],
                     onSelected: (value) {
                       if (value != null) {
@@ -282,12 +285,12 @@ class _CalendarSettingsTabState extends State<CalendarSettingsTab> {
                 // ── לוח שנה גוגל ──
                 SwitchSettingsTile(
                   leading: const Icon(FluentIcons.arrow_sync_24_regular),
-                  title: const Text('לוח שנה של Google',
+                  title: Text('לוח שנה של Google'.tr(),
                       style: kSettingsTitleStyle),
                   subtitle: Text(
                       isOfflineMode
-                          ? 'מושבת במצב מנותק'
-                          : 'סנכרון אירועים עם Google Calendar',
+                          ? 'מושבת במצב מנותק'.tr()
+                          : 'סנכרון אירועים עם Google Calendar'.tr(),
                       style: kSettingsSubtitleStyle),
                   value: state.googleCalendarEnabled,
                   enabled: !isOfflineMode,
@@ -309,7 +312,7 @@ class _CalendarSettingsTabState extends State<CalendarSettingsTab> {
                           SizedBox(
                             width: double.infinity,
                             child: RecommendedActionButton(
-                              text: 'התחברות לחשבון',
+                              text: 'התחברות לחשבון'.tr(),
                               icon: FluentIcons.person_accounts_24_regular,
                               isLoading: state.googleCalendarSyncInProgress,
                               onPressed: () async {
@@ -325,21 +328,21 @@ class _CalendarSettingsTabState extends State<CalendarSettingsTab> {
                                       await _showCalendarMultiSelectionDialog<
                                           String>(
                                     context: context,
-                                    title: 'בחר לוחות שנה',
+                                    title: 'בחר לוחות שנה'.tr(),
                                     items: calendars
                                         .map((cal) =>
                                             _CalendarMultiSelectionItem<String>(
                                               label: cal.name,
                                               value: cal.id,
                                               subtitle: cal.isPrimary
-                                                  ? 'לוח שנה ראשי'
+                                                  ? 'לוח שנה ראשי'.tr()
                                                   : null,
                                             ))
                                         .toList(),
                                     initialSelectedValues:
                                         state.googleCalendarSelectedIds,
-                                    searchHint: 'חפש לוח שנה...',
-                                    emptyMessage: 'לא נמצאו לוחות שנה',
+                                    searchHint: 'חפש לוח שנה...'.tr(),
+                                    emptyMessage: 'לא נמצאו לוחות שנה'.tr(),
                                   );
                                   if (selected != null && selected.isNotEmpty) {
                                     cubit.updateGoogleCalendarSelectedIds(
@@ -355,8 +358,10 @@ class _CalendarSettingsTabState extends State<CalendarSettingsTab> {
                             children: [
                               Expanded(
                                 child: NeutralActionButton(
-                                  text:
-                                      'לוחות שנה (${state.googleCalendarSelectedIds.length})',
+                                  text: 'לוחות שנה ({count})'.tr(args: {
+                                    'count':
+                                        '${state.googleCalendarSelectedIds.length}'
+                                  }),
                                   icon: FluentIcons.calendar_24_regular,
                                   onPressed: () async {
                                     final cubit = context.read<CalendarCubit>();
@@ -365,14 +370,15 @@ class _CalendarSettingsTabState extends State<CalendarSettingsTab> {
                                     if (!context.mounted) return;
                                     if (calendars.isEmpty) {
                                       UiSnack.show(
-                                          'לא נמצאו לוחות שנה. נסה להתחבר מחדש.');
+                                          'לא נמצאו לוחות שנה. נסה להתחבר מחדש.'
+                                              .tr());
                                       return;
                                     }
                                     final selected =
                                         await _showCalendarMultiSelectionDialog<
                                             String>(
                                       context: context,
-                                      title: 'בחר לוחות שנה',
+                                      title: 'בחר לוחות שנה'.tr(),
                                       items: calendars
                                           .map((cal) =>
                                               _CalendarMultiSelectionItem<
@@ -380,14 +386,14 @@ class _CalendarSettingsTabState extends State<CalendarSettingsTab> {
                                                 label: cal.name,
                                                 value: cal.id,
                                                 subtitle: cal.isPrimary
-                                                    ? 'לוח שנה ראשי'
+                                                    ? 'לוח שנה ראשי'.tr()
                                                     : null,
                                               ))
                                           .toList(),
                                       initialSelectedValues:
                                           state.googleCalendarSelectedIds,
-                                      searchHint: 'חפש לוח שנה...',
-                                      emptyMessage: 'לא נמצאו לוחות שנה',
+                                      searchHint: 'חפש לוח שנה...'.tr(),
+                                      emptyMessage: 'לא נמצאו לוחות שנה'.tr(),
                                     );
                                     if (selected != null &&
                                         selected.isNotEmpty) {
@@ -401,7 +407,7 @@ class _CalendarSettingsTabState extends State<CalendarSettingsTab> {
                               ),
                               const SizedBox(width: 8),
                               RecommendedActionButton(
-                                text: 'סנכרן',
+                                text: 'סנכרן'.tr(),
                                 icon: FluentIcons.arrow_sync_24_regular,
                                 isLoading: state.googleCalendarSyncInProgress,
                                 onPressed: () => context
@@ -410,7 +416,7 @@ class _CalendarSettingsTabState extends State<CalendarSettingsTab> {
                               ),
                               const SizedBox(width: 8),
                               NeutralActionButton(
-                                text: 'התנתק',
+                                text: 'התנתק'.tr(),
                                 onPressed: () => context
                                     .read<CalendarCubit>()
                                     .disconnectGoogleCalendar(),
@@ -424,7 +430,9 @@ class _CalendarSettingsTabState extends State<CalendarSettingsTab> {
                           Padding(
                             padding: const EdgeInsets.only(top: 8.0),
                             child: Text(
-                              'סנכרון אחרון: ${state.googleCalendarLastSync}',
+                              'סנכרון אחרון: {time}'.tr(args: {
+                                'time': '${state.googleCalendarLastSync}'
+                              }),
                               style: TextStyle(
                                 fontSize: AppTokens.fontSM,
                                 color: Theme.of(context)
@@ -540,13 +548,13 @@ class _CalendarSettingsTabState extends State<CalendarSettingsTab> {
 String _calendarDayTransitionSubtitle(CalendarDayTransition transition) {
   switch (transition) {
     case CalendarDayTransition.sunset:
-      return 'היום בלוח יתחלף בזמן השקיעה של העיר הנבחרת';
+      return 'היום בלוח יתחלף בזמן השקיעה של העיר הנבחרת'.tr();
     case CalendarDayTransition.tzais:
-      return 'היום בלוח יתחלף בצאת הכוכבים של העיר הנבחרת';
+      return 'היום בלוח יתחלף בצאת הכוכבים של העיר הנבחרת'.tr();
     case CalendarDayTransition.rabbeinuTam:
-      return 'היום בלוח יתחלף בצאת הכוכבים לרבינו תם';
+      return 'היום בלוח יתחלף בצאת הכוכבים לרבינו תם'.tr();
     case CalendarDayTransition.midnight:
-      return 'היום בלוח יתחלף בשעה 12 בלילה';
+      return 'היום בלוח יתחלף בשעה 12 בלילה'.tr();
   }
 }
 
@@ -555,7 +563,8 @@ Future<List<T>?> _showCalendarMultiSelectionDialog<T>({
   required String title,
   required List<_CalendarMultiSelectionItem<T>> items,
   List<T> initialSelectedValues = const [],
-  String searchHint = 'חיפוש...',
+  String searchHint =
+      'חיפוש...', // i18n-ignore: ברירת מחדל const; הקוראים מעבירים ערך מתורגם
   String? emptyMessage,
   bool barrierDismissible = true,
 }) {
@@ -583,7 +592,7 @@ class _CalendarMultiSelectionDialog<T> extends StatefulWidget {
     required this.title,
     required this.items,
     this.initialSelectedValues = const [],
-    this.searchHint = 'חיפוש...',
+    this.searchHint = 'חיפוש...', // i18n-ignore: ברירת מחדל const
     this.emptyMessage,
   });
 
@@ -632,7 +641,7 @@ class _CalendarMultiSelectionDialogState<T>
 
     return AlertDialog(
       backgroundColor: cs.surfaceContainerHigh,
-      title: Text(widget.title, textDirection: TextDirection.rtl),
+      title: Text(widget.title, textDirection: AppTranslations.textDirection),
       content: SizedBox(
         width: double.maxFinite,
         height: 400,
@@ -648,16 +657,16 @@ class _CalendarMultiSelectionDialogState<T>
               child: widget.items.isEmpty
                   ? Center(
                       child: Text(
-                        widget.emptyMessage ?? 'לא נמצאו פריטים',
+                        widget.emptyMessage ?? 'לא נמצאו פריטים'.tr(),
                         style: TextStyle(color: cs.onSurfaceVariant),
-                        textDirection: TextDirection.rtl,
+                        textDirection: AppTranslations.textDirection,
                       ),
                     )
                   : filteredItems.isEmpty
-                      ? const Center(
+                      ? Center(
                           child: Text(
-                            'לא נמצאו תוצאות',
-                            textDirection: TextDirection.rtl,
+                            'לא נמצאו תוצאות'.tr(),
+                            textDirection: AppTranslations.textDirection,
                           ),
                         )
                       : ListView.builder(
@@ -670,12 +679,13 @@ class _CalendarMultiSelectionDialogState<T>
                             return CheckboxListTile(
                               title: Text(
                                 item.label,
-                                textDirection: TextDirection.rtl,
+                                textDirection: AppTranslations.textDirection,
                               ),
                               subtitle: item.subtitle != null
                                   ? Text(
                                       item.subtitle!,
-                                      textDirection: TextDirection.rtl,
+                                      textDirection:
+                                          AppTranslations.textDirection,
                                     )
                                   : null,
                               value: isSelected,
@@ -697,11 +707,11 @@ class _CalendarMultiSelectionDialogState<T>
       ),
       actions: [
         NeutralActionButton(
-          text: 'ביטול',
+          text: 'ביטול'.tr(),
           onPressed: () => Navigator.of(context).pop(),
         ),
         RecommendedActionButton(
-          text: 'אישור',
+          text: 'אישור'.tr(),
           onPressed: selectedValues.isEmpty
               ? () {}
               : () => Navigator.of(context).pop(selectedValues.toList()),

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
+import 'package:otzaria/l10n/app_translations.dart';
+import 'package:otzaria/l10n/tr_extension.dart';
 import 'package:otzaria/settings/search/settings_search_models.dart';
 import 'package:otzaria/settings/view/settings_screen.dart';
 import 'package:otzaria/theme/layout_tokens.dart';
@@ -69,14 +71,14 @@ class SettingsSearchResultsView extends StatelessWidget {
                   ),
                   const SizedBox(height: 12),
                   Text(
-                    'לא נמצאו הגדרות תואמות',
+                    'לא נמצאו הגדרות תואמות'.tr(),
                     style: Theme.of(context).textTheme.titleMedium?.copyWith(
                           color: colorScheme.onSurfaceVariant,
                         ),
                   ),
                   const SizedBox(height: 4),
                   Text(
-                    'נסה לחפש מילים אחרות',
+                    'נסה לחפש מילים אחרות'.tr(),
                     style: Theme.of(context).textTheme.bodySmall?.copyWith(
                           color: colorScheme.onSurfaceVariant,
                         ),
@@ -199,7 +201,7 @@ class _HighlightedText extends StatelessWidget {
     final spans = _buildSpans(text, query, highlightColor);
 
     return RichText(
-      textDirection: TextDirection.rtl,
+      textDirection: AppTranslations.textDirection,
       text: TextSpan(
         style: style ?? DefaultTextStyle.of(context).style,
         children: spans,
@@ -275,7 +277,9 @@ class _HighlightedText extends StatelessWidget {
       if (code >= 0x0591 && code <= 0x05C7) continue;
 
       // גרשיים
-      if (ch == '"' || ch == "'" || ch == '׳' || ch == '״') continue;
+      if (ch == '"' || ch == "'" || ch == '׳' || ch == '״') {
+        continue; // i18n-ignore — תווי עיבוד, לא טקסט ממשק
+      }
 
       final lower = ch.toLowerCase();
 
@@ -318,18 +322,18 @@ IconData _iconForTab(SettingsTab tab) {
 String _tabLabel(SettingsTab tab) {
   switch (tab) {
     case SettingsTab.design:
-      return 'מראה';
+      return 'מראה'.tr();
     case SettingsTab.text:
-      return 'כתב';
+      return 'כתב'.tr();
     case SettingsTab.library:
-      return 'ספריה';
+      return 'ספריה'.tr();
     case SettingsTab.tools:
-      return 'כלים';
+      return 'כלים'.tr();
     case SettingsTab.shortcuts:
-      return 'קיצורים';
+      return 'קיצורים'.tr();
     case SettingsTab.system:
-      return 'מערכת';
+      return 'מערכת'.tr();
     case SettingsTab.about:
-      return 'אודות';
+      return 'אודות'.tr();
   }
 }

@@ -5,6 +5,8 @@ import 'package:file_picker/file_picker.dart';
 import 'dart:io';
 
 import 'package:otzaria/data/data_providers/database_library_provider.dart';
+import 'package:otzaria/l10n/app_translations.dart';
+import 'package:otzaria/l10n/tr_extension.dart';
 import 'package:otzaria/settings/services/custom_folders/custom_folder.dart';
 import 'package:otzaria/settings/services/custom_folders/bloc/custom_folders_bloc.dart';
 import 'package:otzaria/widgets/dialogs/confirmation_dialog.dart';
@@ -43,8 +45,8 @@ class _CustomFoldersTileState extends State<CustomFoldersTile> {
     super.dispose();
   }
 
-  static const String _customFoldersReloadNotice =
-      'לאחר הוספת ספרים חדשים לתיקייה קיימת, יש ללחוץ על סמל הרענון.';
+  String get _customFoldersReloadNotice =>
+      'לאחר הוספת ספרים חדשים לתיקייה קיימת, יש ללחוץ על סמל הרענון.'.tr();
 
   Future<void> _addFolder() async {
     final bloc = context.read<CustomFoldersBloc>();
@@ -54,7 +56,7 @@ class _CustomFoldersTileState extends State<CustomFoldersTile> {
     final dir = Directory(path);
     if (!await dir.exists()) {
       if (!mounted) return;
-      UiSnack.showError('התיקייה לא נמצאה');
+      UiSnack.showError('התיקייה לא נמצאה'.tr());
       return;
     }
 
@@ -85,10 +87,11 @@ class _CustomFoldersTileState extends State<CustomFoldersTile> {
 
     bloc.add(AddCustomFolder(path));
 
-    String msg =
-        'התיקייה "${path.split(Platform.pathSeparator).last}" נוספה בהצלחה';
+    String msg = 'התיקייה "{name}" נוספה בהצלחה'
+        .tr(args: {'name': path.split(Platform.pathSeparator).last});
     if (zipExtracted && extractedFileName != null) {
-      msg += '\nהקובץ "$extractedFileName" חולץ בהצלחה!';
+      msg += '\nהקובץ "{name}" חולץ בהצלחה!'
+          .tr(args: {'name': '$extractedFileName'});
     }
     UiSnack.show(msg, duration: const Duration(seconds: 9));
   }
@@ -97,20 +100,21 @@ class _CustomFoldersTileState extends State<CustomFoldersTile> {
     final bloc = context.read<CustomFoldersBloc>();
     final confirmed = await showConfirmationDialog(
       context: context,
-      title: 'הסרת תיקייה',
-      content: 'האם להסיר את התיקייה "${folder.name}" מהספרייה?\n'
-          'הקבצים המקוריים לא יימחקו.',
+      title: 'הסרת תיקייה'.tr(),
+      content:
+          'האם להסיר את התיקייה "{name}" מהספרייה?\nהקבצים המקוריים לא יימחקו.'
+              .tr(args: {'name': folder.name}),
       isDangerous: false,
     );
     if (confirmed != true || !mounted) return;
 
     final deleteFromDb = await showTwoActionsDialog(
       context: context,
-      title: 'מחיקה ממסד הנתונים',
-      content: 'התיקייה הוסרה מהרשימה.\n'
-          'האם למחוק גם את הספרים ממסד הנתונים?',
-      cancelText: 'השאר ב-DB',
-      confirmText: 'מחק מ-DB',
+      title: 'מחיקה ממסד הנתונים'.tr(),
+      content:
+          'התיקייה הוסרה מהרשימה.\nהאם למחוק גם את הספרים ממסד הנתונים?'.tr(),
+      cancelText: 'השאר ב-DB'.tr(),
+      confirmText: 'מחק מ-DB'.tr(),
     );
 
     if (!mounted) return;
@@ -122,10 +126,10 @@ class _CustomFoldersTileState extends State<CustomFoldersTile> {
     if (value) {
       final confirmed = await showConfirmationDialog(
         context: context,
-        title: 'הכנסת תוכן ל-DB',
-        content: 'תוכן הספרים יישמר במסד הנתונים.\n'
-            'הקבצים המקוריים יישארו במקום.\n\n'
-            'האם להמשיך?',
+        title: 'הכנסת תוכן ל-DB'.tr(),
+        content:
+            'תוכן הספרים יישמר במסד הנתונים.\nהקבצים המקוריים יישארו במקום.\n\nהאם להמשיך?'
+                .tr(),
         isDangerous: false,
       );
       if (confirmed != true || !mounted) return;
@@ -151,11 +155,11 @@ class _CustomFoldersTileState extends State<CustomFoldersTile> {
           children: [
             ListTile(
               leading: const Icon(FluentIcons.folder_add_24_regular),
-              title: const Text('הוסף תיקייה לאוצריא'),
+              title: Text('הוסף תיקייה לאוצריא'.tr()),
               subtitle: Text(
                 folders.isEmpty
-                    ? 'לחץ להוספת תיקיות אישיות'
-                    : '${folders.length} תיקיות',
+                    ? 'לחץ להוספת תיקיות אישיות'.tr()
+                    : '{count} תיקיות'.tr(args: {'count': '${folders.length}'}),
                 style: Theme.of(context).textTheme.bodySmall,
               ),
               hoverColor: Colors.transparent,
@@ -176,10 +180,10 @@ class _CustomFoldersTileState extends State<CustomFoldersTile> {
                           : () => context
                               .read<CustomFoldersBloc>()
                               .add(const RescanCustomFolders()),
-                      tooltip: 'סרוק מחדש תיקיות אישיות',
+                      tooltip: 'סרוק מחדש תיקיות אישיות'.tr(),
                     ),
                   RecommendedActionButton(
-                    text: 'הוסף תיקייה',
+                    text: 'הוסף תיקייה'.tr(),
                     icon: FluentIcons.folder_add_24_regular,
                     onPressed: _addFolder,
                     isLoading: isSyncing,
@@ -193,7 +197,7 @@ class _CustomFoldersTileState extends State<CustomFoldersTile> {
                       ),
                       onPressed: () =>
                           setState(() => _isExpanded = !_isExpanded),
-                      tooltip: _isExpanded ? 'הסתר' : 'הצג תיקיות',
+                      tooltip: _isExpanded ? 'הסתר'.tr() : 'הצג תיקיות'.tr(),
                     ),
                 ],
               ),
@@ -224,7 +228,7 @@ class _CustomFoldersTileState extends State<CustomFoldersTile> {
                       Expanded(
                         child: Text(
                           _customFoldersReloadNotice,
-                          textDirection: TextDirection.rtl,
+                          textDirection: AppTranslations.textDirection,
                           style:
                               Theme.of(context).textTheme.bodySmall?.copyWith(
                                     color: Theme.of(context)
@@ -279,7 +283,7 @@ class _CustomFoldersTileState extends State<CustomFoldersTile> {
         mainAxisSize: MainAxisSize.min,
         children: [
           Tooltip(
-            message: 'הכנס תוכן ל-DB',
+            message: 'הכנס תוכן ל-DB'.tr(),
             child: isSyncing && folder.addToDatabase
                 ? const SizedBox(
                     width: 24,
@@ -296,7 +300,7 @@ class _CustomFoldersTileState extends State<CustomFoldersTile> {
           IconButton(
             icon: const Icon(FluentIcons.delete_24_regular, size: 18),
             onPressed: isSyncing ? null : () => _removeFolder(folder),
-            tooltip: 'הסר תיקייה',
+            tooltip: 'הסר תיקייה'.tr(),
           ),
         ],
       ),

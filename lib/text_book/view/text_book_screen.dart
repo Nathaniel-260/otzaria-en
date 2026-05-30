@@ -3,6 +3,8 @@ import 'dart:math';
 import 'dart:async';
 import 'dart:ui' as ui;
 import 'package:otzaria/core/ui_snack.dart';
+import 'package:otzaria/l10n/app_translations.dart';
+import 'package:otzaria/l10n/tr_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
@@ -198,7 +200,7 @@ class _TextBookViewerBlocState extends State<TextBookViewerBloc>
       final state = context.read<TextBookBloc>().state as TextBookLoaded;
 
       if (!dataProvider.hasData) {
-        UiSnack.showError('נתוני שמור וזכור לא נטענו');
+        UiSnack.showError('נתוני שמור וזכור לא נטענו'.tr());
         return;
       }
 
@@ -219,7 +221,7 @@ class _TextBookViewerBlocState extends State<TextBookViewerBloc>
       }
 
       if (bookId == null) {
-        UiSnack.showError('הספר לא נמצא במסד הנתונים');
+        UiSnack.showError('הספר לא נמצא במסד הנתונים'.tr());
         return;
       }
 
@@ -227,7 +229,7 @@ class _TextBookViewerBlocState extends State<TextBookViewerBloc>
       final result = dataProvider.getBookById(bookId);
 
       if (result == null) {
-        UiSnack.showError('הספר לא נמצא בשמור וזכור');
+        UiSnack.showError('הספר לא נמצא בשמור וזכור'.tr());
         return;
       }
 
@@ -335,7 +337,8 @@ class _TextBookViewerBlocState extends State<TextBookViewerBloc>
       }
 
       if (targetItem == null) {
-        throw Exception('$searchTitle לא נמצא בשמור וזכור');
+        throw Exception(
+            '{title} לא נמצא בשמור וזכור'.tr(args: {'title': searchTitle}));
       }
 
       debugPrint(
@@ -360,7 +363,8 @@ class _TextBookViewerBlocState extends State<TextBookViewerBloc>
       }
 
       if (columnToMark == null) {
-        UiSnack.show('אין מקום פנוי ב$chapterName, למדת הרבה!');
+        UiSnack.show('אין מקום פנוי ב{chapter}, למדת הרבה!'
+            .tr(args: {'chapter': chapterName}));
         return;
       }
 
@@ -376,10 +380,12 @@ class _TextBookViewerBlocState extends State<TextBookViewerBloc>
       final columnName = _getColumnDisplayName(columnToMark);
       // השתמש בשם המקורי מהכותרת
       final displayName = chapterName;
-      UiSnack.show('$displayName סומן כ$columnName בהצלחה!');
+      UiSnack.show('{name} סומן כ{column} בהצלחה!'
+          .tr(args: {'name': displayName, 'column': columnName}));
     } catch (e) {
       debugPrint('Error in _markShamorZachorProgress: $e');
-      UiSnack.showError('שגיאה בסימון: ${e.toString()}');
+      UiSnack.showError(
+          'שגיאה בסימון: {error}'.tr(args: {'error': e.toString()}));
     }
   }
 
@@ -415,13 +421,13 @@ class _TextBookViewerBlocState extends State<TextBookViewerBloc>
   String _getColumnDisplayName(String column) {
     switch (column) {
       case 'learn':
-        return 'נלמד';
+        return 'נלמד'.tr();
       case 'review1':
-        return 'חזרה ראשונה';
+        return 'חזרה ראשונה'.tr();
       case 'review2':
-        return 'חזרה שנייה';
+        return 'חזרה שנייה'.tr();
       case 'review3':
-        return 'חזרה שלישית';
+        return 'חזרה שלישית'.tr();
       default:
         return column;
     }
@@ -455,7 +461,7 @@ class _TextBookViewerBlocState extends State<TextBookViewerBloc>
       final settingsState = context.read<SettingsBloc>().state;
 
       if (png == null || png.isEmpty) {
-        UiSnack.showError('לא ניתן לצלם את תצוגת "צורת הדף" לצורך הדפסה');
+        UiSnack.showError('לא ניתן לצלם את תצוגת "צורת הדף" לצורך הדפסה'.tr());
         return;
       }
 
@@ -723,7 +729,7 @@ class _TextBookViewerBlocState extends State<TextBookViewerBloc>
     ));
 
     if (mounted) {
-      UiSnack.show('ההגדרות הפר-ספריות אופסו בהצלחה');
+      UiSnack.show('ההגדרות הפר-ספריות אופסו בהצלחה'.tr());
     }
   }
 
@@ -961,7 +967,7 @@ class _TextBookViewerBlocState extends State<TextBookViewerBloc>
                       ),
                       leading: IconButton(
                         icon: const Icon(FluentIcons.navigation_24_regular),
-                        tooltip: "ניווט וחיפוש",
+                        tooltip: "ניווט וחיפוש".tr(),
                         onPressed: null,
                       ),
                       actions: [
@@ -974,110 +980,110 @@ class _TextBookViewerBlocState extends State<TextBookViewerBloc>
                               widget: IconButton(
                                 icon: const Icon(
                                     FluentIcons.panel_left_24_regular),
-                                tooltip: 'הצגת מפרשים',
+                                tooltip: 'הצגת מפרשים'.tr(),
                                 onPressed: null,
                               ),
                               icon: FluentIcons.panel_left_24_regular,
-                              tooltip: 'הצגת מפרשים',
+                              tooltip: 'הצגת מפרשים'.tr(),
                               onPressed: null,
                             ),
                             ActionButtonData(
                               widget: IconButton(
                                 icon: const Icon(
                                     FluentIcons.text_font_24_regular),
-                                tooltip: 'הצג או הסתר ניקוד',
+                                tooltip: 'הצג או הסתר ניקוד'.tr(),
                                 onPressed: null,
                               ),
                               icon: FluentIcons.text_font_24_regular,
-                              tooltip: 'הצג או הסתר ניקוד',
+                              tooltip: 'הצג או הסתר ניקוד'.tr(),
                               onPressed: null,
                             ),
                             ActionButtonData(
                               widget: IconButton(
                                 icon: const Icon(FluentIcons
                                     .text_clear_formatting_24_regular),
-                                tooltip: 'הסתר פיסוק',
+                                tooltip: 'הסתר פיסוק'.tr(),
                                 onPressed: null,
                               ),
                               icon:
                                   FluentIcons.text_clear_formatting_24_regular,
-                              tooltip: 'הסתר פיסוק',
+                              tooltip: 'הסתר פיסוק'.tr(),
                               onPressed: null,
                             ),
                             ActionButtonData(
                               widget: IconButton(
                                 icon: const Icon(FluentIcons.search_24_regular),
-                                tooltip: 'חיפוש',
+                                tooltip: 'חיפוש'.tr(),
                                 onPressed: null,
                               ),
                               icon: FluentIcons.search_24_regular,
-                              tooltip: 'חיפוש',
+                              tooltip: 'חיפוש'.tr(),
                               onPressed: null,
                             ),
                             ActionButtonData(
                               widget: IconButton(
                                 icon:
                                     const Icon(FluentIcons.zoom_in_24_regular),
-                                tooltip: 'הגדל את גודל הטקסט',
+                                tooltip: 'הגדל את גודל הטקסט'.tr(),
                                 onPressed: null,
                               ),
                               icon: FluentIcons.zoom_in_24_regular,
-                              tooltip: 'הגדל את גודל הטקסט',
+                              tooltip: 'הגדל את גודל הטקסט'.tr(),
                               onPressed: null,
                             ),
                             ActionButtonData(
                               widget: IconButton(
                                 icon:
                                     const Icon(FluentIcons.zoom_out_24_regular),
-                                tooltip: 'הקטן את גודל הטקסט',
+                                tooltip: 'הקטן את גודל הטקסט'.tr(),
                                 onPressed: null,
                               ),
                               icon: FluentIcons.zoom_out_24_regular,
-                              tooltip: 'הקטן את גודל הטקסט',
+                              tooltip: 'הקטן את גודל הטקסט'.tr(),
                               onPressed: null,
                             ),
                             ActionButtonData(
                               widget: IconButton(
                                 icon: const Icon(
                                     FluentIcons.arrow_previous_24_filled),
-                                tooltip: 'תחילת הספר',
+                                tooltip: 'תחילת הספר'.tr(),
                                 onPressed: null,
                               ),
                               icon: FluentIcons.arrow_previous_24_filled,
-                              tooltip: 'תחילת הספר',
+                              tooltip: 'תחילת הספר'.tr(),
                               onPressed: null,
                             ),
                             ActionButtonData(
                               widget: IconButton(
                                 icon: const Icon(
                                     FluentIcons.chevron_left_24_regular),
-                                tooltip: 'הקטע הקודם',
+                                tooltip: 'הקטע הקודם'.tr(),
                                 onPressed: null,
                               ),
                               icon: FluentIcons.chevron_left_24_regular,
-                              tooltip: 'הקטע הקודם',
+                              tooltip: 'הקטע הקודם'.tr(),
                               onPressed: null,
                             ),
                             ActionButtonData(
                               widget: IconButton(
                                 icon: const Icon(
                                     FluentIcons.chevron_right_24_regular),
-                                tooltip: 'הקטע הבא',
+                                tooltip: 'הקטע הבא'.tr(),
                                 onPressed: null,
                               ),
                               icon: FluentIcons.chevron_right_24_regular,
-                              tooltip: 'הקטע הבא',
+                              tooltip: 'הקטע הבא'.tr(),
                               onPressed: null,
                             ),
                             ActionButtonData(
                               widget: IconButton(
                                 icon: const Icon(
                                     FluentIcons.arrow_next_24_filled),
-                                tooltip: 'סוף הספר',
+                                tooltip: 'סוף הספר'.tr(),
                                 onPressed: null,
                               ),
                               icon: FluentIcons.arrow_next_24_filled,
-                              tooltip: 'סוף הספר',
+                              tooltip: 'סוף הספר'.tr(),
                               onPressed: null,
                             ),
                           ],
@@ -1086,7 +1092,7 @@ class _TextBookViewerBlocState extends State<TextBookViewerBloc>
                             ActionButtonData(
                               widget: const SizedBox.shrink(),
                               icon: FluentIcons.more_horizontal_24_regular,
-                              tooltip: 'פעולות נוספות',
+                              tooltip: 'פעולות נוספות'.tr(),
                               onPressed: null,
                               submenuItems: [
                                 ActionButtonData(
@@ -1212,7 +1218,7 @@ class _TextBookViewerBlocState extends State<TextBookViewerBloc>
       BuildContext context, TextBookLoaded state) {
     return IconButton(
       icon: const Icon(FluentIcons.settings_24_regular, size: 20),
-      tooltip: 'הגדרות צורת הדף',
+      tooltip: 'הגדרות צורת הדף'.tr(),
       onPressed: () async {
         // טעינת ההגדרות הנוכחיות
         final config = PageShapeSettingsManager.loadConfiguration(
@@ -1318,7 +1324,7 @@ class _TextBookViewerBlocState extends State<TextBookViewerBloc>
     return IconButton(
       key: widget.enableTourTargets ? textBookNavigationTourTargetKey : null,
       icon: const Icon(FluentIcons.navigation_24_regular),
-      tooltip: "ניווט וחיפוש",
+      tooltip: "ניווט וחיפוש".tr(),
       onPressed: () =>
           context.read<TextBookBloc>().add(ToggleLeftPane(!state.showLeftPane)),
     );
@@ -1365,9 +1371,9 @@ class _TextBookViewerBlocState extends State<TextBookViewerBloc>
               ? {
                   _getViewModeTooltip(state):
                       textBookOverflowCommentatorsTourTargetKey,
-                  'הוסף סימניה': textBookOverflowBookmarkTourTargetKey,
-                  'חיפוש': textBookOverflowSearchTourTargetKey,
-                  'הדפסה': textBookOverflowPrintTourTargetKey,
+                  'הוסף סימניה'.tr(): textBookOverflowBookmarkTourTargetKey,
+                  'חיפוש'.tr(): textBookOverflowSearchTourTargetKey,
+                  'הדפסה'.tr(): textBookOverflowPrintTourTargetKey,
                 }
               : null,
           actions: _buildDisplayOrderActions(context, state),
@@ -1391,11 +1397,11 @@ class _TextBookViewerBlocState extends State<TextBookViewerBloc>
         ActionButtonData(
           widget: IconButton(
             icon: const Icon(FluentIcons.document_pdf_24_regular),
-            tooltip: 'פתח ספר במהדורה מודפסת',
+            tooltip: 'פתח ספר במהדורה מודפסת'.tr(),
             onPressed: () => _handlePdfButtonPress(context, state),
           ),
           icon: FluentIcons.document_pdf_24_regular,
-          tooltip: 'פתח ספר במהדורה מודפסת',
+          tooltip: 'פתח ספר במהדורה מודפסת'.tr(),
           onPressed: () => _handlePdfButtonPress(context, state),
         ),
 
@@ -1422,7 +1428,7 @@ class _TextBookViewerBlocState extends State<TextBookViewerBloc>
         icon: state.removeNikud
             ? FluentIcons.text_font_24_regular
             : FluentIcons.text_font_info_24_regular,
-        tooltip: state.removeNikud ? 'הצג ניקוד' : 'הסתר ניקוד',
+        tooltip: state.removeNikud ? 'הצג ניקוד'.tr() : 'הסתר ניקוד'.tr(),
         onPressed: () async {
           final newValue = !state.removeNikud;
           context.read<TextBookBloc>().add(ToggleNikud(newValue));
@@ -1438,7 +1444,7 @@ class _TextBookViewerBlocState extends State<TextBookViewerBloc>
           icon: state.removePunctuation
               ? FluentIcons.text_quote_24_regular
               : FluentIcons.text_clear_formatting_24_regular,
-          tooltip: state.removePunctuation ? 'הצג פיסוק' : 'הסתר פיסוק',
+          tooltip: state.removePunctuation ? 'הצג פיסוק'.tr() : 'הסתר פיסוק'.tr(),
           onPressed: () => _toggleAndSavePunctuation(context, state),
         ),
 
@@ -1450,8 +1456,8 @@ class _TextBookViewerBlocState extends State<TextBookViewerBloc>
               ? FluentIcons.text_align_justify_24_filled
               : FluentIcons.text_align_justify_24_regular,
           tooltip: state.continuousReadingMode
-              ? 'הצג כשורות בודדות'
-              : 'הצג כטקסט רציף',
+              ? 'הצג כשורות בודדות'.tr()
+              : 'הצג כטקסט רציף'.tr(),
           onPressed: () => _toggleAndSaveContinuousReading(context, state),
         ),
 
@@ -1463,7 +1469,7 @@ class _TextBookViewerBlocState extends State<TextBookViewerBloc>
           key: widget.enableTourTargets ? textBookSearchTourTargetKey : null,
         ),
         icon: FluentIcons.search_24_regular,
-        tooltip: 'חיפוש',
+        tooltip: 'חיפוש'.tr(),
         onPressed: _openSearchFromToolbar,
       ),
 
@@ -1471,7 +1477,7 @@ class _TextBookViewerBlocState extends State<TextBookViewerBloc>
       ActionButtonData(
         widget: _buildZoomInButton(context, state),
         icon: FluentIcons.zoom_in_24_regular,
-        tooltip: 'הגדל את גודל הטקסט',
+        tooltip: 'הגדל את גודל הטקסט'.tr(),
         onPressed: () async {
           final newSize = min(50.0, state.fontSize + 3);
           context.read<TextBookBloc>().add(UpdateFontSize(newSize));
@@ -1483,7 +1489,7 @@ class _TextBookViewerBlocState extends State<TextBookViewerBloc>
       ActionButtonData(
         widget: _buildZoomOutButton(context, state),
         icon: FluentIcons.zoom_out_24_regular,
-        tooltip: 'הקטן את גודל הטקסט',
+        tooltip: 'הקטן את גודל הטקסט'.tr(),
         onPressed: () async {
           final newSize = max(15.0, state.fontSize - 3);
           context.read<TextBookBloc>().add(UpdateFontSize(newSize));
@@ -1513,7 +1519,7 @@ class _TextBookViewerBlocState extends State<TextBookViewerBloc>
           child: _buildBookmarkButton(context, state),
         ),
         icon: FluentIcons.bookmark_add_24_regular,
-        tooltip: 'הוסף סימניה',
+        tooltip: 'הוסף סימניה'.tr(),
         onPressed: () => _handleBookmarkPress(context, state),
       ),
 
@@ -1522,10 +1528,10 @@ class _TextBookViewerBlocState extends State<TextBookViewerBloc>
         widget: IconButton(
           onPressed: () => _showBookmarksForCurrentBook(context, state.book),
           icon: const Icon(FluentIcons.bookmark_multiple_24_regular),
-          tooltip: 'סימניות בספר זה',
+          tooltip: 'סימניות בספר זה'.tr(),
         ),
         icon: FluentIcons.bookmark_multiple_24_regular,
-        tooltip: 'סימניות בספר זה',
+        tooltip: 'סימניות בספר זה'.tr(),
         onPressed: () => _showBookmarksForCurrentBook(context, state.book),
       ),
 
@@ -1534,10 +1540,10 @@ class _TextBookViewerBlocState extends State<TextBookViewerBloc>
         widget: IconButton(
           onPressed: () => _openPersonalNotesForCurrentView(state),
           icon: const Icon(FluentIcons.note_24_regular),
-          tooltip: 'הצג הערות אישיות',
+          tooltip: 'הצג הערות אישיות'.tr(),
         ),
         icon: FluentIcons.note_24_regular,
-        tooltip: 'הצג הערות אישיות',
+        tooltip: 'הצג הערות אישיות'.tr(),
         onPressed: () => _openPersonalNotesForCurrentView(state),
       ),
 
@@ -1548,8 +1554,8 @@ class _TextBookViewerBlocState extends State<TextBookViewerBloc>
             ? FluentIcons.checkmark_circle_24_regular
             : FluentIcons.add_circle_24_regular,
         tooltip: _isBookTrackedInShamorZachor(state.book.title)
-            ? 'סמן קטע פתוח כנלמד בשמור וזכור'
-            : 'הוסף למעקב לימוד בשמור וזכור',
+            ? 'סמן קטע פתוח כנלמד בשמור וזכור'.tr()
+            : 'הוסף למעקב לימוד בשמור וזכור'.tr(),
         onPressed: () {
           if (_isBookTrackedInShamorZachor(state.book.title)) {
             _markShamorZachorProgress(state.book.title);
@@ -1564,7 +1570,7 @@ class _TextBookViewerBlocState extends State<TextBookViewerBloc>
           context.read<SettingsBloc>().state.enablePerBookSettings)
         ActionButtonData.simple(
           icon: FluentIcons.arrow_reset_24_regular,
-          tooltip: 'אפס הגדרות ספר זה',
+          tooltip: 'אפס הגדרות ספר זה'.tr(),
           onPressed: _resetPerBookSettings,
           compact: false,
           visual: ActionButtonVisual.iconButton,
@@ -1585,8 +1591,8 @@ class _TextBookViewerBlocState extends State<TextBookViewerBloc>
         widget: const SizedBox.shrink(),
         icon: FluentIcons.link_24_regular,
         tooltip: state.book.id != null
-            ? 'העתק קישור ישיר'
-            : 'העתק קישור ישיר (לא זמין לספר זה)',
+            ? 'העתק קישור ישיר'.tr()
+            : 'העתק קישור ישיר (לא זמין לספר זה)'.tr(),
         onPressed: null,
         submenuItems: state.book.id != null
             ? () {
@@ -1595,13 +1601,13 @@ class _TextBookViewerBlocState extends State<TextBookViewerBloc>
                   ActionButtonData(
                     widget: const SizedBox.shrink(),
                     icon: FluentIcons.link_24_regular,
-                    tooltip: 'העתק קישור ישיר לספר זה',
+                    tooltip: 'העתק קישור ישיר לספר זה'.tr(),
                     onPressed: () => copyLinkToClipboard(buildBookLink(bookId)),
                   ),
                   ActionButtonData(
                     widget: const SizedBox.shrink(),
                     icon: FluentIcons.link_multiple_24_regular,
-                    tooltip: 'העתק קישור ישיר למקטע זה',
+                    tooltip: 'העתק קישור ישיר למקטע זה'.tr(),
                     onPressed: () {
                       // קישור deep-link חייב להפנות לשורת מקור: ב-positions
                       // הסט לא ממוין, וב-מצב רצף ה-index הוא segmentIndex.
@@ -1623,7 +1629,7 @@ class _TextBookViewerBlocState extends State<TextBookViewerBloc>
             key: widget.enableTourTargets ? textBookPrintTourTargetKey : null,
           ),
           icon: FluentIcons.print_24_regular,
-          tooltip: 'הדפסה',
+          tooltip: 'הדפסה'.tr(),
           onPressed: () => _handlePrintPress(state),
         ),
 
@@ -1632,11 +1638,11 @@ class _TextBookViewerBlocState extends State<TextBookViewerBloc>
         ActionButtonData(
           widget: IconButton(
             icon: const Icon(FluentIcons.info_24_regular),
-            tooltip: 'אודות הספר',
+            tooltip: 'אודות הספר'.tr(),
             onPressed: () => showBookSourceDialog(context, state),
           ),
           icon: FluentIcons.info_24_regular,
-          tooltip: 'אודות הספר',
+          tooltip: 'אודות הספר'.tr(),
           onPressed: () => showBookSourceDialog(context, state),
         ),
 
@@ -1645,7 +1651,7 @@ class _TextBookViewerBlocState extends State<TextBookViewerBloc>
         ActionButtonData(
           widget: const SizedBox.shrink(), // לא נראה כי זה בתפריט
           icon: FluentIcons.more_horizontal_24_regular,
-          tooltip: 'פעולות נוספות',
+          tooltip: 'פעולות נוספות'.tr(),
           onPressed: null, // לא ניתן ללחיצה - זה submenu
           submenuItems: [
             // איפוס הגדרות פר-ספר (מוצג רק כשההגדרה מופעלת)
@@ -1653,7 +1659,7 @@ class _TextBookViewerBlocState extends State<TextBookViewerBloc>
               ActionButtonData(
                 widget: const SizedBox.shrink(),
                 icon: FluentIcons.arrow_reset_24_regular,
-                tooltip: 'אפס הגדרות ספר זה',
+                tooltip: 'אפס הגדרות ספר זה'.tr(),
                 onPressed: () => _resetPerBookSettings(),
               ),
             // [EDITING DISABLED]
@@ -1666,13 +1672,13 @@ class _TextBookViewerBlocState extends State<TextBookViewerBloc>
             ActionButtonData(
               widget: const SizedBox.shrink(),
               icon: FluentIcons.print_24_regular,
-              tooltip: 'הדפסה',
+              tooltip: 'הדפסה'.tr(),
               onPressed: () => _handlePrintPress(state),
             ),
             ActionButtonData(
               widget: const SizedBox.shrink(),
               icon: FluentIcons.info_24_regular,
-              tooltip: 'אודות הספר',
+              tooltip: 'אודות הספר'.tr(),
               onPressed: () => showBookSourceDialog(context, state),
             ),
           ],
@@ -1684,22 +1690,22 @@ class _TextBookViewerBlocState extends State<TextBookViewerBloc>
     return buildBookViewNavigationActions(
       firstAction: buildBookViewFirstNavigationAction(
         widget: _buildPreviousTocButton(state),
-        tooltip: 'הדף/פרק הקודם',
+        tooltip: 'הדף/פרק הקודם'.tr(),
         onPressed: () => _navigateToPreviousToc(state),
       ),
       previousAction: buildBookViewPreviousNavigationAction(
         widget: _buildPreviousPageButton(state),
-        tooltip: 'הקטע הקודם',
+        tooltip: 'הקטע הקודם'.tr(),
         onPressed: () => _scrollToPreviousSegment(state),
       ),
       nextAction: buildBookViewNextNavigationAction(
         widget: _buildNextPageButton(state),
-        tooltip: 'הקטע הבא',
+        tooltip: 'הקטע הבא'.tr(),
         onPressed: () => _scrollToNextSegment(state),
       ),
       lastAction: buildBookViewLastNavigationAction(
         widget: _buildNextTocButton(state),
-        tooltip: 'הדף/פרק הבא',
+        tooltip: 'הדף/פרק הבא'.tr(),
         onPressed: () => _navigateToNextToc(state),
       ),
     );
@@ -1717,11 +1723,11 @@ class _TextBookViewerBlocState extends State<TextBookViewerBloc>
   /// קבלת ה-tooltip למצב התצוגה הנוכחי
   String _getViewModeTooltip(TextBookLoaded state) {
     if (state.showPageShapeView) {
-      return 'תצוגה: צורת הדף';
+      return 'תצוגה: צורת הדף'.tr();
     } else if (state.showSplitView) {
-      return 'תצוגה: מפרשים בצד';
+      return 'תצוגה: מפרשים בצד'.tr();
     } else {
-      return 'תצוגה: מפרשים מתחת';
+      return 'תצוגה: מפרשים מתחת'.tr();
     }
   }
 
@@ -1742,7 +1748,7 @@ class _TextBookViewerBlocState extends State<TextBookViewerBloc>
 
     return AppPopupMenuButton<String>(
       key: key,
-      tooltip: 'בחר סוג תצוגת מפרשים',
+      tooltip: 'בחר סוג תצוגת מפרשים'.tr(),
       icon: iconWidget,
       enabled: !widget.isInCombinedView,
       initialValue: state.showPageShapeView
@@ -1791,28 +1797,28 @@ class _TextBookViewerBlocState extends State<TextBookViewerBloc>
       entries: [
         AppMenuEntry(
           value: _viewModeSplit,
-          label: 'מפרשים בצד',
+          label: 'מפרשים בצד'.tr(),
           icon: isSplit
               ? FluentIcons.panel_left_24_filled
               : FluentIcons.panel_left_24_regular,
         ),
         AppMenuEntry(
           value: _viewModeBelow,
-          label: 'מפרשים מתחת',
+          label: 'מפרשים מתחת'.tr(),
           icon: isBelow
               ? FluentIcons.panel_left_24_filled
               : FluentIcons.panel_left_24_regular,
         ),
         AppMenuEntry(
           value: _viewModePage,
-          label: 'צורת הדף',
+          label: 'צורת הדף'.tr(),
           icon: isPage
               ? FluentIcons.book_open_24_filled
               : FluentIcons.book_open_24_regular,
         ),
-        const AppMenuEntry(
+        AppMenuEntry(
           value: _actionOpenCommentatorsTab,
-          label: 'פתח כרטיסיית מפרשים',
+          label: 'פתח כרטיסיית מפרשים'.tr(),
           icon: FluentIcons.open_24_regular,
         ),
       ],
@@ -1831,7 +1837,7 @@ class _TextBookViewerBlocState extends State<TextBookViewerBloc>
       icon: Icon(state.removeNikud
           ? FluentIcons.text_font_24_regular
           : FluentIcons.text_font_info_24_regular),
-      tooltip: state.removeNikud ? 'הצג ניקוד' : 'הסתר ניקוד',
+      tooltip: state.removeNikud ? 'הצג ניקוד'.tr() : 'הסתר ניקוד'.tr(),
     );
   }
 
@@ -1849,7 +1855,7 @@ class _TextBookViewerBlocState extends State<TextBookViewerBloc>
       icon: Icon(state.removePunctuation
           ? FluentIcons.text_quote_24_regular
           : FluentIcons.text_clear_formatting_24_regular),
-      tooltip: state.removePunctuation ? 'הצג פיסוק' : 'הסתר פיסוק',
+      tooltip: state.removePunctuation ? 'הצג פיסוק'.tr() : 'הסתר פיסוק'.tr(),
     );
   }
 
@@ -1869,7 +1875,9 @@ class _TextBookViewerBlocState extends State<TextBookViewerBloc>
           ? FluentIcons.text_align_justify_24_filled
           : FluentIcons.text_align_justify_24_regular),
       tooltip:
-          state.continuousReadingMode ? 'הצג כשורות בודדות' : 'הצג כטקסט רציף',
+          state.continuousReadingMode
+              ? 'הצג כשורות בודדות'.tr()
+              : 'הצג כטקסט רציף'.tr(),
     );
   }
 
@@ -1892,10 +1900,11 @@ class _TextBookViewerBlocState extends State<TextBookViewerBloc>
               commentatorsToShow: state.activeCommentators,
             );
         UiSnack.showQuick(
-            bookmarkAdded ? 'הסימניה נוספה בהצלחה' : 'הסימניה כבר קיימת');
+            bookmarkAdded ? 'הסימניה נוספה בהצלחה'.tr() : 'הסימניה כבר קיימת'.tr());
       },
       icon: const Icon(FluentIcons.bookmark_add_24_regular),
-      tooltip: 'הוסף סימניה (${shortcut.toUpperCase()})',
+      tooltip: 'הוסף סימניה ({shortcut})'
+          .tr(args: {'shortcut': shortcut.toUpperCase()}),
     );
   }
 
@@ -1919,14 +1928,15 @@ class _TextBookViewerBlocState extends State<TextBookViewerBloc>
       key: key,
       onPressed: _openSearchFromToolbar,
       icon: const Icon(FluentIcons.search_24_regular),
-      tooltip: 'חיפוש (${shortcut.toUpperCase()})',
+      tooltip:
+          'חיפוש ({shortcut})'.tr(args: {'shortcut': shortcut.toUpperCase()}),
     );
   }
 
   Widget _buildZoomInButton(BuildContext context, TextBookLoaded state) {
     return IconButton(
       icon: const Icon(FluentIcons.zoom_in_24_regular),
-      tooltip: 'הגדל את גודל הטקסט (CTRL + +)',
+      tooltip: 'הגדל את גודל הטקסט (CTRL + +)'.tr(),
       onPressed: () async {
         final newSize = min(50.0, state.fontSize + 3);
         context.read<TextBookBloc>().add(UpdateFontSize(newSize));
@@ -1938,7 +1948,7 @@ class _TextBookViewerBlocState extends State<TextBookViewerBloc>
   Widget _buildZoomOutButton(BuildContext context, TextBookLoaded state) {
     return IconButton(
       icon: const Icon(FluentIcons.zoom_out_24_regular),
-      tooltip: 'הקטן את גודל הטקסט (CTRL + -)',
+      tooltip: 'הקטן את גודל הטקסט (CTRL + -)'.tr(),
       onPressed: () async {
         final newSize = max(15.0, state.fontSize - 3);
         context.read<TextBookBloc>().add(UpdateFontSize(newSize));
@@ -1950,7 +1960,7 @@ class _TextBookViewerBlocState extends State<TextBookViewerBloc>
   Widget _buildPreviousPageButton(TextBookLoaded state) {
     return IconButton(
       icon: const Icon(FluentIcons.chevron_left_24_regular),
-      tooltip: 'הקטע הקודם',
+      tooltip: 'הקטע הקודם'.tr(),
       onPressed: () => _scrollToPreviousSegment(state),
     );
   }
@@ -1976,7 +1986,7 @@ class _TextBookViewerBlocState extends State<TextBookViewerBloc>
   Widget _buildNextPageButton(TextBookLoaded state) {
     return IconButton(
       icon: const Icon(FluentIcons.chevron_right_24_regular),
-      tooltip: 'הקטע הבא',
+      tooltip: 'הקטע הבא'.tr(),
       onPressed: () => _scrollToNextSegment(state),
     );
   }
@@ -2086,7 +2096,7 @@ class _TextBookViewerBlocState extends State<TextBookViewerBloc>
   Widget _buildPreviousTocButton(TextBookLoaded state) {
     return IconButton(
       icon: const Icon(FluentIcons.arrow_previous_24_filled),
-      tooltip: 'הדף/פרק הקודם',
+      tooltip: 'הדף/פרק הקודם'.tr(),
       onPressed: () => _navigateToPreviousToc(state),
     );
   }
@@ -2094,7 +2104,7 @@ class _TextBookViewerBlocState extends State<TextBookViewerBloc>
   Widget _buildNextTocButton(TextBookLoaded state) {
     return IconButton(
       icon: const Icon(FluentIcons.arrow_next_24_filled),
-      tooltip: 'הדף/פרק הבא',
+      tooltip: 'הדף/פרק הבא'.tr(),
       onPressed: () => _navigateToNextToc(state),
     );
   }
@@ -2109,7 +2119,8 @@ class _TextBookViewerBlocState extends State<TextBookViewerBloc>
     return IconButton(
       key: key,
       icon: const Icon(FluentIcons.print_24_regular),
-      tooltip: 'הדפסה (${shortcut.toUpperCase()})',
+      tooltip:
+          'הדפסה ({shortcut})'.tr(args: {'shortcut': shortcut.toUpperCase()}),
       onPressed: () {
         final settingsState = context.read<SettingsBloc>().state;
         showDialog(
@@ -2149,8 +2160,8 @@ class _TextBookViewerBlocState extends State<TextBookViewerBloc>
             )
           : const Icon(FluentIcons.add_circle_24_regular, size: 24),
       tooltip: isTracked
-          ? 'סמן קטע פתוח כנלמד בשמור וזכור'
-          : 'הוסף למעקב לימוד בשמור וזכור',
+          ? 'סמן קטע פתוח כנלמד בשמור וזכור'.tr()
+          : 'הוסף למעקב לימוד בשמור וזכור'.tr(),
     );
   }
 
@@ -2215,7 +2226,7 @@ class _TextBookViewerBlocState extends State<TextBookViewerBloc>
       }
 
       if (bookPath == null) {
-        UiSnack.showError('לא נמצא נתיב לספר');
+        UiSnack.showError('לא נמצא נתיב לספר'.tr());
         return;
       }
 
@@ -2226,7 +2237,7 @@ class _TextBookViewerBlocState extends State<TextBookViewerBloc>
       String cleanBookName = bookTitle;
 
       // 3. Show loading indicator
-      UiSnack.show('מוסיף ספר למעקב...');
+      UiSnack.show('מוסיף ספר למעקב...'.tr());
 
       // 4. Add book via provider (only needs book name)
       await dataProvider.addCustomBook(
@@ -2235,21 +2246,24 @@ class _TextBookViewerBlocState extends State<TextBookViewerBloc>
       );
 
       // 5. Success message
-      UiSnack.show('הספר "$cleanBookName" נוסף למעקב בהצלחה!');
+      UiSnack.show('הספר "{name}" נוסף למעקב בהצלחה!'
+          .tr(args: {'name': cleanBookName}));
 
       // 6. Update UI to reflect the change
       setState(() {});
     } catch (e, stackTrace) {
       debugPrint('Error adding book to Shamor Zachor: $e');
       debugPrint('Stack trace: $stackTrace');
-      UiSnack.showError('שגיאה בהוספת הספר למעקב: ${e.toString()}');
+      UiSnack.showError(
+          'שגיאה בהוספת הספר למעקב: {error}'.tr(args: {'error': e.toString()}));
     }
   }
 
   /// פונקציות עזר לטיפול בלחיצות על כפתורים בתפריט הנפתח
   void _handlePdfButtonPress(BuildContext context, TextBookLoaded state) async {
     if (_pdfBook == null) {
-      UiSnack.showError('לא נמצא ספר PDF עבור "${state.book.title}"');
+      UiSnack.showError('לא נמצא ספר PDF עבור "{title}"'
+        .tr(args: {'title': state.book.title}));
       return;
     }
 
@@ -2289,7 +2303,7 @@ class _TextBookViewerBlocState extends State<TextBookViewerBloc>
     );
 
     UiSnack.showQuick(
-        bookmarkAdded ? 'הסימניה נוספה בהצלחה' : 'הסימניה כבר קיימת');
+        bookmarkAdded ? 'הסימניה נוספה בהצלחה'.tr() : 'הסימניה כבר קיימת'.tr());
   }
 
   Widget _buildBody(
@@ -2426,18 +2440,18 @@ class _TextBookViewerBlocState extends State<TextBookViewerBloc>
             (
               icon: FluentIcons.navigation_24_regular,
               iconFilled: FluentIcons.navigation_24_filled,
-              label: 'ניווט'
+              label: 'ניווט'.tr()
             ),
             if (_hasAltTitles)
               (
                 icon: FluentIcons.list_24_regular,
                 iconFilled: FluentIcons.list_24_filled,
-                label: 'כותרות'
+                label: 'כותרות'.tr()
               ),
             (
               icon: FluentIcons.search_24_regular,
               iconFilled: FluentIcons.search_24_filled,
-              label: 'חיפוש'
+              label: 'חיפוש'.tr()
             ),
           ],
           isPinned: state.pinLeftPane,
@@ -2829,7 +2843,7 @@ void _addBookmarkFromKeyboard(
   );
 
   UiSnack.showQuick(
-      bookmarkAdded ? 'הסימניה נוספה בהצלחה' : 'הסימניה כבר קיימת');
+      bookmarkAdded ? 'הסימניה נוספה בהצלחה'.tr() : 'הסימניה כבר קיימת'.tr());
 }
 
 /// Helper function to add note from keyboard shortcut
@@ -2932,7 +2946,8 @@ void _togglePdfView(
 
   final book = library.getCompanionBook(state.book, PdfBook);
   if (book == null) {
-    UiSnack.showError('לא נמצא ספר PDF עבור "${state.book.title}"');
+    UiSnack.showError('לא נמצא ספר PDF עבור "{title}"'
+        .tr(args: {'title': state.book.title}));
     return;
   }
 

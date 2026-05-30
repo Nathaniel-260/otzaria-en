@@ -4,6 +4,7 @@ import 'dart:math';
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:otzaria/l10n/tr_extension.dart';
 import 'package:otzaria/theme/theme_exports.dart';
 import 'package:otzaria/widgets/text/rtl_text_field.dart';
 
@@ -312,7 +313,8 @@ Future<T?> showAnchoredAppSearchMenu<T>({
   required BuildContext anchorContext,
   required List<AppMenuEntry<T>> entries,
   T? initialValue,
-  String searchHint = 'חיפוש',
+  String searchHint =
+      'חיפוש', // i18n-ignore: ברירת מחדל const; הקוראים מעבירים ערך
   PopupMenuPosition position = PopupMenuPosition.under,
   Offset offset = const Offset(0, 4),
 }) async {
@@ -555,7 +557,7 @@ class _AnchoredSearchMenuContentState<T>
                     child: filtered.isEmpty
                         ? Center(
                             child: Text(
-                              'אין תוצאות',
+                              'אין תוצאות'.tr(),
                               style: TextStyle(
                                 color: cs.onSurfaceVariant,
                                 fontSize: widget.metrics.fontSize,

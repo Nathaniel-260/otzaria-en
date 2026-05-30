@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:otzaria/l10n/tr_extension.dart';
 import 'package:otzaria/widgets/text/rtl_text_field.dart';
 import 'package:otzaria/widgets/misc/keyboard_dialog_navigation.dart';
 
@@ -65,7 +66,7 @@ class _InputDialogState extends State<InputDialog> with DialogNavigationMixin {
       onCancel: () => Navigator.of(context).pop(),
       textFieldFocusNode: _textFieldFocusNode,
       child: AlertDialog(
-        title: Text(widget.title),
+        title: Text(widget.title.tr()),
         content: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -74,7 +75,7 @@ class _InputDialogState extends State<InputDialog> with DialogNavigationMixin {
               Padding(
                 padding: const EdgeInsets.only(bottom: 8.0),
                 child: Text(
-                  widget.subtitle!,
+                  widget.subtitle!.tr(),
                   style: Theme.of(context).textTheme.bodySmall,
                 ),
               ),
@@ -84,8 +85,8 @@ class _InputDialogState extends State<InputDialog> with DialogNavigationMixin {
               keyboardType: widget.keyboardType,
               obscureText: widget.obscureText,
               decoration: InputDecoration(
-                labelText: widget.labelText,
-                hintText: widget.hintText,
+                labelText: widget.labelText.tr(),
+                hintText: widget.hintText?.tr(),
               ),
               onSubmitted: (_) => _submit(),
             ),
@@ -131,7 +132,7 @@ class _InputDialogState extends State<InputDialog> with DialogNavigationMixin {
           backgroundColor: showHover ? color!.withValues(alpha: 0.9) : color,
           foregroundColor: foregroundColor,
         ),
-        child: Text(text),
+        child: Text(text.tr()),
       );
     } else {
       return FilledButton.tonal(
@@ -142,7 +143,7 @@ class _InputDialogState extends State<InputDialog> with DialogNavigationMixin {
               : cs.secondaryContainer,
           foregroundColor: cs.onSecondaryContainer,
         ),
-        child: Text(text),
+        child: Text(text.tr()),
       );
     }
   }

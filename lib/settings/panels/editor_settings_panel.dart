@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter_settings_screens/flutter_settings_screens.dart';
+import 'package:otzaria/l10n/tr_extension.dart';
 import 'package:otzaria/settings/settings_card.dart';
 import 'package:otzaria/widgets/widgets_exports.dart';
 
@@ -35,12 +36,12 @@ class _EditorSettingsTabState extends State<EditorSettingsTab> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           SettingsCard(
-            title: 'עורך הספרים',
+            title: 'עורך הספרים'.tr(),
             children: [
               _buildSlider(
                 icon: FluentIcons.timer_24_regular,
-                label: 'זמן עיכוב במילישניות',
-                subtitle: 'זמן ההמתנה לפני עדכון התצוגה המקדימה',
+                label: 'זמן עיכוב במילישניות'.tr(),
+                subtitle: 'זמן ההמתנה לפני עדכון התצוגה המקדימה'.tr(),
                 value: previewDebounce,
                 min: 50,
                 max: 300,
@@ -53,8 +54,8 @@ class _EditorSettingsTabState extends State<EditorSettingsTab> {
               ),
               _buildSlider(
                 icon: FluentIcons.delete_dismiss_24_regular,
-                label: 'ניקוי טיוטות ישנות',
-                subtitle: 'מספר הימים לשמירת טיוטות לפני מחיקה אוטומטית',
+                label: 'ניקוי טיוטות ישנות'.tr(),
+                subtitle: 'מספר הימים לשמירת טיוטות לפני מחיקה אוטומטית'.tr(),
                 value: cleanupDays,
                 min: 7,
                 max: 90,
@@ -67,8 +68,8 @@ class _EditorSettingsTabState extends State<EditorSettingsTab> {
               ),
               _buildSlider(
                 icon: FluentIcons.database_24_regular,
-                label: 'מכסת טיוטות',
-                subtitle: 'גודל מקסימלי לאחסון טיוטות (MB)',
+                label: 'מכסת טיוטות'.tr(),
+                subtitle: 'גודל מקסימלי לאחסון טיוטות (MB)'.tr(),
                 value: draftsQuota,
                 min: 50,
                 max: 100,

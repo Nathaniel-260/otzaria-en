@@ -353,6 +353,15 @@ class UpdateCompactMenuMode extends SettingsEvent {
   List<Object?> get props => [compactMenuMode];
 }
 
+class UpdateLanguage extends SettingsEvent {
+  final String language;
+
+  const UpdateLanguage(this.language);
+
+  @override
+  List<Object?> get props => [language];
+}
+
 class UpdateMergeUserBooksIntoLibrary extends SettingsEvent {
   final bool mergeUserBooksIntoLibrary;
 

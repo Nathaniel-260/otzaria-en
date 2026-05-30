@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
+import 'package:otzaria/l10n/tr_extension.dart';
 import 'package:otzaria/theme/app_surfaces.dart';
 
 /// TabBar גלילה עם חיצים לשמאל/ימין ועיצוב יפה יותר.
@@ -237,7 +238,7 @@ class _ScrollableTabBarWithArrowsState
             canScroll: _canScrollLeft,
             onPressed: _scrollLeft,
             icon: FluentIcons.chevron_left_24_regular,
-            tooltip: 'גלול שמאלה',
+            tooltip: 'גלול שמאלה'.tr(),
           ),
         // TabBar משופר עם עיצוב יפה יותר
         Expanded(
@@ -250,7 +251,7 @@ class _ScrollableTabBarWithArrowsState
             canScroll: _canScrollRight,
             onPressed: _scrollRight,
             icon: FluentIcons.chevron_right_24_regular,
-            tooltip: 'גלול ימינה',
+            tooltip: 'גלול ימינה'.tr(),
           ),
       ],
     );

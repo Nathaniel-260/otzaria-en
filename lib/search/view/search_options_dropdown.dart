@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
+import 'package:otzaria/l10n/tr_extension.dart';
 
 class SearchOptionsDropdown extends StatefulWidget {
   final Function(bool)? onToggle;
@@ -47,7 +48,7 @@ class _SearchOptionsDropdownState extends State<SearchOptionsDropdown> {
       icon: Icon(_isExpanded
           ? FluentIcons.chevron_up_24_regular
           : FluentIcons.chevron_down_24_regular),
-      tooltip: 'אפשרויות חיפוש',
+      tooltip: 'אפשרויות חיפוש'.tr(),
       onPressed: _toggleExpanded,
     );
   }

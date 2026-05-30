@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
+import 'package:otzaria/l10n/app_translations.dart';
+import 'package:otzaria/l10n/tr_extension.dart';
 import 'package:otzaria/settings/engine/settings_engine_exports.dart';
 import 'package:otzaria/settings/services/safer_mode/password_verification_dialog.dart';
 
@@ -71,8 +73,8 @@ class _ProtectedSettingsWrapperState extends State<ProtectedSettingsWrapper> {
       context: context,
       barrierDismissible: true,
       builder: (dialogContext) => PasswordVerificationDialog(
-        title: 'הזן סיסמה',
-        hint: 'הנך במצב מוגן.\nהזן את הסיסמה כדי לגשת להגדרות',
+        title: 'הזן סיסמה'.tr(),
+        hint: 'הנך במצב מוגן.\nהזן את הסיסמה כדי לגשת להגדרות'.tr(),
         onVerify: (password) async {
           return repository.verifyProtectedModePassword(password);
         },
@@ -136,9 +138,9 @@ class _ProtectedSettingsWrapperState extends State<ProtectedSettingsWrapper> {
     if (!_isVerified) {
       return Scaffold(
         appBar: AppBar(
-          title: const Text(
-            'הגדרות',
-            textDirection: TextDirection.rtl,
+          title: Text(
+            'הגדרות'.tr(),
+            textDirection: AppTranslations.textDirection,
           ),
           automaticallyImplyLeading: true,
         ),
@@ -155,14 +157,14 @@ class _ProtectedSettingsWrapperState extends State<ProtectedSettingsWrapper> {
                 ),
                 const SizedBox(height: 24),
                 Text(
-                  'הנך במצב מוגן',
-                  textDirection: TextDirection.rtl,
+                  'הנך במצב מוגן'.tr(),
+                  textDirection: AppTranslations.textDirection,
                   style: Theme.of(context).textTheme.headlineSmall,
                 ),
                 const SizedBox(height: 12),
                 Text(
-                  'נדרשת סיסמה כדי לגשת להגדרות',
-                  textDirection: TextDirection.rtl,
+                  'נדרשת סיסמה כדי לגשת להגדרות'.tr(),
+                  textDirection: AppTranslations.textDirection,
                   textAlign: TextAlign.center,
                   style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                         color: Theme.of(context).colorScheme.onSurfaceVariant,
@@ -177,7 +179,7 @@ class _ProtectedSettingsWrapperState extends State<ProtectedSettingsWrapper> {
                     _showPasswordDialog();
                   },
                   icon: const Icon(FluentIcons.key_24_regular),
-                  label: const Text('הזן סיסמה'),
+                  label: Text('הזן סיסמה'.tr()),
                 ),
               ],
             ),
@@ -208,8 +210,8 @@ Future<bool> verifyPasswordForAction(BuildContext context) async {
   final verified = await showDialog<bool>(
     context: context,
     builder: (context) => PasswordVerificationDialog(
-      title: 'אמת סיסמה',
-      hint: 'הנך במצב מוגן.\nהזן את הסיסמה כדי לבצע פעולה זו',
+      title: 'אמת סיסמה'.tr(),
+      hint: 'הנך במצב מוגן.\nהזן את הסיסמה כדי לבצע פעולה זו'.tr(),
       onVerify: (password) async {
         return repository.verifyProtectedModePassword(password);
       },

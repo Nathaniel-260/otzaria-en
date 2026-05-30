@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:otzaria/theme/theme_exports.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:otzaria/core/ui_snack.dart';
+import 'package:otzaria/l10n/app_translations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:otzaria/navigation/view/main_window_screen.dart';
 import 'package:otzaria/settings/settings_exports.dart';
@@ -46,7 +47,8 @@ class App extends StatelessWidget {
             previous.darkSeedColor != current.darkSeedColor ||
             previous.compactMenuMode != current.compactMenuMode ||
             previous.followSystemTheme != current.followSystemTheme ||
-            previous.isDarkMode != current.isDarkMode;
+            previous.isDarkMode != current.isDarkMode ||
+            previous.language != current.language;
       },
       builder: (context, settingsState) {
         final state = settingsState;
@@ -64,8 +66,11 @@ class App extends StatelessWidget {
           ],
           supportedLocales: const [
             Locale("he", "IL"),
+            Locale("en"),
           ],
-          locale: const Locale("he", "IL"),
+          // כיוון הממשק (RTL/LTR) נגזר אוטומטית מה-locale דרך
+          // GlobalWidgetsLocalizations: עברית → RTL, אנגלית → LTR.
+          locale: AppTranslations.localeFor(state.language),
           title: 'אוצריא',
           theme: AppThemeData.light(lightColorScheme,
               compactMenuMode: state.compactMenuMode),

@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:otzaria/core/ui_snack.dart';
+import 'package:otzaria/l10n/app_translations.dart';
+import 'package:otzaria/l10n/tr_extension.dart';
 import 'package:otzaria/search/bloc/search_bloc.dart';
 import 'package:otzaria/search/bloc/search_event.dart';
 import 'package:otzaria/search/bloc/search_state.dart';
@@ -55,7 +57,7 @@ class _SearchEditPanelState extends State<SearchEditPanel> {
     final query = widget.tab.queryController.text.trim();
 
     if (query.isEmpty) {
-      UiSnack.show('נא להזין טקסט לחיפוש');
+      UiSnack.show('נא להזין טקסט לחיפוש'.tr());
       return;
     }
 
@@ -102,7 +104,8 @@ class _SearchEditPanelState extends State<SearchEditPanel> {
       children: [
         for (final (label, mode) in modes)
           ChoiceChip(
-            label: Text(label, textDirection: TextDirection.rtl),
+            label:
+                Text(label.tr(), textDirection: AppTranslations.textDirection),
             selected: state.configuration.searchMode == mode,
             onSelected: (selected) {
               if (selected) {
@@ -127,12 +130,12 @@ class _SearchEditPanelState extends State<SearchEditPanel> {
       mainAxisSize: MainAxisSize.min,
       children: [
         Text(
-          'מרווח כללי בין מילים:',
+          'מרווח כללי בין מילים:'.tr(),
           style: TextStyle(
             fontSize: 14,
             color: onSurface.withValues(alpha: 0.7),
           ),
-          textDirection: TextDirection.rtl,
+          textDirection: AppTranslations.textDirection,
         ),
         const SizedBox(width: 8),
         SizedBox(
@@ -181,12 +184,12 @@ class _SearchEditPanelState extends State<SearchEditPanel> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Text(
-            'בחר קטגוריות לחיפוש המעודכן',
+            'בחר קטגוריות לחיפוש המעודכן'.tr(),
             style: TextStyle(
               fontSize: 14,
               color: Theme.of(context).colorScheme.onSurfaceVariant,
             ),
-            textDirection: TextDirection.rtl,
+            textDirection: AppTranslations.textDirection,
           ),
           const SizedBox(height: 12),
           categoryTree,
@@ -275,13 +278,13 @@ class _SearchEditPanelState extends State<SearchEditPanel> {
                   crossAxisAlignment: WrapCrossAlignment.center,
                   children: [
                     Text(
-                      'מצב חיפוש:',
+                      'מצב חיפוש:'.tr(),
                       style: TextStyle(
                         fontSize: 14,
                         fontWeight: FontWeight.bold,
                         color: colorScheme.onSurface,
                       ),
-                      textDirection: TextDirection.rtl,
+                      textDirection: AppTranslations.textDirection,
                     ),
                     _buildSearchModeToggle(state),
                     if (widget.tab.spacingValues.isEmpty && !state.fuzzy)
@@ -296,7 +299,7 @@ class _SearchEditPanelState extends State<SearchEditPanel> {
                         controller: widget.tab.queryController,
                         focusNode: widget.tab.searchFieldFocusNode,
                         decoration: InputDecoration(
-                          hintText: 'הזן טקסט לחיפוש...',
+                          hintText: 'הזן טקסט לחיפוש...'.tr(),
                           border: const OutlineInputBorder(),
                           contentPadding: const EdgeInsets.symmetric(
                             horizontal: 16,
@@ -313,13 +316,13 @@ class _SearchEditPanelState extends State<SearchEditPanel> {
                     ),
                     const SizedBox(width: 12),
                     RecommendedActionButton(
-                      text: 'חפש',
+                      text: 'חפש'.tr(),
                       icon: FluentIcons.search_24_regular,
                       onPressed: () => _performSearch(context),
                     ),
                     const SizedBox(width: 8),
                     NeutralActionButton(
-                      text: 'סגור',
+                      text: 'סגור'.tr(),
                       icon: FluentIcons.dismiss_24_regular,
                       onPressed: widget.onClose,
                     ),

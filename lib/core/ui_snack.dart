@@ -3,6 +3,8 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:otzaria/l10n/app_translations.dart';
+import 'package:otzaria/l10n/tr_extension.dart';
 import 'package:otzaria/theme/theme_exports.dart';
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 
@@ -219,18 +221,18 @@ class UiSnack {
     _currentOverlay = null;
   }
 
-  // ── קבועי טקסט ───────────────────────────────────────────────────────────
-  static const String textCopied = 'הטקסט הועתק ללוח';
-  static const String formattedTextCopied = 'הטקסט המעוצב הועתק ללוח';
-  static const String copyError = 'שגיאה בהעתקה';
-  static const String formattedCopyError = 'שגיאה בהעתקה מעוצבת';
-  static const String sectionNotFound = 'הדף לא נמצא בתוכן העניינים';
-  static const String bookNotFound = 'הספר איננו קיים';
-  static const String noteCreated = 'ההערה נוצרה והוצבה בסרגל';
-  static const String savedSuccessfully = 'השינויים נשמרו בהצלחה';
-  static const String textNotFound = 'הטקסט לא נמצא';
-  static const String noTextSelected = 'אנא בחר טקסט להעתקה';
-  static const String cleanupCompleted = 'ניקוי טיוטות הושלם';
+  // ── קבועי טקסט (getters לתרגום בזמן גישה) ─────────────────────────────────
+  static String get textCopied => 'הטקסט הועתק ללוח'.tr();
+  static String get formattedTextCopied => 'הטקסט המעוצב הועתק ללוח'.tr();
+  static String get copyError => 'שגיאה בהעתקה'.tr();
+  static String get formattedCopyError => 'שגיאה בהעתקה מעוצבת'.tr();
+  static String get sectionNotFound => 'הדף לא נמצא בתוכן העניינים'.tr();
+  static String get bookNotFound => 'הספר איננו קיים'.tr();
+  static String get noteCreated => 'ההערה נוצרה והוצבה בסרגל'.tr();
+  static String get savedSuccessfully => 'השינויים נשמרו בהצלחה'.tr();
+  static String get textNotFound => 'הטקסט לא נמצא'.tr();
+  static String get noTextSelected => 'אנא בחר טקסט להעתקה'.tr();
+  static String get cleanupCompleted => 'ניקוי טיוטות הושלם'.tr();
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -404,7 +406,7 @@ class _SnackToastState extends State<_SnackToast>
                                   fontWeight: FontWeight.w400,
                                   height: 1.4,
                                 ),
-                                textDirection: TextDirection.rtl,
+                                textDirection: AppTranslations.textDirection,
                                 maxLines: messageMaxLines,
                                 overflow: TextOverflow.ellipsis,
                               ),

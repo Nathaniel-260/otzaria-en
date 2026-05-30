@@ -4,6 +4,7 @@ import 'package:otzaria/history/bloc/history_bloc.dart';
 import 'package:otzaria/history/bloc/history_event.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:otzaria/l10n/tr_extension.dart';
 import 'package:otzaria/search/bloc/search_bloc.dart';
 import 'package:otzaria/search/bloc/search_event.dart';
 import 'package:otzaria/search/search_query_builder.dart';
@@ -309,10 +310,10 @@ class _EnhancedSearchFieldState extends State<EnhancedSearchField> {
     if (wordInfo == null ||
         wordInfo['word'] == null ||
         wordInfo['word'].isEmpty) {
-      return const Center(
+      return Center(
         child: Text(
-          'הקלד או הצב את הסמן על מילה כלשהיא, כדי לבחור אפשרויות חיפוש',
-          style: TextStyle(fontSize: 12, color: Colors.grey),
+          'הקלד או הצב את הסמן על מילה כלשהיא, כדי לבחור אפשרויות חיפוש'.tr(),
+          style: const TextStyle(fontSize: 12, color: Colors.grey),
           textAlign: TextAlign.center,
         ),
       );
@@ -465,8 +466,8 @@ class _EnhancedSearchFieldState extends State<EnhancedSearchField> {
                         filled: true,
                         fillColor: colorScheme.surfaceContainerHigh,
                         border: const OutlineInputBorder(),
-                        hintText: "חפש כאן...",
-                        labelText: "לחיפוש הקש אנטר או לחץ על סמל החיפוש",
+                        hintText: "חפש כאן...".tr(),
+                        labelText: "לחיפוש הקש אנטר או לחץ על סמל החיפוש".tr(),
                         contentPadding: widget.showInlineSearchButton
                             ? null
                             : const EdgeInsets.only(

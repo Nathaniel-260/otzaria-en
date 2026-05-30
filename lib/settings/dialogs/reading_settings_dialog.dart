@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:otzaria/core/ui_snack.dart';
+import 'package:otzaria/l10n/tr_extension.dart';
 import 'package:otzaria/settings/engine/settings_engine_exports.dart';
 import 'package:otzaria/settings/panels/reading_settings_panel.dart';
 
@@ -18,9 +19,9 @@ void showReadingSettingsDialog(BuildContext context) {
       builder: (context, settingsState) {
         return AlertDialog(
           backgroundColor: Theme.of(context).colorScheme.surfaceContainerHigh,
-          title: const Text(
-            'הגדרות תצוגת הספרים',
-            style: TextStyle(fontWeight: FontWeight.bold),
+          title: Text(
+            'הגדרות תצוגת הספרים'.tr(),
+            style: const TextStyle(fontWeight: FontWeight.bold),
             textAlign: TextAlign.center,
           ),
           content: SizedBox(
@@ -31,7 +32,7 @@ void showReadingSettingsDialog(BuildContext context) {
           actions: [
             FilledButton(
               onPressed: () => Navigator.of(context).pop(),
-              child: const Text('סגור'),
+              child: Text('סגור'.tr()),
             ),
           ],
         );

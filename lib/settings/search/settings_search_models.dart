@@ -75,7 +75,9 @@ class SettingsSearchEntry {
       // טווח ניקוד עברי 0x0591-0x05C7
       if (rune >= 0x0591 && rune <= 0x05C7) continue;
       final ch = String.fromCharCode(rune);
-      if (ch == '"' || ch == "'" || ch == '׳' || ch == '״') continue;
+      if (ch == '"' || ch == "'" || ch == '׳' || ch == '״') {
+        continue; // i18n-ignore — תווי עיבוד, לא טקסט ממשק
+      }
       buffer.write(ch);
     }
     return buffer.toString().replaceAll(RegExp(r'\s+'), ' ').trim();

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
+import 'package:otzaria/l10n/tr_extension.dart';
 
 class CommentatorsFilterButton extends StatelessWidget {
   final bool isActive;
@@ -32,7 +33,7 @@ class CommentatorsFilterButton extends StatelessWidget {
                 .withValues(alpha: inactiveAlpha),
         size: iconSize,
       ),
-      tooltip: 'בחירת מפרשים',
+      tooltip: 'בחירת מפרשים'.tr(),
       padding: padding,
       constraints: constraints,
       onPressed: onPressed,

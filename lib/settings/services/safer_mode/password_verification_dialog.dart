@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
+import 'package:otzaria/l10n/app_translations.dart';
+import 'package:otzaria/l10n/tr_extension.dart';
 import 'package:otzaria/widgets/text/rtl_text_field.dart';
 import 'package:otzaria/core/ui_snack.dart';
 import 'package:otzaria/widgets/misc/keyboard_dialog_navigation.dart';
@@ -13,7 +15,8 @@ class PasswordVerificationDialog extends StatefulWidget {
   const PasswordVerificationDialog({
     super.key,
     required this.onVerify,
-    this.title = 'הזן סיסמה',
+    this.title =
+        'הזן סיסמה', // i18n-ignore: ברירת מחדל const; הקוראים מעבירים title מתורגם
     this.hint,
   });
 
@@ -48,7 +51,7 @@ class _PasswordVerificationDialogState extends State<PasswordVerificationDialog>
 
   Future<void> _handleVerify() async {
     if (_passwordController.text.isEmpty) {
-      UiSnack.showError('נא להזין סיסמה');
+      UiSnack.showError('נא להזין סיסמה'.tr());
       return;
     }
 
@@ -64,7 +67,7 @@ class _PasswordVerificationDialogState extends State<PasswordVerificationDialog>
       if (isValid) {
         Navigator.of(context).pop(true);
       } else {
-        UiSnack.showError('סיסמה שגויה');
+        UiSnack.showError('סיסמה שגויה'.tr());
         _passwordController.clear();
       }
     } finally {
@@ -88,7 +91,7 @@ class _PasswordVerificationDialogState extends State<PasswordVerificationDialog>
           children: [
             Text(
               widget.title,
-              textDirection: TextDirection.rtl,
+              textDirection: AppTranslations.textDirection,
               style: const TextStyle(fontSize: 20),
             ),
             const SizedBox(width: 8),
@@ -104,7 +107,7 @@ class _PasswordVerificationDialogState extends State<PasswordVerificationDialog>
               if (widget.hint != null) ...[
                 Text(
                   widget.hint!,
-                  textDirection: TextDirection.rtl,
+                  textDirection: AppTranslations.textDirection,
                   style: TextStyle(
                     color: Theme.of(context).colorScheme.onSurfaceVariant,
                   ),
@@ -118,8 +121,8 @@ class _PasswordVerificationDialogState extends State<PasswordVerificationDialog>
                 enabled: !_isVerifying,
                 autofocus: true,
                 decoration: InputDecoration(
-                  labelText: 'סיסמה',
-                  hintText: 'הזן את הסיסמה',
+                  labelText: 'סיסמה'.tr(),
+                  hintText: 'הזן את הסיסמה'.tr(),
                   border: const OutlineInputBorder(),
                   prefixIcon: const Icon(FluentIcons.key_24_regular),
                   suffixIcon: IconButton(
@@ -142,13 +145,13 @@ class _PasswordVerificationDialogState extends State<PasswordVerificationDialog>
         ),
         actions: [
           _buildButton(
-            text: 'ביטול',
+            text: 'ביטול'.tr(),
             isFocused: focusedButtonIndex == 0,
             onPressed: () => Navigator.of(context).pop(false),
             enabled: !_isVerifying,
           ),
           _buildButton(
-            text: 'אישור',
+            text: 'אישור'.tr(),
             isFocused: focusedButtonIndex == 1,
             isConfirm: true,
             onPressed: _handleVerify,
@@ -245,17 +248,17 @@ class _SetPasswordDialogState extends State<SetPasswordDialog>
 
   Future<void> _handleSave() async {
     if (_passwordController.text.isEmpty) {
-      UiSnack.showError('נא להזין סיסמה');
+      UiSnack.showError('נא להזין סיסמה'.tr());
       return;
     }
 
     if (_passwordController.text.length < 4) {
-      UiSnack.showError('הסיסמה חייבת להכיל לפחות 4 תווים');
+      UiSnack.showError('הסיסמה חייבת להכיל לפחות 4 תווים'.tr());
       return;
     }
 
     if (_passwordController.text != _confirmController.text) {
-      UiSnack.showError('הסיסמאות אינן תואמות');
+      UiSnack.showError('הסיסמאות אינן תואמות'.tr());
       return;
     }
 
@@ -268,11 +271,12 @@ class _SetPasswordDialogState extends State<SetPasswordDialog>
 
       if (!mounted) return;
 
-      UiSnack.show('הסיסמה נשמרה בהצלחה');
+      UiSnack.show('הסיסמה נשמרה בהצלחה'.tr());
       Navigator.of(context).pop(true);
     } catch (e) {
       if (!mounted) return;
-      UiSnack.showError('שגיאה בשמירת הסיסמה: $e');
+      UiSnack.showError(
+          'שגיאה בשמירת הסיסמה: {error}'.tr(args: {'error': '$e'}));
     } finally {
       if (mounted) {
         setState(() {
@@ -289,16 +293,16 @@ class _SetPasswordDialogState extends State<SetPasswordDialog>
       onCancel: () => Navigator.of(context).pop(false),
       textFieldFocusNode: _passwordFocusNode,
       child: AlertDialog(
-        title: const Row(
+        title: Row(
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
             Text(
-              'הגדרת סיסמה',
-              textDirection: TextDirection.rtl,
-              style: TextStyle(fontSize: 20),
+              'הגדרת סיסמה'.tr(),
+              textDirection: AppTranslations.textDirection,
+              style: const TextStyle(fontSize: 20),
             ),
-            SizedBox(width: 8),
-            Icon(FluentIcons.lock_closed_24_regular),
+            const SizedBox(width: 8),
+            const Icon(FluentIcons.lock_closed_24_regular),
           ],
         ),
         content: SizedBox(
@@ -308,8 +312,8 @@ class _SetPasswordDialogState extends State<SetPasswordDialog>
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Text(
-                'הגדר סיסמה להגנה על ההגדרות',
-                textDirection: TextDirection.rtl,
+                'הגדר סיסמה להגנה על ההגדרות'.tr(),
+                textDirection: AppTranslations.textDirection,
                 style: TextStyle(
                   color: Theme.of(context).colorScheme.onSurfaceVariant,
                 ),
@@ -321,8 +325,8 @@ class _SetPasswordDialogState extends State<SetPasswordDialog>
                 obscureText: _isObscured1,
                 enabled: !_isSaving,
                 decoration: InputDecoration(
-                  labelText: 'סיסמה חדשה',
-                  hintText: 'לפחות 4 תווים',
+                  labelText: 'סיסמה חדשה'.tr(),
+                  hintText: 'לפחות 4 תווים'.tr(),
                   border: const OutlineInputBorder(),
                   prefixIcon: const Icon(FluentIcons.key_24_regular),
                   suffixIcon: IconButton(
@@ -347,8 +351,8 @@ class _SetPasswordDialogState extends State<SetPasswordDialog>
                 obscureText: _isObscured2,
                 enabled: !_isSaving,
                 decoration: InputDecoration(
-                  labelText: 'אימות סיסמה',
-                  hintText: 'הזן שוב את הסיסמה',
+                  labelText: 'אימות סיסמה'.tr(),
+                  hintText: 'הזן שוב את הסיסמה'.tr(),
                   border: const OutlineInputBorder(),
                   prefixIcon: const Icon(FluentIcons.checkmark_lock_24_regular),
                   suffixIcon: IconButton(
@@ -371,13 +375,13 @@ class _SetPasswordDialogState extends State<SetPasswordDialog>
         ),
         actions: [
           _buildButton(
-            text: 'ביטול',
+            text: 'ביטול'.tr(),
             isFocused: focusedButtonIndex == 0,
             onPressed: () => Navigator.of(context).pop(false),
             enabled: !_isSaving,
           ),
           _buildButton(
-            text: 'שמור',
+            text: 'שמור'.tr(),
             isFocused: focusedButtonIndex == 1,
             isConfirm: true,
             onPressed: _handleSave,

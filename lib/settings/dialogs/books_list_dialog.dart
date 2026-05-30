@@ -6,6 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
 
 import 'package:otzaria/core/ui_snack.dart';
+import 'package:otzaria/l10n/app_translations.dart';
+import 'package:otzaria/l10n/tr_extension.dart';
 import 'package:otzaria/models/books.dart';
 import 'package:otzaria/widgets/text/rtl_text_field.dart';
 import 'package:otzaria/widgets/widgets_exports.dart';
@@ -66,7 +68,7 @@ class _BooksListDialogState extends State<_BooksListDialog> {
     if (!mounted) return;
 
     final path = await FilePicker.saveFile(
-      dialogTitle: 'בחר מיקום לשמירת רשימת הספרים',
+      dialogTitle: 'בחר מיקום לשמירת רשימת הספרים'.tr(),
       fileName: 'otzaria_books.csv',
       initialDirectory: downloadsDirectory?.path,
       allowedExtensions: ['csv'],
@@ -81,10 +83,12 @@ class _BooksListDialogState extends State<_BooksListDialog> {
       // BOM כדי שאקסל יזהה UTF-8 כראוי בעברית.
       await File(path).writeAsString('﻿$csv');
       if (!mounted) return;
-      UiSnack.show('רשימת הספרים נשמרה: ${_rows.length} שורות');
+      UiSnack.show('רשימת הספרים נשמרה: {count} שורות'
+          .tr(args: {'count': '${_rows.length}'}));
     } catch (e) {
       if (!mounted) return;
-      UiSnack.showError('שגיאה בשמירת הקובץ: $e');
+      UiSnack.showError(
+          'שגיאה בשמירת הקובץ: {error}'.tr(args: {'error': '$e'}));
     } finally {
       if (mounted) setState(() => _isExporting = false);
     }
@@ -98,7 +102,7 @@ class _BooksListDialogState extends State<_BooksListDialog> {
     final maxHeight = media.size.height * 0.85;
 
     return Directionality(
-      textDirection: TextDirection.rtl,
+      textDirection: AppTranslations.textDirection,
       child: Dialog(
         child: ConstrainedBox(
           constraints: BoxConstraints(
@@ -117,7 +121,7 @@ class _BooksListDialogState extends State<_BooksListDialog> {
                     const SizedBox(width: 8),
                     Expanded(
                       child: Text(
-                        'רשימת הספרים',
+                        'רשימת הספרים'.tr(),
                         style: Theme.of(context).textTheme.titleLarge,
                       ),
                     ),
@@ -133,10 +137,10 @@ class _BooksListDialogState extends State<_BooksListDialog> {
                 RtlTextField(
                   controller: _searchController,
                   autofocus: true,
-                  decoration: const InputDecoration(
-                    prefixIcon: Icon(FluentIcons.search_24_regular),
-                    hintText: 'חיפוש לפי שם, מחבר או קטגוריה',
-                    border: OutlineInputBorder(),
+                  decoration: InputDecoration(
+                    prefixIcon: const Icon(FluentIcons.search_24_regular),
+                    hintText: 'חיפוש לפי שם, מחבר או קטגוריה'.tr(),
+                    border: const OutlineInputBorder(),
                     isDense: true,
                   ),
                 ),
@@ -145,7 +149,7 @@ class _BooksListDialogState extends State<_BooksListDialog> {
                   child: _visibleRows.isEmpty
                       ? Center(
                           child: Text(
-                            'לא נמצאו ספרים',
+                            'לא נמצאו ספרים'.tr(),
                             style: TextStyle(color: cs.onSurfaceVariant),
                           ),
                         )
@@ -166,14 +170,14 @@ class _BooksListDialogState extends State<_BooksListDialog> {
                 Row(
                   children: [
                     RecommendedActionButton(
-                      text: 'ייצוא ל-CSV',
+                      text: 'ייצוא ל-CSV'.tr(),
                       icon: FluentIcons.arrow_download_24_regular,
                       isLoading: _isExporting,
                       onPressed: _exportToCsv,
                     ),
                     const Spacer(),
                     NeutralActionButton(
-                      text: 'סגור',
+                      text: 'סגור'.tr(),
                       onPressed: () => Navigator.of(context).pop(),
                     ),
                   ],
@@ -261,8 +265,8 @@ class _BookRow {
 
 String _buildCsv(List<_BookRow> rows) {
   final buf = StringBuffer();
-  buf.write(
-      '${_csvEscape('כותרת')},${_csvEscape('מחבר')},${_csvEscape('קטגוריה')},${_csvEscape('סוג קובץ')}\r\n');
+  buf.write('${_csvEscape('כותרת'.tr())},${_csvEscape('מחבר'.tr())},'
+      '${_csvEscape('קטגוריה'.tr())},${_csvEscape('סוג קובץ'.tr())}\r\n');
   for (final r in rows) {
     buf.write(_csvEscape(r.title));
     buf.write(',');

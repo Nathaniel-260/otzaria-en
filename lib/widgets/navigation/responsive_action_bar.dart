@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
+import 'package:otzaria/l10n/tr_extension.dart';
 import 'package:otzaria/theme/theme_exports.dart';
 import 'package:otzaria/widgets/buttons/action_buttons.dart';
 import 'package:otzaria/widgets/misc/app_menu_exports.dart';
@@ -218,7 +219,7 @@ class _ResponsiveActionBarState extends State<ResponsiveActionBar> {
         final menuButton = AppPopupMenuButton<ActionButtonData>(
           key: widget.overflowButtonKey,
           icon: const Icon(FluentIcons.more_vertical_24_regular),
-          tooltip: 'עוד פעולות',
+          tooltip: 'עוד פעולות'.tr(),
           position: PopupMenuPosition.under,
           offset: widget.overflowMenuOffset,
           onSelected: (action) {

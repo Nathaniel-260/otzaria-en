@@ -2,6 +2,7 @@
 // The bookmarks tab is BookmarkView and the history is HistoryView.
 import 'package:flutter/material.dart';
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
+import 'package:otzaria/l10n/tr_extension.dart';
 import 'package:otzaria/history/view/history_screen.dart';
 import 'package:otzaria/bookmarks/view/bookmark_screen.dart';
 
@@ -25,16 +26,16 @@ class _FavouritesScreenState extends State<FavouritesScreen>
       child: Scaffold(
         appBar: TabBar(
           splashBorderRadius: BorderRadius.circular(12),
-          tabs: const [
+          tabs: [
             Tab(
-              text: 'סימניות',
-              icon: Icon(
+              text: 'סימניות'.tr(),
+              icon: const Icon(
                 FluentIcons.bookmark_24_regular,
               ),
             ),
             Tab(
-              text: 'היסטוריה',
-              icon: Icon(
+              text: 'היסטוריה'.tr(),
+              icon: const Icon(
                 FluentIcons.history_24_regular,
               ),
             ),

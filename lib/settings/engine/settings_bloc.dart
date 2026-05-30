@@ -1,4 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:otzaria/l10n/app_translations.dart';
 import 'package:otzaria/theme/app_fonts.dart';
 import 'package:otzaria/settings/engine/settings_event.dart';
 import 'package:otzaria/settings/engine/settings_repository.dart';
@@ -54,6 +55,7 @@ class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
     on<UpdatePersonalNotesCollapsedByDefault>(
         _onUpdatePersonalNotesCollapsedByDefault);
     on<UpdateCompactMenuMode>(_onUpdateCompactMenuMode);
+    on<UpdateLanguage>(_onUpdateLanguage);
     on<UpdateMergeUserBooksIntoLibrary>(_onUpdateMergeUserBooksIntoLibrary);
     on<UpdateProtectedModeEnabled>(_onUpdateProtectedModeEnabled);
     on<UpdateProtectedModePassword>(_onUpdateProtectedModePassword);
@@ -66,6 +68,10 @@ class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
     Emitter<SettingsState> emit,
   ) async {
     final settings = await _repository.loadSettings();
+
+    // טעינת תרגומי הממשק לשפה השמורה לפני בניית ה-state, כדי ש-.tr() יחזיר
+    // מיד את הטקסט הנכון בעת הרינדור הראשון.
+    await AppTranslations.load((settings['language'] as String?) ?? 'he');
 
     // בדסקטופ: אם המשתמש בחר גופן מערכת בעבר, נטען אותו כדי שיהיה זמין ב-TextStyle.
     await AppFonts.ensureFontLoaded(settings['fontFamily'] as String);
@@ -114,8 +120,8 @@ class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
       personalNotesCollapsedByDefault:
           settings['personalNotesCollapsedByDefault'] ?? true,
       compactMenuMode: settings['compactMenuMode'] ?? false,
-      mergeUserBooksIntoLibrary:
-          settings['mergeUserBooksIntoLibrary'] ?? false,
+      language: settings['language'] ?? 'he',
+      mergeUserBooksIntoLibrary: settings['mergeUserBooksIntoLibrary'] ?? false,
       protectedModeEnabled: settings['protectedModeEnabled'] ?? false,
       hiddenBuiltInToolIds:
           (settings['hiddenBuiltInToolIds'] as Set<String>?) ?? <String>{},
@@ -189,6 +195,17 @@ class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
   ) async {
     await _repository.updateCompactMenuMode(event.compactMenuMode);
     emit(state.copyWith(compactMenuMode: event.compactMenuMode));
+  }
+
+  Future<void> _onUpdateLanguage(
+    UpdateLanguage event,
+    Emitter<SettingsState> emit,
+  ) async {
+    await _repository.updateLanguage(event.language);
+    // טעינת מפת התרגום החדשה לפני ה-emit כדי ש-.tr() יחזיר את הטקסט הנכון
+    // ברגע שה-UI נבנה מחדש.
+    await AppTranslations.load(event.language);
+    emit(state.copyWith(language: event.language));
   }
 
   Future<void> _onUpdateMergeUserBooksIntoLibrary(

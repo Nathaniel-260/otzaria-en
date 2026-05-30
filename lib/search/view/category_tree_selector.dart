@@ -3,6 +3,8 @@ import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:otzaria/library/bloc/library_bloc.dart';
 import 'package:otzaria/library/bloc/library_state.dart';
+import 'package:otzaria/l10n/app_translations.dart';
+import 'package:otzaria/l10n/tr_extension.dart';
 import 'package:otzaria/library/models/library.dart';
 import 'package:otzaria/models/books.dart';
 import 'package:otzaria/search/search_scope_preferences.dart';
@@ -157,10 +159,12 @@ class _SearchScopeSelectorState extends State<SearchScopeSelector> {
     final colorScheme = Theme.of(context).colorScheme;
     final manualCount = _manualSelectedFacets.length;
     final helperText = _searchAllCategories
-        ? 'מופעל כברירת מחדל. כבה כדי לבחור קטגוריות או ספרים ידנית.'
+        ? 'מופעל כברירת מחדל. כבה כדי לבחור קטגוריות או ספרים ידנית.'.tr()
         : manualCount == 0
             ? 'אפשר לחפש בעץ ולבחור קטגוריות או ספרים. עד שתיבחר בחירה ידנית, החיפוש יישאר בכל הקטגוריות.'
-            : 'נשמרו $manualCount פריטים לבחירה הידנית הכללית.';
+                .tr()
+            : 'נשמרו {count} פריטים לבחירה הידנית הכללית.'
+                .tr(args: {'count': '$manualCount'});
 
     return Column(
       mainAxisSize: MainAxisSize.min,
@@ -188,13 +192,13 @@ class _SearchScopeSelectorState extends State<SearchScopeSelector> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'חיפוש בכל הקטגוריות',
+                      'חיפוש בכל הקטגוריות'.tr(),
                       style: TextStyle(
                         fontSize: 14,
                         fontWeight: FontWeight.w700,
                         color: colorScheme.onSurface,
                       ),
-                      textDirection: TextDirection.rtl,
+                      textDirection: AppTranslations.textDirection,
                     ),
                     const SizedBox(height: 4),
                     Text(
@@ -203,7 +207,7 @@ class _SearchScopeSelectorState extends State<SearchScopeSelector> {
                         fontSize: 12,
                         color: colorScheme.onSurfaceVariant,
                       ),
-                      textDirection: TextDirection.rtl,
+                      textDirection: AppTranslations.textDirection,
                     ),
                   ],
                 ),
@@ -407,18 +411,18 @@ class _CategoryTreeSelectorState extends State<CategoryTreeSelector> {
         ),
         const SizedBox(width: 8),
         Text(
-          'חיפוש בקטגוריות',
+          'חיפוש בקטגוריות'.tr(),
           style: TextStyle(
             fontSize: 14,
             fontWeight: FontWeight.w600,
             color: Theme.of(context).colorScheme.primary,
           ),
-          textDirection: TextDirection.rtl,
+          textDirection: AppTranslations.textDirection,
         ),
         const Spacer(),
         if (hasSelection)
           Tooltip(
-            message: 'איפוס בחירה',
+            message: 'איפוס בחירה'.tr(),
             child: IconButton(
               icon: const Icon(FluentIcons.arrow_reset_24_regular, size: 16),
               onPressed: widget.onResetSelection ?? () => _toggleAll(false),
@@ -443,12 +447,12 @@ class _CategoryTreeSelectorState extends State<CategoryTreeSelector> {
           onChanged: (value) => _toggleAll(value == true),
         ),
         Text(
-          'הכל',
+          'הכל'.tr(),
           style: TextStyle(
             fontSize: 13,
             color: Theme.of(context).colorScheme.onSurface,
           ),
-          textDirection: TextDirection.rtl,
+          textDirection: AppTranslations.textDirection,
         ),
       ],
     );
@@ -458,7 +462,7 @@ class _CategoryTreeSelectorState extends State<CategoryTreeSelector> {
     return RtlTextField(
       controller: _searchController,
       decoration: InputDecoration(
-        hintText: 'איתור קטגוריה או ספר...',
+        hintText: 'איתור קטגוריה או ספר...'.tr(),
         prefixIcon: const Icon(FluentIcons.search_24_regular),
         suffixIcon: _searchController.text.isEmpty
             ? null
@@ -486,9 +490,10 @@ class _CategoryTreeSelectorState extends State<CategoryTreeSelector> {
     if (_normalizedSearchQuery.length < _minSearchQueryLength) {
       return Center(
         child: Text(
-          'הקלד לפחות $_minSearchQueryLength תווים כדי לחפש.',
+          'הקלד לפחות {count} תווים כדי לחפש.'
+              .tr(args: {'count': '$_minSearchQueryLength'}),
           style: TextStyle(color: colorScheme.onSurfaceVariant),
-          textDirection: TextDirection.rtl,
+          textDirection: AppTranslations.textDirection,
         ),
       );
     }
@@ -496,9 +501,9 @@ class _CategoryTreeSelectorState extends State<CategoryTreeSelector> {
     if (results.isEmpty) {
       return Center(
         child: Text(
-          'לא נמצאו קטגוריות או ספרים תואמים.',
+          'לא נמצאו קטגוריות או ספרים תואמים.'.tr(),
           style: TextStyle(color: colorScheme.onSurfaceVariant),
-          textDirection: TextDirection.rtl,
+          textDirection: AppTranslations.textDirection,
         ),
       );
     }
@@ -511,13 +516,13 @@ class _CategoryTreeSelectorState extends State<CategoryTreeSelector> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Text(
-                'נמצאו ${results.length} תוצאות',
+                'נמצאו {count} תוצאות'.tr(args: {'count': '${results.length}'}),
                 style: TextStyle(
                   fontSize: 13,
                   fontWeight: FontWeight.w600,
                   color: colorScheme.onSurfaceVariant,
                 ),
-                textDirection: TextDirection.rtl,
+                textDirection: AppTranslations.textDirection,
               ),
               const SizedBox(height: 6),
               Row(
@@ -525,7 +530,7 @@ class _CategoryTreeSelectorState extends State<CategoryTreeSelector> {
                   SizedBox(
                     height: 30,
                     child: RecommendedActionButton(
-                      text: 'בחר הכל',
+                      text: 'בחר הכל'.tr(),
                       icon: FluentIcons.checkbox_checked_24_regular,
                       onPressed: () => _selectAllSearchResults(results),
                     ),
@@ -534,7 +539,7 @@ class _CategoryTreeSelectorState extends State<CategoryTreeSelector> {
                   SizedBox(
                     height: 30,
                     child: NeutralActionButton(
-                      text: 'נקה',
+                      text: 'נקה'.tr(),
                       icon: FluentIcons.eraser_24_regular,
                       onPressed: () => _clearSearchResultsSelection(results),
                     ),

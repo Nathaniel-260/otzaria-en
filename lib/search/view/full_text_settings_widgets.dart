@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_settings_screens/flutter_settings_screens.dart';
 import 'package:flutter_spinbox/flutter_spinbox.dart';
+import 'package:otzaria/l10n/tr_extension.dart';
 import 'package:otzaria/search/bloc/search_bloc.dart';
 import 'package:otzaria/search/bloc/search_event.dart';
 import 'package:otzaria/search/bloc/search_state.dart';
@@ -44,10 +45,10 @@ class SearchModeToggle extends StatelessWidget {
             inactiveFgColor: Colors.white,
             initialLabelIndex: currentIndex,
             totalSwitches: 3,
-            labels: const [
-              'חיפוש מתקדם',
-              'חיפוש מדוייק',
-              'חיפוש מקורב',
+            labels: [
+              'חיפוש מתקדם'.tr(),
+              'חיפוש מדוייק'.tr(),
+              'חיפוש מקורב'.tr(),
             ],
             radiusStyle: true,
             onToggle: (index) {
@@ -142,8 +143,8 @@ class _FuzzyDistanceState extends State<FuzzyDistance> {
               enabled: isEnabled,
               decoration: InputDecoration(
                 labelText: hasCustomSpacing
-                    ? 'מרווח בין מילים (מושבת)'
-                    : 'מרווח בין מילים',
+                    ? 'מרווח בין מילים (מושבת)'.tr()
+                    : 'מרווח בין מילים'.tr(),
                 labelStyle: TextStyle(
                   color: hasCustomSpacing
                       ? Theme.of(context).colorScheme.onSurfaceVariant
@@ -534,18 +535,18 @@ class OrderOfResults extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
             child: AppDropdownField<ResultsOrder>(
               value: state.sortBy,
-              decoration: const InputDecoration(
-                labelText: 'מיון',
-                border: OutlineInputBorder(),
+              decoration: InputDecoration(
+                labelText: 'מיון'.tr(),
+                border: const OutlineInputBorder(),
               ),
-              entries: const [
+              entries: [
                 AppMenuEntry(
                   value: ResultsOrder.relevance,
-                  label: 'לפי רלוונטיות',
+                  label: 'לפי רלוונטיות'.tr(),
                 ),
                 AppMenuEntry(
                   value: ResultsOrder.catalogue,
-                  label: 'לפי סדר קטלוגי',
+                  label: 'לפי סדר קטלוגי'.tr(),
                 ),
               ],
               onSelected: (value) {

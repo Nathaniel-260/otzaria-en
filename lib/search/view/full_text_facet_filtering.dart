@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:otzaria/l10n/tr_extension.dart';
 import 'package:otzaria/library/bloc/library_bloc.dart';
 import 'package:otzaria/library/bloc/library_state.dart';
 import 'package:otzaria/search/bloc/search_bloc.dart';
@@ -115,7 +116,7 @@ class _SearchFacetFilteringState extends State<SearchFacetFiltering>
       child: RtlTextField(
         controller: _filterQuery,
         decoration: InputDecoration(
-          hintText: 'איתור ספר…',
+          hintText: 'איתור ספר…'.tr(),
           prefixIcon: const Icon(FluentIcons.filter_24_regular),
           suffixIcon: IconButton(
             onPressed: _clearFilter,
@@ -245,10 +246,10 @@ class _SearchFacetFilteringState extends State<SearchFacetFiltering>
   ) {
     // אם אין ספרים, הצג הודעה
     if (books.isEmpty) {
-      return const Center(
+      return Center(
         child: Padding(
-          padding: EdgeInsets.all(16.0),
-          child: Text('לא נמצאו ספרים'),
+          padding: const EdgeInsets.all(16.0),
+          child: Text('לא נמצאו ספרים'.tr()),
         ),
       );
     }
