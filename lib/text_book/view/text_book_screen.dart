@@ -3,7 +3,6 @@ import 'dart:math';
 import 'dart:async';
 import 'dart:ui' as ui;
 import 'package:otzaria/core/ui_snack.dart';
-import 'package:otzaria/l10n/app_translations.dart';
 import 'package:otzaria/l10n/tr_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -1444,7 +1443,8 @@ class _TextBookViewerBlocState extends State<TextBookViewerBloc>
           icon: state.removePunctuation
               ? FluentIcons.text_quote_24_regular
               : FluentIcons.text_clear_formatting_24_regular,
-          tooltip: state.removePunctuation ? 'הצג פיסוק'.tr() : 'הסתר פיסוק'.tr(),
+          tooltip:
+              state.removePunctuation ? 'הצג פיסוק'.tr() : 'הסתר פיסוק'.tr(),
           onPressed: () => _toggleAndSavePunctuation(context, state),
         ),
 
@@ -1874,10 +1874,9 @@ class _TextBookViewerBlocState extends State<TextBookViewerBloc>
       icon: Icon(state.continuousReadingMode
           ? FluentIcons.text_align_justify_24_filled
           : FluentIcons.text_align_justify_24_regular),
-      tooltip:
-          state.continuousReadingMode
-              ? 'הצג כשורות בודדות'.tr()
-              : 'הצג כטקסט רציף'.tr(),
+      tooltip: state.continuousReadingMode
+          ? 'הצג כשורות בודדות'.tr()
+          : 'הצג כטקסט רציף'.tr(),
     );
   }
 
@@ -1899,8 +1898,9 @@ class _TextBookViewerBlocState extends State<TextBookViewerBloc>
               index: index,
               commentatorsToShow: state.activeCommentators,
             );
-        UiSnack.showQuick(
-            bookmarkAdded ? 'הסימניה נוספה בהצלחה'.tr() : 'הסימניה כבר קיימת'.tr());
+        UiSnack.showQuick(bookmarkAdded
+            ? 'הסימניה נוספה בהצלחה'.tr()
+            : 'הסימניה כבר קיימת'.tr());
       },
       icon: const Icon(FluentIcons.bookmark_add_24_regular),
       tooltip: 'הוסף סימניה ({shortcut})'
@@ -2246,8 +2246,8 @@ class _TextBookViewerBlocState extends State<TextBookViewerBloc>
       );
 
       // 5. Success message
-      UiSnack.show('הספר "{name}" נוסף למעקב בהצלחה!'
-          .tr(args: {'name': cleanBookName}));
+      UiSnack.show(
+          'הספר "{name}" נוסף למעקב בהצלחה!'.tr(args: {'name': cleanBookName}));
 
       // 6. Update UI to reflect the change
       setState(() {});
@@ -2263,7 +2263,7 @@ class _TextBookViewerBlocState extends State<TextBookViewerBloc>
   void _handlePdfButtonPress(BuildContext context, TextBookLoaded state) async {
     if (_pdfBook == null) {
       UiSnack.showError('לא נמצא ספר PDF עבור "{title}"'
-        .tr(args: {'title': state.book.title}));
+          .tr(args: {'title': state.book.title}));
       return;
     }
 
@@ -2946,8 +2946,8 @@ void _togglePdfView(
 
   final book = library.getCompanionBook(state.book, PdfBook);
   if (book == null) {
-    UiSnack.showError('לא נמצא ספר PDF עבור "{title}"'
-        .tr(args: {'title': state.book.title}));
+    UiSnack.showError(
+        'לא נמצא ספר PDF עבור "{title}"'.tr(args: {'title': state.book.title}));
     return;
   }
 

@@ -8,6 +8,7 @@ import 'package:otzaria/bookmarks/bloc/bookmark_bloc.dart';
 import 'package:otzaria/bookmarks/models/bookmark.dart';
 import 'package:otzaria/bookmarks/view/bookmark_screen.dart';
 import 'package:otzaria/core/ui_snack.dart';
+import 'package:otzaria/l10n/tr_extension.dart';
 import 'package:otzaria/models/books.dart';
 import 'package:otzaria/tabs/models/commentators_tab.dart';
 import 'package:otzaria/tabs/models/tab.dart';
@@ -367,13 +368,15 @@ class _CommentatorsTabScreenState extends State<CommentatorsTabScreen>
                   elevation: 0,
                   scrolledUnderElevation: 0,
                   centerTitle: false,
-                  leading: const IconButton(
-                    icon: Icon(FluentIcons.navigation_24_regular, size: 20),
-                    tooltip: 'ניווט',
+                  leading: IconButton(
+                    icon: const Icon(FluentIcons.navigation_24_regular,
+                        size: 20),
+                    tooltip: 'ניווט'.tr(),
                     onPressed: null,
                   ),
                   title: Text(
-                    'מפרשים על ${widget.tab.sourceTab.book.title}',
+                    'מפרשים על {title}'
+                        .tr(args: {'title': widget.tab.sourceTab.book.title}),
                     style: const TextStyle(fontSize: 16),
                     overflow: TextOverflow.ellipsis,
                   ),
@@ -383,38 +386,38 @@ class _CommentatorsTabScreenState extends State<CommentatorsTabScreen>
                       maxVisibleButtons: 999,
                       originalOrder: const [],
                       actions: [
-                        for (final action in const [
+                        for (final action in [
                           (
                             icon: FluentIcons.text_font_24_regular,
-                            tooltip: 'ניקוד',
+                            tooltip: 'ניקוד'.tr(),
                           ),
                           (
                             icon: FluentIcons.search_24_regular,
-                            tooltip: 'חיפוש',
+                            tooltip: 'חיפוש'.tr(),
                           ),
                           (
                             icon: FluentIcons.apps_list_24_regular,
-                            tooltip: 'בחירת מפרשים',
+                            tooltip: 'בחירת מפרשים'.tr(),
                           ),
                           (
                             icon: FluentIcons.bookmark_add_24_regular,
-                            tooltip: 'הוסף סימניה',
+                            tooltip: 'הוסף סימניה'.tr(),
                           ),
                           (
                             icon: FluentIcons.zoom_in_24_regular,
-                            tooltip: 'הגדל את גודל הטקסט',
+                            tooltip: 'הגדל את גודל הטקסט'.tr(),
                           ),
                           (
                             icon: FluentIcons.zoom_out_24_regular,
-                            tooltip: 'הקטן את גודל הטקסט',
+                            tooltip: 'הקטן את גודל הטקסט'.tr(),
                           ),
                           (
                             icon: FluentIcons.chevron_left_24_regular,
-                            tooltip: 'הקטע הקודם',
+                            tooltip: 'הקטע הקודם'.tr(),
                           ),
                           (
                             icon: FluentIcons.chevron_right_24_regular,
-                            tooltip: 'הקטע הבא',
+                            tooltip: 'הקטע הבא'.tr(),
                           ),
                         ])
                           ActionButtonData(
